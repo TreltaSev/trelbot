@@ -14,6 +14,7 @@ import typing
 # If Trelbot should be used in all guilds globally
 isGlobal: typing.Literal[True, False] = False
 
+
 class VersionDescriptor(typing.NamedTuple):
     major: int
     minor: int
@@ -23,3 +24,4 @@ class VersionDescriptor(typing.NamedTuple):
 version_description: VersionDescriptor = VersionDescriptor(major=1, minor=0, patch=0, level='production')
 
 del typing
+

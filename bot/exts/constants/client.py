@@ -7,10 +7,10 @@ Holds Client Class, Spine of Bot
 
 import os
 import discord
-from typing import List
+from typing import Any, List
 from discord.ext import commands
 from exts.constants.cogs import Cogs
-from bot.types.guild import PartialGuild
+from core_tools.guild import PartialGuild
 
 SpionereToken = "OTY0MDA5NDc2NzIwMDUwMjA2.YleZyQ.x8wE9l63AuqAgwczfUY9Ph1F2Qs"
 Developers = [342797306980204561]
@@ -61,6 +61,9 @@ class Client(commands.Bot):
                 Name of the guild
             """
             self.guilds.append(PartialGuild(id=guild_id, name=guild_name))
+
+        def __call__(self):
+            return self.guilds
 
 
 

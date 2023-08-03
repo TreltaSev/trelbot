@@ -1,3 +1,3 @@
 from . import (
-    exts as exts
+    guild
 )

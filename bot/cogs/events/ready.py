@@ -5,7 +5,7 @@ On ready event that logs information to console
 """
 
 from discord.ext import commands
-from bot.exts.constants.cogs import Setup
+from exts.constants.cogs import Setup
 
 class on_ready(commands.Cog):
     
@@ -16,6 +16,6 @@ class on_ready(commands.Cog):
     async def on_ready(self):
         print("Discord bot loaded")
 
-@Setup.basic()
+@Setup.basic(on_ready, "Event:on_ready")
 async def setup(client: commands.Bot):
     pass

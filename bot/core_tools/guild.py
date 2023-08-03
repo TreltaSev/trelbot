@@ -7,6 +7,8 @@ guild values.
 """
 import typing
 
+
+
 class PartialGuild:
     """
     Converts a partial guild id and name into an object to be read.
