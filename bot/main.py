@@ -25,4 +25,4 @@ except (KeyboardInterrupt, SystemExit) as error:
         EndReason = "System Exist"
 
     bcolors.console(f"{bcolors.colors.cvlPurple}[{time.current()}] {bcolors.colors.cvlOrange}[Info] {bcolors.colors.cvlRed}Bot Ended Abruptly: {EndReason}")
-    pass
+    
