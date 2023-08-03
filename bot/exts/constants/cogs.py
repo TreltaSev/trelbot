@@ -53,7 +53,7 @@ class Cogs:
                 if not file.endswith(extension) or file in exclusions:
                     continue
 
-                file_locations.append(os.path.relpath(os.path.join(root, file), os.getcwd()).replace("\\", ".").replace(extension, ""))
+                file_locations.append(os.path.relpath(os.path.join(root, file), os.getcwd()).replace("\\", ".").replace(extension, "").replace("/", "."))
 
         return file_locations
 
