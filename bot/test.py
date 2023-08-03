@@ -1,4 +1,5 @@
-
+from PIL import Image
+from discord import Member
 
 class Banner:
     """
@@ -8,13 +9,14 @@ class Banner:
     Contains methods used for basic creation of images
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, member: Member):
+        self.member = member
 
     
     """Constructs a basic image template and saves to self.image"""
     def _construct_image(self):
-        pass
+        self.image = Image.new("RGBA", (1100, 500), "#121218")
+        
     
 
 class UserBanner(Banner):
@@ -27,12 +29,12 @@ class UserBanner(Banner):
     Specialized methods for applying customized assets to the banner
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, member: Member):
+        super().__init__(member=member)
 
     
     def _apply_pfp(self):
-        """Applies a users profile picture by url"""
+        """Applies a users profile picture by url"""        
 
         pass
 
