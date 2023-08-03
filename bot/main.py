@@ -3,6 +3,7 @@ import sys
 sys.dont_write_bytecode = True
 
 from exts.constants.client import Client, SpionereToken
+from core_tools import bcolors, time
 import asyncio
 
 # Start Client
@@ -15,5 +16,13 @@ try:
     client = Client()
     asyncio.run(run())
 except (KeyboardInterrupt, SystemExit) as error:
-    print("Stopping Trelbot")
+    EndReason = ""
+
+    if isinstance(error, KeyboardInterrupt):
+        EndReason = "Exited with `Ctrl+C`"
+    
+    if isinstance(error, SystemExit):
+        EndReason = "System Exist"
+
+    bcolors.console(f"{bcolors.colors.cvlPurple}[{time.current()}] {bcolors.colors.cvlOrange}[Info] {bcolors.colors.cvlRed}Bot Ended Abruptly: {EndReason}")
     pass

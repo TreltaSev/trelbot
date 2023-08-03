@@ -15,6 +15,7 @@ from core_tools.guild import PartialGuild
 SpionereToken = "OTY0MDA5NDc2NzIwMDUwMjA2.YleZyQ.x8wE9l63AuqAgwczfUY9Ph1F2Qs"
 Developers = [342797306980204561]
 
+
 # If Trelbot should be used in all guilds globally
 isGlobal: Literal[True, False] = False
 

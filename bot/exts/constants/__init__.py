@@ -1,4 +1,5 @@
 from . import (
     client as client,
-    cogs as cogs
+    cogs as cogs,
+    version as version
 )
