@@ -2,14 +2,14 @@ import sys
 # Prevent program from creating __pycache__ dirs
 sys.dont_write_bytecode = True
 
-from exts.constants.client import Client, SpionereToken
+from exts.constants.client import Client, SpionereToken, TrelbotToken
 from core_tools import bcolors, time
 import asyncio
 
 # Start Client
 async def run():
     async with client:
-        await client.start(SpionereToken, reconnect=True)
+        await client.start(TrelbotToken, reconnect=True)
 
 
 try:

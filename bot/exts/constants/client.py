@@ -12,7 +12,9 @@ from discord.ext import commands
 from exts.constants.cogs import Cogs
 from core_tools.guild import PartialGuild
 
+
 SpionereToken = "OTY0MDA5NDc2NzIwMDUwMjA2.YleZyQ.x8wE9l63AuqAgwczfUY9Ph1F2Qs"
+TrelbotToken = "OTMyOTk5OTY1NDk4ODM0OTU0.GJoDm0.hnXOxg7Wm83MFCQcKNFun0x6Bw12I79Y043AN0"
 Developers = [342797306980204561]
 
 
@@ -35,6 +37,13 @@ class Client(commands.Bot):
         for extension in Cogs.FindAll(f"{os.getcwd()}/cogs"):
             await self.load_extension(extension)
 
+        if isGlobal:
+            await self.tree.sync()
+        else:
+            for guild in Client.DevelopmentGuilds()():
+                print("Syncing with", guild.id)
+                await self.tree.sync(guild=discord.Object(id=guild.id))
+
     
     class DevelopmentGuilds:
         """
@@ -49,6 +58,7 @@ class Client(commands.Bot):
         def __init__(self):
             self.guilds: List[PartialGuild] = []
             self.add_guild(964323076089208843, "Spionere")
+            self.add_guild(802799445476769822, "BTB")
 
         
         def add_guild(self, guild_id: int, guild_name: str):

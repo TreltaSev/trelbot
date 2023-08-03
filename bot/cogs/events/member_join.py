@@ -8,6 +8,7 @@ Displays a custom "banner" on member join
 import discord
 from discord.ext import commands
 from exts.constants.cogs import Setup
+from exts.constants import banner_tools
 
 class on_member_join(commands.Cog):
     
@@ -16,7 +17,16 @@ class on_member_join(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
-        pass
+
+        join = 0
+
+        if member.guild.id == 964323076089208843:
+            join = 964526484217794590
+
+        if member.guild.id == 802799445476769822:
+            join = 821215729047175179
+
+        await self.client.get_channel(join).send(file=banner_tools.UserBanner("join", member=member)._get_file())
 
 @Setup.basic(on_member_join, "Event:on_member_join")
 async def setup(client: commands.Bot):
