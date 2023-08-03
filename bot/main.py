@@ -3,7 +3,6 @@ import sys
 sys.dont_write_bytecode = True
 
 from exts.constants.client import Client, SpionereToken
-
 import asyncio
 
 # Start Client

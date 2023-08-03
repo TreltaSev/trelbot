@@ -7,7 +7,6 @@ Holds Cogs Class used to locate and use cogs
 
 import os
 import functools
-from exts import isGlobal
 from typing import Union, List
 from discord.ext import commands
 from . import client as packageClient
@@ -79,7 +78,7 @@ class Setup:
             @functools.wraps(func)            
             async def wrapper(*args, **kwargs):
                 client: commands.Bot = args[0]
-                if isGlobal:
+                if packageClient.isGlobal:
                     await client.add_cog(method(client))                
                 else:
                     await client.add_cog(method(client), guilds=packageClient.Client.DevelopmentGuilds()())
