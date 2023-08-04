@@ -6,4 +6,4 @@ sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 
 from shared import bot_overlay
 
-print(bot_overlay.Client.get.guilds())
+print(bot_overlay.Client.check.has_access_to_guild(34487238342352151808))
