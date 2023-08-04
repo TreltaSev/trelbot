@@ -16,19 +16,23 @@ class Client(discord.Client):
 
     authorization_headers = {"Authorization": F"Bot {Setup.get_token()}"}    
     def __init__(self, *, intents: discord.flags.Intents, **options: typing.Any) -> None:
-        super().__init__(intents=intents, **options)
+        super().__init__(intents=intents, **options)        
 
     class get:
         """
         Get certain values primaraly by requests
         """
         
-        class guilds:
+        class guild:
             """
             get values in guilds
             """
 
-            def __new__(cls, *args, **kwargs):
+            @classmethod
+            def guilds(cls):
+                """
+                ret
+                """
                 return requests.get("https://discord.com/api/users/@me/guilds", headers=Client.authorization_headers).json()
             
         
