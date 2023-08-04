@@ -9,8 +9,8 @@ import os
 import discord
 from typing import List, Literal
 from discord.ext import commands
-from exts.constants.cogs import Cogs
 from core_tools.guild import PartialGuild
+from exts.constants.cogs import Cogs
 
 
 
@@ -75,7 +75,7 @@ class Client(commands.Bot):
         def __init__(self):
             self.guilds: List[PartialGuild] = []
             self.add_guild(964323076089208843, "Spionere")
-            self.add_guild(802799445476769822, "BTB")
+            # self.add_guild(802799445476769822, "BTB")
 
         
         def add_guild(self, guild_id: int, guild_name: str):

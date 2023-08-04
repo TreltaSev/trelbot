@@ -1,11 +1,12 @@
+import os
 import sys
 # Prevent program from creating __pycache__ dirs
 sys.dont_write_bytecode = True
+sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 
 import asyncio
 from core_tools import bcolors, time
 from exts.constants.client import Client, SpionereToken, TrelbotToken, Setup
-
 
 Setup.set_token(SpionereToken)
 

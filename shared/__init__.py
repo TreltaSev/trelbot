@@ -2,6 +2,11 @@ import os
 import typing
 import sqlite3
 
+
+from bot.exts.constants.client import Setup, SpionereToken, TrelbotToken
+
+Setup.set_token(SpionereToken)
+
 class config:    
     """|class|
     
@@ -27,7 +32,3 @@ class connections:
     """
 
     settings = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
-
-from . import (
-    db as db
-)
