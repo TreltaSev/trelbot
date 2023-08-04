@@ -10,7 +10,7 @@ from exts.constants.client import Client, SpionereToken, TrelbotToken
 # Start Client
 async def run():
     async with client:
-        await client.start(TrelbotToken, reconnect=True)
+        await client.start(SpionereToken, reconnect=True)
 
 
 try:
