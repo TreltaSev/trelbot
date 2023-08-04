@@ -2,9 +2,10 @@ import sys
 # Prevent program from creating __pycache__ dirs
 sys.dont_write_bytecode = True
 
-from exts.constants.client import Client, SpionereToken, TrelbotToken
-from core_tools import bcolors, time
 import asyncio
+from core_tools import bcolors, time
+from exts.constants.client import Client, SpionereToken, TrelbotToken
+
 
 # Start Client
 async def run():
