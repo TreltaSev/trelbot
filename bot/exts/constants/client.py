@@ -13,9 +13,26 @@ from exts.constants.cogs import Cogs
 from core_tools.guild import PartialGuild
 
 
+
 SpionereToken = "OTY0MDA5NDc2NzIwMDUwMjA2.YleZyQ.x8wE9l63AuqAgwczfUY9Ph1F2Qs"
 TrelbotToken = "OTMyOTk5OTY1NDk4ODM0OTU0.GJoDm0.hnXOxg7Wm83MFCQcKNFun0x6Bw12I79Y043AN0"
 Developers = [342797306980204561]
+
+
+class Setup:
+    """
+    Setup class for program
+    """
+    
+    token: str
+
+    @classmethod
+    def set_token(cls, token: str):
+        cls.token = token
+
+    @classmethod
+    def get_token(cls):
+        return cls.token
 
 
 # If Trelbot should be used in all guilds globally

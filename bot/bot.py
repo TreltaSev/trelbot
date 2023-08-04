@@ -4,13 +4,15 @@ sys.dont_write_bytecode = True
 
 import asyncio
 from core_tools import bcolors, time
-from exts.constants.client import Client, SpionereToken, TrelbotToken
+from exts.constants.client import Client, SpionereToken, TrelbotToken, Setup
 
+
+Setup.set_token(SpionereToken)
 
 # Start Client
 async def run():
     async with client:
-        await client.start(SpionereToken, reconnect=True)
+        await client.start(Setup.token, reconnect=True)
 
 
 try:
