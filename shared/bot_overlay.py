@@ -22,14 +22,15 @@ class Client(discord.Client):
         """
         Get certain values primaraly by requests
         """
-
-        @classmethod
-        def guilds(cls):
+        
+        class guilds:
             """
-            Returns all guilds of the bot in a json format
+            get values in guilds
             """
 
-            return requests.get("https://discord.com/api/users/@me/guilds", headers=Client.authorization_headers).json()
+            def __new__(cls, *args, **kwargs):
+                return requests.get("https://discord.com/api/users/@me/guilds", headers=Client.authorization_headers).json()
+            
         
     class check:
         """
@@ -46,5 +47,5 @@ class Client(discord.Client):
 
             if isinstance(guilds, type(None)):
                 guilds = Client.get.guilds()
-                
+
             return any(str(guild_id) == str(_guild.get("id")) for _guild in guilds)
