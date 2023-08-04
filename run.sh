@@ -1,2 +1,2 @@
 #!bin/bash
-source ./bot/venv/bin/activate && nohup main.py &
+source ./venv/bin/activate && nohup main.py &
