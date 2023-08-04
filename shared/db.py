@@ -3,14 +3,14 @@ shared.db
 ~~~~~~~~~
 Access local databases with sqlite3 package
 """
+import os
 import json
 import sqlite3
-import typing
 import logging
 
-from . import config, connections, types
+from . import types
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.CRITICAL)
 
 class Settings:
     """
@@ -19,12 +19,14 @@ class Settings:
     """
 
     _template: dict = {
-        "banner": """background:color("#fff");pfp:true;pfp_location:[center, center];pfp_border_color:color("#fff");pfp_border_width:20;main_text:Welcome to the sever;main_text_size: 64;sub_text:Leave and all cry;sub_text_size:12;display_name:true;display_member_count:true;"""
+        "banner": """background:color("#fff");pfp:true;pfp_location:[center, 50];pfp_border_color:color("#fff");pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
     }
+
+    connection = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
     
     def __init__(self, guild_id: str):
         self.guild_id = guild_id
-        self.cursor: sqlite3.Cursor = connections.settings.cursor()
+        self.cursor: sqlite3.Cursor = Settings.connection.cursor()
 
         if not isinstance(guild_id, types.GuildID):
             logging.error("Not a valid guild id")
@@ -58,7 +60,8 @@ class Settings:
         
         self.cursor.execute(f"CREATE TABLE IF NOT EXISTS '{self.guild_id}' (data TEXT)")
         self.cursor.execute(f"INSERT INTO '{self.guild_id}' (data) VALUES (?)", (json.dumps(Settings._template), ))
-        connections.settings.commit()
+        print(json.dumps(Settings._template))
+        Settings.connection.commit()
 
         logging.debug(f"Created new table: {self.guild_id}")
 

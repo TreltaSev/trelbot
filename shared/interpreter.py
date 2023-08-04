@@ -16,9 +16,11 @@ class ConfigInterperter:
             "pfp_location": self._parse_pfp,
             "pfp_border_color": self._parse_pfp,
             "pfp_border_width": self._parse_pfp,
-            "main_text": self._parse_text,
+            "join_main_text": self._parse_text,
+            "leave_main_text": self._parse_text,
             "main_text_size": self._parse_text_size,
-            "sub_text": self._parse_text,
+            "join_sub_text": self._parse_text,
+            "leave_sub_text": self._parse_text,
             "sub_text_size": self._parse_text_size,
             "display_name": self._parse_display_name,
             "display_member_count": self._parse_display_member_count
@@ -29,8 +31,10 @@ class ConfigInterperter:
         self.pfp_location: list = ["center", "center"]
         self.pfp_border_color: str = "#fff"
         self.pfp_border_width: int = 20
-        self.main_text: str = "Welcome Main Text"
-        self.sub_text: str = "Welcome Sub Text"
+        self.join_main_text: str = "Welcome Main Text"
+        self.leave_main_text: str = "Leave Main Text"
+        self.join_sub_text: str = "Welcome Sub Text"
+        self.leave_sub_text: str = "Leave Sub Text"
         self.main_text_size: int = 64
         self.sub_text_size: int = 12
         self.display_name: bool = True
@@ -94,18 +98,12 @@ class ConfigInterperter:
         """Parses main_text and sub_text"""
         value: str
         # Check for main_text
-        if _k == "main_text":
-            if len(value) > 256:
-                return
-            self.main_text = value
+        if len(value) > 256:
             return
+        setattr(self, _k, value)
+        return
         
-        # Check for sub_text
-        if _k == "sub_text":
-            if len(value) > 256:
-                return
-            self.sub_text = value
-            return
+
         
     def _parse_text_size(self, _k, value):
         """Parses main_text_size and sub_text_size"""

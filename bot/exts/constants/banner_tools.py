@@ -1,10 +1,12 @@
 import io
 import os
 import requests
-from typing import List, Union, Literal
+from typing import List, Literal
 from PIL.ImageFont import FreeTypeFont
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 from discord import Member, File
+from shared import interpreter, db
+import traceback
 
 def get_suffix(num: int):
     """ Gets number suffix, th, rd, st"""
@@ -41,8 +43,25 @@ class Banner:
         self.image.save(byte_array, format="PNG")
         byte_array.seek(0)
         return File(byte_array, filename=name)
-        
     
+    """Parses any location string format"""
+    def _parse_location(self, values: list, size: list) -> list:
+
+        if len(values) != 2:
+            return [0, 0]
+        
+        for i, value in enumerate(values):
+            if value == "center":
+                values[i] = int((self.image.size[i] - size[i]) / 2)
+                continue
+            if not value.isnumeric():
+                values[i] = 0
+                continue
+            values[i] = int(value)
+            continue
+
+        return values
+
 
 class UserBanner(Banner):
     """
@@ -54,10 +73,10 @@ class UserBanner(Banner):
     Specialized methods for applying customized assets to the banner
     """
 
-    def __init__(self, event: Literal["join", "leave"], member: Member = None):
+    def __init__(self, event: Literal["join", "leave"],  member: Member = None):
         super().__init__(member=member)
         self.event = event
-
+        self.config: interpreter.ConfigInterperter = interpreter.ConfigInterperter(db.Settings(str(member.guild.id)).get()["banner"])
         try:
             self._apply_pfp()
             self._apply_message()
@@ -65,17 +84,22 @@ class UserBanner(Banner):
             self._apply_username()
             self._apply_server_count()
         except Exception as e:
-            print(e)
+            traceback.print_exception(e)
+            
 
     
     def _apply_pfp(self):
         """Applies a users profile picture by url"""
 
+        if not self.config.pfp:
+            return
+
         # Save pfp to bytes
         rendered_profile_picture = Image.open(io.BytesIO(requests.get(self.member.avatar.url).content)).resize([200, 200]).convert("RGBA")
         
         # Get Center
-        position = [int((self.image.size[0] - 200) / 2), int((self.image.size[1] - 200) / 2) - 100]
+        position = self._parse_location(self.config.pfp_location, [200, 200])
+        print(position)
 
         # Crop
         cropped_mask = Image.new("L", rendered_profile_picture.size, 0)
@@ -90,16 +114,15 @@ class UserBanner(Banner):
         # Add border
         _origional_size = self.image.size
         _mag = 4
-        _bw = 20
         self.image = self.image.resize((_origional_size[0]*_mag, _origional_size[1]*_mag))
 
         np = [
-            (position[0]*_mag) - int((_bw * _mag) / 2),
-            (position[1]*_mag) - int((_bw * _mag) / 2),
-            (position[0]*_mag) + int((_bw * _mag) / 2) + (200*_mag),
-            (position[1]*_mag) + int((_bw * _mag) / 2) + (200*_mag)
+            (position[0]*_mag) - int((self.config.pfp_border_width * _mag) / 2),
+            (position[1]*_mag) - int((self.config.pfp_border_width * _mag) / 2),
+            (position[0]*_mag) + int((self.config.pfp_border_width * _mag) / 2) + (200*_mag),
+            (position[1]*_mag) + int((self.config.pfp_border_width * _mag) / 2) + (200*_mag)
         ]
-        ImageDraw.Draw(self.image).ellipse(np, width=int((_bw * _mag)/2) + 5, outline="#fff")
+        ImageDraw.Draw(self.image).ellipse(np, width=int((self.config.pfp_border_width * _mag)/2) + 5, outline=self.config.pfp_border_color)
 
         self.image = self.image.resize((_origional_size[0], _origional_size[1]))
     
@@ -107,29 +130,35 @@ class UserBanner(Banner):
         """Applies a basic welcome/goodbye text centered in the image"""
 
         if self.event == "join":
-            Message = "Welcome, to the Server of Legos!"
+            Message = self.config.join_main_text
         else:
-            Message = "Me = Sad"
+            Message = self.config.leave_main_text
 
-        LatoFont = ImageFont.truetype("./resources/lato.ttf", 64)
+        LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.main_text_size)
         message_size = LatoFont.getbbox(Message)
-        position = [int((self.image.size[0] - message_size[2]) / 2), int((self.image.size[1] - message_size[3] + 100)/ 2)]
+        position = self._parse_location(["center", "center"])
+        position[1] += self.config.main_text_size
         self._construct_text(Message, LatoFont, position)        
 
     def _apply_secondary_message(self):
         """Applies a secondary message"""
 
         if self.event == "join":
-            Message = "if you leave ill be sad :("
+            Message = self.config.join_sub_text
         else:
-            Message = "Imagine Leaving? Shame this user :)"
+            Message = self.config.leave_sub_text
 
-        LatoFont = ImageFont.truetype("./resources/lato.ttf", 24)
+        LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.sub_text_size)
         message_size = LatoFont.getbbox(Message)
-        position = [int((self.image.size[0] - message_size[2]) / 2), int((self.image.size[1] - message_size[3] + 240)/ 2)]
+        position = self._parse_location(["center", "center"])
+        position[1] += self.config.main_text_size + self.config.sub_text_size
         self._construct_text(Message, LatoFont, position, (255, 255, 255, 128))  
     
     def _apply_username(self):
+
+        if not self.config.display_name:
+            return
+        
         """Applies the username of a member under the applied message"""
         LatoFont = ImageFont.truetype(f"{os.getcwd()}/resources/lato.ttf", 24)
         position = [10, 10]
@@ -137,6 +166,10 @@ class UserBanner(Banner):
 
     def _apply_server_count(self):
         """Applies member count of the server"""
+
+        if not self.config.display_member_count:
+            return
+        
         Message = f"{get_suffix(self.member.guild.member_count)} Member"
         LatoFont = ImageFont.truetype(f"{os.getcwd()}/resources/lato.ttf", 24)
         message_size = LatoFont.getbbox(Message)
