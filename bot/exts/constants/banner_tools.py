@@ -20,32 +20,36 @@ class Banner:
     """
     Banner
     ~~~~~~
-
     Contains methods used for basic creation of images
     """
 
     def __init__(self, member: Member = None):
         self.member = member
-        self._construct_image()
-
+        self._construct_image()    
     
-    """Constructs a basic image template and saves to self.image"""
     def _construct_image(self):
+        """Constructs a basic image template and saves to self.image"""
+
         self.image = Image.new("RGBA", (1100, 500), "#121218")     
 
-    """Constructs a basic text compoennt and draws to self.image"""
+    
     def _construct_text(self, text: str, font: FreeTypeFont, position: List[int], color = "#fff"):
+        """Constructs a basic text compoennt and draws to self.image"""
+
         ImageDraw.Draw(self.image).text(position, text, color, font)
 
-    """Gets the image in a file format for discord"""
+    
     def _get_file(self, name="image.png") -> File:
+        """Gets the image in a file format for discord"""
+
         byte_array = io.BytesIO()
         self.image.save(byte_array, format="PNG")
         byte_array.seek(0)
         return File(byte_array, filename=name)
     
-    """Parses any location string format"""
+    
     def _parse_location(self, values: list, size: list) -> list:
+        """Parses any location string format"""
 
         if len(values) != 2:
             return [0, 0]
@@ -84,10 +88,8 @@ class UserBanner(Banner):
             self._apply_username()
             self._apply_server_count()
         except Exception as e:
-            traceback.print_exception(e)
-            
+            traceback.print_exception(e)           
 
-    
     def _apply_pfp(self):
         """Applies a users profile picture by url"""
 
@@ -122,6 +124,7 @@ class UserBanner(Banner):
             (position[0]*_mag) + int((self.config.pfp_border_width * _mag) / 2) + (200*_mag),
             (position[1]*_mag) + int((self.config.pfp_border_width * _mag) / 2) + (200*_mag)
         ]
+
         ImageDraw.Draw(self.image).ellipse(np, width=int((self.config.pfp_border_width * _mag)/2) + 5, outline=self.config.pfp_border_color)
 
         self.image = self.image.resize((_origional_size[0], _origional_size[1]))
