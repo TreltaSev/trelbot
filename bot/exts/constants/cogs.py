@@ -34,15 +34,14 @@ class Cogs:
         `OPTIONAL` exclusions: Union[List[str], str]
             exlusions that will be ignored as cog files
             (defaults to ["__init__.py"])
-        
-        Added in `v1.0.0`        
+           
         """
 
         # Convert Exclusions to a list if its a string.
         if isinstance(exclusions, str):
             exclusions = [exclusions]
 
-        file_locations = []
+        cog_locations = []
         for root, _, files in os.walk(directory):
             for file in files:
                 file: str
@@ -53,9 +52,9 @@ class Cogs:
                 if not file.endswith(extension) or file in exclusions:
                     continue
 
-                file_locations.append(os.path.relpath(os.path.join(root, file), os.getcwd()).replace("\\", ".").replace(extension, "").replace("/", "."))
+                cog_locations.append(os.path.relpath(os.path.join(root, file), os.getcwd()).replace("\\", ".").replace(extension, "").replace("/", "."))
 
-        return file_locations
+        return cog_locations
 
 class Setup:
     """

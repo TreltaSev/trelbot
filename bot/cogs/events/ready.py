@@ -7,8 +7,8 @@ On ready event that logs information to console
 import discord
 from discord.ext import commands
 from exts.constants.cogs import Setup
-from core_tools import time, bcolors
 from exts.constants import version
+from shared.core_tools import bcolors, time
 
 class on_ready(commands.Cog):
     

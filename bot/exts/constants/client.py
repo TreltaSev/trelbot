@@ -9,7 +9,7 @@ import os
 import discord
 from typing import List, Literal
 from discord.ext import commands
-from core_tools.guild import PartialGuild
+from shared.core_tools.guild import PartialGuild
 from exts.constants.cogs import Cogs
 
 
