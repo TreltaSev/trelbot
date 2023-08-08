@@ -50,11 +50,36 @@ class Banner:
     
     def _parse_location(self, values: list, size: list) -> list:
         """Parses any location string format"""
-
+        print(values, size)
+        # Make sure values make sense
         if len(values) != 2:
             return [0, 0]
         
+        # Logic for if bbox has 4 items, x, y, w, h get replace v with [v, h]
+        if len(size) == 4:
+            size = [size[2], size[3]]
+        
+        # Logic for formatting "center"
         for i, value in enumerate(values):
+            if "center" in value:
+                # Get _parts
+                _value_parts = value.split("+") if "+" in value else value.split("-")
+
+                # Handle + or -
+                if len(_value_parts) == 2 and _value_parts[1].strip().isnumeric():
+                    _value_offset = int(_value_parts[1].strip())
+
+                    # Handle - if - is present
+                    if "-" in value:
+                        _value_offset = -_value_offset
+
+                    # Make sure value isn't negative, if its negative return 0
+                    values[i] = max(int((self.image.size[i] - size[i]) / 2) + _value_offset, 0)
+                    continue
+
+                values[i] = int((self.image.size[i] - size[i]) / 2)
+                continue                
+
             if value == "center":
                 values[i] = int((self.image.size[i] - size[i]) / 2)
                 continue
@@ -138,8 +163,7 @@ class UserBanner(Banner):
             Message = self.config.leave_main_text
 
         LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.main_text_size)
-        message_size = LatoFont.getbbox(Message)
-        position = self._parse_location(["center", "center"])
+        position = self._parse_location(["center", "center"], LatoFont.getbbox(Message))
         position[1] += self.config.main_text_size
         self._construct_text(Message, LatoFont, position)        
 
@@ -152,8 +176,7 @@ class UserBanner(Banner):
             Message = self.config.leave_sub_text
 
         LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.sub_text_size)
-        message_size = LatoFont.getbbox(Message)
-        position = self._parse_location(["center", "center"])
+        position = self._parse_location(["center", "center + 50"], LatoFont.getbbox(Message))
         position[1] += self.config.main_text_size + self.config.sub_text_size
         self._construct_text(Message, LatoFont, position, (255, 255, 255, 128))  
     
