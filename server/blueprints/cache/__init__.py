@@ -12,3 +12,9 @@ class Connection:
             "validated": self.validated
         }
         return quart.json.jsonify(_response_object)
+    
+    @property
+    async def client_input(self):
+        print(quart.request.is_json)
+        return await quart.request.get_json() if quart.request.is_json else await quart.request.get_data()
+        

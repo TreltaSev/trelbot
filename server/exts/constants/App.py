@@ -143,3 +143,6 @@ class BlueprintsManager:
 
 
         
+def foo():
+    class_object = MyClass() # MyClass checks if a value is true, if it is stop the code
+    print("I wont display") # Shouldn't display because value is true.
