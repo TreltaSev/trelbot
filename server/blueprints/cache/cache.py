@@ -1,6 +1,5 @@
 import quart
-from server.exts.constants.App import Connection
-
+from . import Connection
 config = {
     "ignore": False
 }
@@ -11,7 +10,7 @@ blueprint = quart.Blueprint("api:test", __name__, subdomain="cache")
 async def root():
     _https_connection = Connection(quart.request)
 
-    if not _https_connection.local_validated:
-        return quart.json.jsonify(validated=False)
+    if not _https_connection.validated:
+        return _https_connection.response
 
-    return quart.json.jsonify(validated=True)
+    return _https_connection.response

@@ -141,12 +141,5 @@ class BlueprintsManager:
         cls.load_from_spec(spec, name)
         return True
 
-class Connection:
-    """|Class|"""
-    def __init__(self, request: quart.Request):
-        self.request = request
 
-    @property
-    def local_validated(self):
-        return self.request.remote_addr in ["127.0.0.1", "::1"]
         
