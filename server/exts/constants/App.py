@@ -4,8 +4,13 @@ server.exts.constants.App
 
 Contains a class which inherits from quart.Quart
 """
+import os
 from typing import Optional
 import quart
+import typing
+import importlib.util
+import importlib.machinery
+from shared.core_tools.errors import BlueprintAlreadyLoadedException, BlueprintFailedInSetup
 
 class App(quart.Quart):
 
@@ -30,4 +35,104 @@ class BlueprintsManager:
     this is basically cogs but for blueprints    
     """
 
-    pass
+    extenders: dict = {}
+
+    app: quart.Quart
+
+    @classmethod
+    def apply_app(cls, app):
+        """Saves app for later usage"""
+        cls.app = app
+        
+
+    @classmethod
+    def find_all(cls, directory: str, extension: str = ".py", exclusions: typing.Union[typing.List[str], str] = ["__init__.py"]) -> list:
+        """
+        finds all available blueprints within a directory
+
+        Arguments
+        ~~~~~~~~~~~~~~~~~~
+
+        `REQUIRED` directory : str 
+            Location to surf for files
+
+        `REQUIRED` extension : str
+            Ending of a file to be considered a blueprint
+
+        `OPTIONAL` exculsions : list 
+            A list containing a list of exculsions to pass, set to ["__init__.py"] as default
+
+        """
+
+        if isinstance(exclusions, str):
+            exclusions = [exclusions]
+
+        file_locations = []
+        for root, _, files in os.walk(directory):
+            for file in files:
+                file: str
+
+                if not isinstance(file, str):
+                    continue
+
+                if not file.endswith(extension) or file in exclusions:
+                    continue
+                
+                file_locations.append(os.path.relpath(os.path.join(root, file), os.getcwd()).replace("\\", ".").replace(extension, "").replace("/", "."))
+        return file_locations
+
+    @classmethod
+    def _resolve_name(cls, name: str, package: typing.Optional[str]) -> typing.Union[str, None]:
+        """Resolves the name of a package, private."""
+        try:
+            return importlib.util.resolve_name(name, package)
+        except ImportError:
+            return None
+        
+    @classmethod
+    def load_from_spec(cls, spec: importlib.machinery.ModuleSpec, key: str) -> None:
+        """
+        Loads a blueprint from importlib.machinery.ModuleSpec
+        """
+
+        lib = importlib.util.module_from_spec(spec)
+
+        try:
+            spec.loader.exec_module(lib)
+        except Exception as error:
+            return
+        
+        if not hasattr(lib, "setup"):
+            return
+        
+        setup_method = getattr(lib, "setup")
+        try:
+            setup_method(cls)
+        except Exception as e:
+            raise BlueprintFailedInSetup(spec)
+        
+        cls.extenders[key] = lib
+
+    @classmethod
+    def load(cls, name: str, *, package: typing.Optional[str] = None) -> typing.Union[bool, None]:
+        """|method|
+
+        Loads a blueprint.
+
+        A blueprint can be loaded with this method, a function within the blueprint should be visible,
+        the "setup" method.
+        
+        """
+
+        name = cls._resolve_name(name, package)
+        if name in cls.extenders:
+            raise BlueprintAlreadyLoadedException(name)
+        
+        spec = importlib.util.find_spec(name)
+        if spec is None:
+            return None
+        
+        cls.load_from_spec(spec, name)
+
+
+        
