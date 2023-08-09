@@ -100,17 +100,24 @@ class BlueprintsManager:
         try:
             spec.loader.exec_module(lib)
         except Exception as error:
-            return
+            raise errors.BaseBlueprintException(error, name=key)
+        if hasattr(lib, "config"):
+            if getattr(lib, "config")["ignore"]:
+                return
         
+
         if not hasattr(lib, "blueprint"):            
             raise errors.BlueprintHasNoBlueprintVariable(key)
         
         _pulled_blueprint = getattr(lib, "blueprint")
 
         if not isinstance(_pulled_blueprint, quart.Blueprint):
-            raise errors.BlueprintHasWrongBlueprintType
+            raise errors.BlueprintHasWrongBlueprintType(key)
+        
+        cls.app.register_blueprint(_pulled_blueprint)
         
         cls.extenders[key] = lib
+
 
     @classmethod
     def load(cls, name: str, *, package: typing.Optional[str] = None) -> typing.Union[bool, None]:
@@ -132,6 +139,7 @@ class BlueprintsManager:
             return None
         
         cls.load_from_spec(spec, name)
+        return True
 
 
         
