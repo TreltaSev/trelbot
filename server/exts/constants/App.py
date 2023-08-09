@@ -10,7 +10,7 @@ import quart
 import typing
 import importlib.util
 import importlib.machinery
-from shared.core_tools.errors import BlueprintAlreadyLoadedException, BlueprintFailedInSetup
+from shared.core_tools import errors
 
 class App(quart.Quart):
 
@@ -102,14 +102,13 @@ class BlueprintsManager:
         except Exception as error:
             return
         
-        if not hasattr(lib, "setup"):
-            return
+        if not hasattr(lib, "blueprint"):            
+            raise errors.BlueprintHasNoBlueprintVariable(key)
         
-        setup_method = getattr(lib, "setup")
-        try:
-            setup_method(cls)
-        except Exception as e:
-            raise BlueprintFailedInSetup(spec)
+        _pulled_blueprint = getattr(lib, "blueprint")
+
+        if not isinstance(_pulled_blueprint, quart.Blueprint):
+            raise errors.BlueprintHasWrongBlueprintType
         
         cls.extenders[key] = lib
 
@@ -126,7 +125,7 @@ class BlueprintsManager:
 
         name = cls._resolve_name(name, package)
         if name in cls.extenders:
-            raise BlueprintAlreadyLoadedException(name)
+            raise errors.BlueprintAlreadyLoadedException(name)
         
         spec = importlib.util.find_spec(name)
         if spec is None:

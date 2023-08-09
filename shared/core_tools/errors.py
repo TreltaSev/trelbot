@@ -16,8 +16,13 @@ class BlueprintAlreadyLoadedException(BaseBlueprintException):
     """Raised when a blueprint is already loaded and is being loaded again."""
     def __init__(self, name: str) -> None:
         super().__init__(f"Blueprint {name!r} has already been loaded.", name=name)
-
-class BlueprintFailedInSetup(BaseBlueprintException):
-    """Raised when a blueprint fails in the setup method"""
+        
+class BlueprintHasNoBlueprintVariable(BaseBlueprintException):
+    """Raised from server.exts.constants.App.BlueprintManager"""
     def __init__(self, name: str) -> None:
-        super().__init__(f"Blueprint {name!r} failed during setup.", name=name)
+        super().__init__(f"Blueprint {name!r} has no blueprint variable.", name=name)
+
+class BlueprintHasWrongBlueprintType(BaseBlueprintException):
+    """Raised from server.exts.constants.App.BlueprintManager"""
+    def __init__(self, name: str) -> None:
+        super().__init__(f"Blueprint {name!r}'s blueprint variable is not quart.Blueprint", name=name)
