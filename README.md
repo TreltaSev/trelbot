@@ -1,3 +1,4 @@
+![procrastination_100](screenshots/status_procrastination.png)
 # Trelbot (bot, server, frontend)
 Discord bot with a backend server and frontend server for fun games... maybe...
 
