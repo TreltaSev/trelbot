@@ -52,6 +52,29 @@ class ConfigInterperter:
             key, value = _section.split(":")
             if self.actions.__contains__(key):
                 self.actions.get(key)(key, value)
+
+    def cache_results(self):
+        """Convert the parsed settings into a base css format"""
+        _copy = dict(vars(self))
+
+        for _to_remove in ["config", "actions"]:
+            if _to_remove in _copy:
+                del _copy[_to_remove]
+
+        _cache_out = ""
+
+        for _child_key, _child_value in _copy.items():
+            _segment_out = ""
+
+            if not isinstance(_child_value, list):
+                _segment_out = str(_child_value)
+
+            if isinstance(_child_value, list):
+                _segment_out = "[" + ",".join([str(item) for item in _child_value]) + "]"
+
+            _cache_out += f"{_child_key}:{_segment_out};"
+    
+        return _cache_out
     
     def _parse_background(self, _, value: str):
         """Parse background as color or image"""
@@ -137,10 +160,11 @@ class ConfigInterperter:
             self.display_member_count = True
     
     def _match_color(self, _to_match: str):
-        """Checks and gets hex value in between color()"""
-        match = re.search(r'color\((\#[a-fA-F0-9]{3, 6})\)', _to_match)
+        """Checks and gets hex value in a string"""
+        match = re.search(r'^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', _to_match)
+        print(match, _to_match)
         if match:
-            return [True, match.group(1)]
+            return [True, _to_match]
         return [False, None]
     
     def _match_image(self, _to_match: str):

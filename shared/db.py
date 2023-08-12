@@ -8,7 +8,7 @@ import json
 import sqlite3
 import logging
 
-from . import types
+from . import types, interpreter
 
 logging.basicConfig(level=logging.CRITICAL)
 
@@ -19,7 +19,7 @@ class Settings:
     """
 
     _template: dict = {
-        "banner": """background:color("#fff");pfp:true;pfp_location:[center, 50];pfp_border_color:color("#fff");pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
+        "banner": """background:#fff;pfp:true;pfp_location:[center,50];pfp_border_color:#fff;pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
     }
 
     connection = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
@@ -35,6 +35,7 @@ class Settings:
         self._create_if_not_exists()
 
     def get(self) -> dict: 
+        """Returns current settings from a specific guild in a json format as a dictionary"""
         logging.debug(f"Getting Guild: {self.guild_id}")
         if not self._table_exists():
             logging.debug("Guild Doesnt exist")
@@ -70,9 +71,13 @@ class Settings:
 
         if not self._table_exists():
             logging.error(f"During Update: {self.guild_id} table doesn't exist... File corruption?")
-            return
+            return 
         
-        # Verify if the new settings are vailid
+        # Get the current settings
+        _current_settings = self.get()
+        
+        # Convert the new settings to a viable format, replacing inputted values as needed  
+        _new_config = interpreter.ConfigInterperter(_new_settings)
 
         # Update the settings in the current database
 

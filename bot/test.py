@@ -6,4 +6,5 @@ sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 
 from shared import db, interpreter
 
-print(interpreter.ConfigInterperter(db.Settings("0").get()["banner"]))
+v = interpreter.ConfigInterperter("pfp:true;pfp_border_color:#f00;").cache_results()
+print(v)
