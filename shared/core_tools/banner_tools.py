@@ -25,12 +25,11 @@ class Banner:
 
     def __init__(self, member: Member = None):
         self.member = member
-        self._construct_image()    
     
-    def _construct_image(self):
+    def _construct_image(self, color: str):
         """Constructs a basic image template and saves to self.image"""
 
-        self.image = Image.new("RGBA", (1100, 500), "#121218")     
+        self.image = Image.new("RGBA", (1100, 500),color)     
 
     
     def _construct_text(self, text: str, font: FreeTypeFont, position: List[int], color = "#fff"):
@@ -107,13 +106,18 @@ class UserBanner(Banner):
         self.event = event
         self.config: interpreter.ConfigInterperter = interpreter.ConfigInterperter(db.Settings(str(member.guild.id)).get()["banner"])
         try:
+            self._apply_background()
             self._apply_pfp()
             self._apply_message()
             self._apply_secondary_message()
             self._apply_username()
             self._apply_server_count()
         except Exception as e:
-            traceback.print_exception(e)           
+            traceback.print_exception(e)       
+
+    def _apply_background(self):
+        """Applies a background color as well as constructs the actual image"""
+        self._construct_image(color=self.config.background)
 
     def _apply_pfp(self):
         """Applies a users profile picture by url"""

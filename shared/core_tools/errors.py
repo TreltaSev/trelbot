@@ -45,12 +45,16 @@ class BaseBannerException(Exception):
 class BannerMissingPermissions(BaseBannerException):
     """Raised when a user attempts to modify a banner and that user is missing credentials such as administrator"""
     def __init__(self, permission: str):
-        super().__init__(f"You seem to be missing the permission: {permission!r}")
+        super().__init__(f"You seem to be missing the permission: {permission!r}", name="BannerParseError")
 
 class BannerParseError(BaseBannerException):
     """Raised when parsing a key or value while editing banners and its wrong in some way and it fails to parse."""
     def __init__(self, parse_key: str, attempted_value: str, estimated_failed_reason: str, possible_solution: typing.Optional[str] = None):
+        self.key: str = parse_key
+        self.value: str = attempted_value
+        self.failed_reason: str = estimated_failed_reason
+        self.solution: str = possible_solution 
         _message: str = f"Failed to set value for `{parse_key!r}` to `{attempted_value}` because `{estimated_failed_reason}`"
         if possible_solution is not None:
             _message += f", {possible_solution}"            
-        super().__init__(_message)
+        super().__init__(_message, name="BannerParseError")

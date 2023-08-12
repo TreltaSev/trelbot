@@ -20,7 +20,7 @@ class Settings:
     """
 
     _template: dict = {
-        "banner": """background:#fff;pfp:true;pfp_location:[center,50];pfp_border_color:#fff;pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
+        "banner": """background:#181818;pfp:true;pfp_location:[center,50];pfp_border_color:#fff;pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
     }
 
     connection = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")

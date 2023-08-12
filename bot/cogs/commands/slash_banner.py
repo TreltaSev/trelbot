@@ -25,8 +25,11 @@ class slash_banner(commands.GroupCog, name="banner"):
         if interaction.user.id not in client.Developers:
             await interaction.response.send_message(content="Nuh uh, not a dev :)", ephemeral=True)
             return
-        
-        await interaction.response.send_message(file=banner_tools.UserBanner("join", interaction.user)._get_file(), ephemeral=True)
+        try:
+            await interaction.response.send_message(file=banner_tools.UserBanner("join", interaction.user)._get_file(), ephemeral=True)
+        except Exception as e:
+            tb = traceback.format_exc()
+            print(tb)
         return
     
     

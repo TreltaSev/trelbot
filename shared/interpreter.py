@@ -6,6 +6,7 @@ Contains Config Interpreter
 """
 import re
 import typing
+from shared.core_tools import errors
 
 class ConfigInterperter:
     """Converts a css like string base into a class object in python"""
@@ -28,6 +29,7 @@ class ConfigInterperter:
         }
         self.config = config
 
+        self.background: str = "#fff"
         self.pfp: bool = True
         self.pfp_location: list = ["center", "50"]
         self.pfp_border_color: str = "#fff"
@@ -42,7 +44,7 @@ class ConfigInterperter:
         self.display_member_count: bool = True
 
         self.parse_errors: list = []
-        
+
         self.convert(config)
 
     def convert(self, config: typing.Union[None, str] = None):
@@ -51,8 +53,6 @@ class ConfigInterperter:
         if isinstance(config, type(None)):
             config = self.config
         
-        print(config, type(config))
-
         for _section in config.split(";"):
             if len(_section.split(":")) == 1:
                 continue
@@ -60,6 +60,8 @@ class ConfigInterperter:
             key, value = _section.split(":")
             if self.actions.__contains__(key):
                 self.actions.get(key)(key, value)
+            else:
+                self.parse_errors.append(errors.BannerParseError(key, value, "Key Not Found", f"Check to make sure `{key}` is spelt correctly."))
         
         return self
 
@@ -86,11 +88,14 @@ class ConfigInterperter:
     
         return _cache_out
     
+
     def _parse_background(self, _, value: str):
         """Parse background as color or image"""
         match = self._match_color(value)
+
         if match[0] == True:
-            self.pfp_border_color = match[1]
+            self.background = match[1]
+
         return
 
     def _parse_pfp(self, _k, value):
