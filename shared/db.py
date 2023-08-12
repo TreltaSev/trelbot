@@ -67,9 +67,17 @@ class Settings:
 
     def update(self, _new_settings: str) -> None:
         """Updates a specific guilds settings for banners"""
-        
+
         if not self._table_exists():
             logging.error(f"During Update: {self.guild_id} table doesn't exist... File corruption?")
+            return
+        
+        # Verify if the new settings are vailid
+
+        # Update the settings in the current database
+
+        # Commit changes
+        
 
 
 
