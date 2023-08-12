@@ -7,6 +7,7 @@ import os
 import json
 import sqlite3
 import logging
+import typing
 
 from . import types, interpreter
 
@@ -24,11 +25,11 @@ class Settings:
 
     connection = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
     
-    def __init__(self, guild_id: str):
-        self.guild_id = guild_id
+    def __init__(self, guild_id: typing.Union[str, int]):        
+        self.guild_id = str(guild_id)
         self.cursor: sqlite3.Cursor = Settings.connection.cursor()
 
-        if not isinstance(guild_id, types.GuildID):
+        if not isinstance(self.guild_id, types.GuildID):
             logging.error("Not a valid guild id")
             return
 
@@ -43,7 +44,7 @@ class Settings:
         
         self.cursor.execute(f"SELECT data FROM '{self.guild_id}'")
         return json.loads(self.cursor.fetchone()[0])
-        
+
 
     def _table_exists(self) -> bool:
         """Returns a bool representing if self.guild_id exists inside of the database"""
@@ -72,16 +73,20 @@ class Settings:
         if not self._table_exists():
             logging.error(f"During Update: {self.guild_id} table doesn't exist... File corruption?")
             return 
-        
+
         # Get the current settings
         _current_settings = self.get()
-        
-        # Convert the new settings to a viable format, replacing inputted values as needed  
-        _new_config = interpreter.ConfigInterperter(_new_settings)
+
+        # Convert the new settings to a viable format, replacing inputted values as needed and Overwrite current data        
+        _current_settings["banner"] = interpreter.ConfigInterperter(_current_settings["banner"]).convert(_new_settings).cache_results()
 
         # Update the settings in the current database
+        self.cursor.execute(f"UPDATE '{self.guild_id}' SET data = ?", (json.dumps(_current_settings),))
 
         # Commit changes
+        Settings.connection.commit()
+
+
         
 
 

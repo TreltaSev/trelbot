@@ -5,6 +5,7 @@ shared.interpreter
 Contains Config Interpreter
 """
 import re
+import typing
 
 class ConfigInterperter:
     """Converts a css like string base into a class object in python"""
@@ -28,7 +29,7 @@ class ConfigInterperter:
         self.config = config
 
         self.pfp: bool = True
-        self.pfp_location: list = ["center", "center"]
+        self.pfp_location: list = ["center", "50"]
         self.pfp_border_color: str = "#fff"
         self.pfp_border_width: int = 20
         self.join_main_text: str = "Welcome Main Text"
@@ -40,18 +41,27 @@ class ConfigInterperter:
         self.display_name: bool = True
         self.display_member_count: bool = True
 
+        self.parse_errors: list = []
+        
+        self.convert(config)
 
-        self.convert()
-
-    def convert(self):
+    def convert(self, config: typing.Union[None, str] = None):
         """Convert banner settings format into a dictionary for easy use"""
-        for _section in self.config.split(";"):
+
+        if isinstance(config, type(None)):
+            config = self.config
+        
+        print(config, type(config))
+
+        for _section in config.split(";"):
             if len(_section.split(":")) == 1:
                 continue
 
             key, value = _section.split(":")
             if self.actions.__contains__(key):
                 self.actions.get(key)(key, value)
+        
+        return self
 
     def cache_results(self):
         """Convert the parsed settings into a base css format"""
