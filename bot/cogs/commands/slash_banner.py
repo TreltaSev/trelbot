@@ -8,7 +8,7 @@ Banner Command Testing
 import discord
 from discord.ext import commands
 from exts.constants.cogs import Setup
-from exts.constants import banner_tools
+from shared.core_tools import banner_tools
 from exts.constants import client
 
 class slash_banner(commands.Cog):

@@ -9,7 +9,7 @@ Displays a custom "banner" on member leave
 import discord
 from discord.ext import commands
 from exts.constants.cogs import Setup
-from exts.constants import banner_tools
+from shared.core_tools import banner_tools
 
 class on_member_remove(commands.Cog):
     

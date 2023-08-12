@@ -8,7 +8,7 @@ Displays a custom "banner" on member join
 import discord
 from discord.ext import commands
 from exts.constants.cogs import Setup
-from exts.constants import banner_tools
+from shared.core_tools import banner_tools
 
 class on_member_join(commands.Cog):
     

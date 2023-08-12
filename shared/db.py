@@ -65,6 +65,12 @@ class Settings:
 
         logging.debug(f"Created new table: {self.guild_id}")
 
+    def update(self, _new_settings: str) -> None:
+        """Updates a specific guilds settings for banners"""
+        
+        if not self._table_exists():
+            logging.error(f"During Update: {self.guild_id} table doesn't exist... File corruption?")
+
 
 
         
