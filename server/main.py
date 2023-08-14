@@ -31,8 +31,7 @@ _UvicornConfig = {
 def run():    
     BlueprintsManager.apply_app(_Application)
     for blueprint in BlueprintsManager.find_all(f"{os.getcwd()}/blueprints", ".py"):
-        BlueprintsManager.load(blueprint)
-    
+        BlueprintsManager.load(blueprint)    
     uvicorn.run(_Application, **_UvicornConfig)
 
 
