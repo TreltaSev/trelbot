@@ -168,4 +168,5 @@ class Session:
     @classmethod
     def remove(cls, session_id: str) -> None:
         """Removes a session from the sessions dictionary"""
-        pass
+        if session_id in cls.sessions:
+            del cls.sessions[session_id]
