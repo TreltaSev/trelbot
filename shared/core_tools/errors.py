@@ -5,6 +5,14 @@ shared.core_tools.errors
 Holds errors
 """
 import typing
+import json
+
+class Codes:
+    Fatal: int      = 1000
+    Caution: int    = 1020
+    Dafaq: int      = 9999
+    Ignoreable: int = 5000
+
 
 
 """|server/blueprints|
@@ -58,3 +66,22 @@ class BannerParseError(BaseBannerException):
         if possible_solution is not None:
             _message += f", {possible_solution}"            
         super().__init__(_message, name="BannerParseError")
+
+"""|server/route|
+Errors inside server routes, contains a json response as a string and dictionary
+"""
+class BaseServerRouteException(Exception):
+    """Server Route Exception to be inherited from"""
+    def __init__(self, message: typing.Optional[str] = None, *args: typing.Any, code: typing.Union[str, int]) -> None:
+        self.code: typing.Union[str, int] = code
+        if isinstance(message, type(None)):
+            message = f"Backend Error: {message!r}"
+
+        self.json = {"code": code, "message": message}
+        self.jsonstr = json.dumps(self.json)
+        super().__init__(message, *args)
+
+class ServerRouteRequestNotJson(BaseServerRouteException):
+    """Raised when a server route which requires a json request is not json"""
+    def __init__(self) -> None:
+        super().__init__("Backend Request is not valid Json", code=Codes.Fatal)

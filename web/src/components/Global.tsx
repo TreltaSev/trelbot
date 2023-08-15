@@ -5,6 +5,18 @@
  */
 import React, {ReactNode} from "react"
 import styling from "@assets/styling.module.css"
+
+export const JsonForm = (method: string, object: Object): RequestInit => {
+    return {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(object),
+        mode: "cors"
+    }
+}
+
 // Logo with background and circle not visible
 export const PartialLogo = () => {
     return (

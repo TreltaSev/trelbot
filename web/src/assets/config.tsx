@@ -10,14 +10,14 @@ interface configInterface {
     domain: string;
     backendPort: number,
     backendSecure: boolean,
-    backendUrl: string
+    backendUrl: string,
 }
 
-const local: boolean       = true
-const production: boolean  = false
-const domain: string       = "trelbot.xyz"
-const backendPort: number  = 1090
-const backendSecure: false = false
+const local: boolean         = true
+const production: boolean    = false
+const domain: string         = "trelbot.xyz"
+const backendPort: number    = 1090
+const backendSecure: boolean = false
 
 const config: configInterface = {
     local: local,
@@ -25,7 +25,7 @@ const config: configInterface = {
     domain: domain,
     backendPort: backendPort,
     backendSecure: true,
-    backendUrl: `${backendSecure ? "https" : "http"}${local ? "locahost" : domain}:${backendPort}`
+    backendUrl: `${backendSecure ? "https" : "http"}://api.${local ? "localhost" : domain}:${backendPort}`,
 }
 
 export default config

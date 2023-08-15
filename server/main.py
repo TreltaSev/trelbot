@@ -18,15 +18,17 @@ _Application.config["SERVER_NAME"] = "localhost:1090"
 # Variables
 _LocalIp = "localhost"
 _LocalPort = 1090
+_Secure: bool = False
 _SSLKey = "../.cert/server.key"
 _SSLCert = "../.cert/server.cert"
 _UvicornConfig = {
     "host": _LocalIp,
-    "port": _LocalPort,
-    "ssl_keyfile": _SSLKey,
-    "ssl_certfile": _SSLCert,
+    "port": _LocalPort,    
     "log_level": "info"
 }
+if _Secure:
+    _UvicornConfig["ssl_keyfile"] = _SSLKey
+    _UvicornConfig["ssl_certfile"] = _SSLCert
 
 def run():    
     BlueprintsManager.apply_app(_Application)

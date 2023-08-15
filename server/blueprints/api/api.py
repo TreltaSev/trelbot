@@ -1,14 +1,26 @@
 import quart
-from . import Connection
+import json
+from quart_cors import cors
+from . import JsonConnection
+from shared.core_tools import errors
+
 config = {
     "ignore": False
 }
 
-blueprint = quart.Blueprint("api:test", __name__, subdomain="cache")
+blueprint = quart.Blueprint("api:cache", __name__, subdomain="api")
+cors(blueprint, allow_origin="http://localhost:3000")
 
-@blueprint.websocket("/")
+@blueprint.route("/discord-callback", methods=["POST"])
 async def root():
-    pass
+    print(quart.request.args.get("code"))
+    try:
+        _https_connection = JsonConnection(quart.request)
+        await _https_connection.check_validated()
+    except Exception as error:
+        return error.jsonstr
+    
+    return quart.json.jsonify({"pog": True})
 
 # @blueprint.route("/")
 # async def root():

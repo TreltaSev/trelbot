@@ -3,9 +3,11 @@
  * Description: Its a login page that always displays if the user isn't logged in.
  */
 import React, { useEffect } from "react";
-import { DefaultTemplate, PartialLogo, DiscordLogo, Text } from "@components/Global";
+import { DefaultTemplate, PartialLogo, DiscordLogo, Text, JsonForm } from "@components/Global";
 import styling from "@assets/styling.module.css"
 import custom from "@assets/custom.module.css"
+import config from "@assets/config";
+
 
 const DiscordLoginButton = () => {
     const redirectLogin = () => {
