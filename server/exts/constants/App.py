@@ -11,6 +11,7 @@ import typing
 import importlib.util
 import importlib.machinery
 from shared.core_tools import errors
+import secrets
 
 class App(quart.Quart):
 
@@ -142,7 +143,25 @@ class BlueprintsManager:
         return True
 
 
-        
-def foo():
-    class_object = MyClass() # MyClass checks if a value is true, if it is stop the code
-    print("I wont display") # Shouldn't display because value is true.
+class Session:
+    sessions: dict = {}
+
+    @classmethod
+    def add(secret_code) -> str:
+        """Adds a secret code to the session cache and returns the session id that was just created."""
+        pass
+
+    @classmethod
+    def replace(session_id: str, new_access_token: str) -> None:
+        """Replaces the access token of a session with a new one"""
+        pass
+
+    @classmethod
+    def expired(access_token: str) -> bool:
+        """Checks if a access token is expired returns a boolean"""
+        pass
+
+    @classmethod
+    def remove(session_id: str) -> None:
+        """Removes a session from the sessions dictionary"""
+        pass
