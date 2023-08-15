@@ -157,7 +157,8 @@ class Session:
     @classmethod
     def replace(cls, session_id: str, new_access_token: str) -> None:
         """Replaces the access token of a session with a new one"""
-        pass
+        cls.sessions[session_id] = new_access_token
+        return None
 
     @classmethod
     def expired(cls, access_token: str) -> bool:
