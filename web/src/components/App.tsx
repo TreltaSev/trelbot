@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./login";
+import Login from "@components/login";
 
 /* Main router that controls everything being displayed depending on the route. */
 const App: React.FC = () => {
