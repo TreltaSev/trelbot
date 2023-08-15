@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "@components/login";
+import Login from "@routes/login";
+import DiscordCallback from "@routes/discord-callback";
 
 /* Main router that controls everything being displayed depending on the route. */
 const App: React.FC = () => {
@@ -9,6 +10,7 @@ const App: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/discord-callback" element={<DiscordCallback/>}/>
                 </Routes>
             </Router>
         </>

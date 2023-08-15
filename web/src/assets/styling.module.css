@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+
+:root {
+    --dark: #1A181B;    
+    --main: #8C52FF;    
+    --accent: #FDEAFE;
+    --darkrgb: 26, 24, 27;
+    --mainrgb: 140, 82, 255;
+    --accentrgb: 253, 234, 254;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+/* |Color Types|
+incase using css variables isn't viable, there are also classes.
+*/
+.dark {
+    background-color: var(--dark);
+}
+
+.main {
+    background-color: var(--main);
+}
+
+.accent {
+    background-color: var(--accent);
+}
+
+/* |Flex Types|
+Holds all the different types of flex types to make it easier
+to apply flex styling to different components.
+*/
+.flex {
+    display: flex;
+}
+
+.flex_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex_col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* |Border Box|
+Borderbox making sketches in figma actually accurate without having to rely
+on modifing margin.
+*/
+.border_box {
+    box-sizing: border-box;
+}
+
+/* |Text Types|
+Different text types depending on what is needed to do
+Normally not assigned directly but through a template.
+*/
+.text_large {
+    font-family: "Lato";
+    font-size: 1em;
+}
+
+.text_medium {
+    font-family: "Lato";
+    font-size: 0.625em;
+}
+
+.text_small {
+    font-size: "Lato";
+    font-size: 0.5em;
+}
+
+/* |Fill Types|
+Different fill types to accomplish different things
+*/
+.fill_all {
+    width: 100%;
+    height: 100%;
+}
+
+.fill_width {
+    width: 100%;
+}
+
+.fill_height {
+    height: 100%;
+}
+
+/* |Align Types|
+Different align types such as align center, start, end, and stretch
+*/
+.align_items_start {
+    align-items: start;
+}
+
+.align_items_center {
+    align-items: center;
+}
+
+.align_items_end {
+    align-items: end;
+}
+
+.align_self_stretch {
+    align-self: stretch;
+}
+
+/* |Justify Types|
+Different justify types such as justify content center
+*/
+.justify_content_start {
+    justify-content: start;
+}
+
+.justify_content_center {
+    justify-content: center;
+}
+
+.justify_content_end {
+    justify-content: end;
+}
+
+.justify_self_stretch {
+    justify-self: stretch;
+}
+
+.justify_self_end {
+    justify-self: end;
+}

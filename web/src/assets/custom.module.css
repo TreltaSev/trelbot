@@ -1,0 +1,14 @@
+/* |Discord Login Button|
+The cuustom styling for the Login with discord button
+this adds some hover effect.
+*/
+.discordlogin {
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    transition-timing-function: cubic-bezier(.11,.07,.04,.98);
+    background-color: rgba(var(--mainrgb), 1.0);
+}
+
+.discordlogin:hover {
+    background-color: rgba(var(--mainrgb), 0.5);
+}

@@ -1,5 +1,5 @@
+const path = require("path")
 const prod = process.env.NODE_ENV === 'production';
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
@@ -8,7 +8,9 @@ module.exports = {
     mode: prod ? "production": "development",
     entry: "./src/index.tsx",
     output: {
-        path: __dirname + "/dist/"
+        path: path.resolve(__dirname, "dist"),
+        filename: 'index_bundle.js',
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -22,7 +24,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                use: ["style-loader", "css-loader"],
             }
         ]
     },
@@ -34,7 +36,10 @@ module.exports = {
       new MiniCssExtractPlugin(),
     ],
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
+        extensions: ['.ts', '.tsx', '.js', '.json', '.css'],
         plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })],
     },
+    devServer: {
+        historyApiFallback: true
+    }
 }
