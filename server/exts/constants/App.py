@@ -147,21 +147,24 @@ class Session:
     sessions: dict = {}
 
     @classmethod
-    def add(secret_code) -> str:
+    def add(cls, secret_code) -> str:
         """Adds a secret code to the session cache and returns the session id that was just created."""
-        pass
+        session_id: str = secrets.token_hex(64)
+        cls.sessions[session_id] = secret_code
+        return session_id
+        
 
     @classmethod
-    def replace(session_id: str, new_access_token: str) -> None:
+    def replace(cls, session_id: str, new_access_token: str) -> None:
         """Replaces the access token of a session with a new one"""
         pass
 
     @classmethod
-    def expired(access_token: str) -> bool:
+    def expired(cls, access_token: str) -> bool:
         """Checks if a access token is expired returns a boolean"""
         pass
 
     @classmethod
-    def remove(session_id: str) -> None:
+    def remove(cls, session_id: str) -> None:
         """Removes a session from the sessions dictionary"""
         pass
