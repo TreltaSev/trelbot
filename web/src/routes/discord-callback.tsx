@@ -9,11 +9,12 @@ import config from "@assets/config";
 const DiscordCallback: React.FC = () => {
 
     useEffect(() => {
-        fetch(config.backendUrl, JsonForm("post", {})).then(data => data.json()).then(
+        const discord_code: string | null = new URLSearchParams(window.location.search).get("code")
+        fetch(`${config.backendUrl}/discord-callback`, JsonForm("post", {"code": discord_code})).then(data => data.json()).then(
             _d => {console.log(_d)}
         )
         localStorage.setItem("login_refresh?", "true");
-        window.close();        
+        // window.close();        
         
     }, [])
 

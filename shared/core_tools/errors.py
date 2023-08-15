@@ -85,3 +85,8 @@ class ServerRouteRequestNotJson(BaseServerRouteException):
     """Raised when a server route which requires a json request is not json"""
     def __init__(self) -> None:
         super().__init__("Backend Request is not valid Json", code=Codes.Fatal)
+
+class ServerRouteJsonRequestMissingValue(BaseServerRouteException):
+    """Raised whenever a json request doesn't have a value"""
+    def __init__(self, valuename: str) -> None:
+        super().__init__("Missing {valuename} in Request", code=Codes.Fatal)
