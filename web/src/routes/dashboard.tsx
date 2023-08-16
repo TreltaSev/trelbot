@@ -6,6 +6,8 @@
 import React, { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
+type DashType = "selector" | "editor";
+
 const Selector: React.FC = () => {
     return (
         <div>
