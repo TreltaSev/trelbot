@@ -1,8 +1,8 @@
 import quart
-import json
 from quart_cors import cors
 from . import JsonConnection
 from shared.core_tools import errors
+from exts.constants import oauth2
 
 config = {
     "ignore": False
@@ -21,35 +21,12 @@ async def root():
         await _https_connection.checkValidated()
         await _https_connection.checkValue("code")
         await _https_connection.cacheValue("code")
-    except Exception as e:
-        if hasattr(e, "jsonstr"):
-            return e.jsontr
-        return {"code": errors.Codes.Fatal, "message": "Fatal error cause unknown."}
+        access_token: str = oauth2.Oauth2.retrieveAccessToken(code=_https_connection.code)
+        await _https_connection.cacheValue("access_token", access_token)
+    except Exception as error:
+        if hasattr(error, "jsonstr"):
+            return error.jsontr
+        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020)
     
-    
-
-
-    
-    print(_https_connection.code)
-    
-    return quart.json.jsonify({"pog": True})
-
-# @blueprint.route("/")
-# async def root():
-#     _https_connection = Connection(quart.request)
-
-#     if not _https_connection.validated:
-#         return _https_connection.response
-
-#     return _https_connection.response
-
-# @blueprint.route("/read", methods=["POST"])
-# async def read():
-#     """Reads from the cache and returns results"""
-#     _https_connection = Connection(quart.request)
-
-#     if not _https_connection.validated:
-#         return _https_connection.response
-    
-#     print(await _https_connection.client_input)
-#     return "..."
+    session: str = oauth2.Session.add(access_token)    
+    return quart.json.jsonify({"session": session})
