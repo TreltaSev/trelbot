@@ -3,7 +3,7 @@
  * Holds global methods and variables such as svg objects in host for other files
  * to easily access them
  */
-import React, {ReactNode} from "react"
+import React, {ReactNode, useRef, useState} from "react"
 import styling from "@assets/styling.module.css"
 
 export const JsonForm = (method: string, object: Object): RequestInit => {
@@ -111,14 +111,16 @@ interface TextProps {
     size? : number | string;
     color?: string;
     weight?: number | string;
+    opacity?: string;
 }
 
-export const Text: React.FC<TextProps> = ({ children, size, color, weight }) => {
-    size  = size  === undefined ? 16 : size;
-    color = color === undefined ? "#fff" : color;    
-    weight= weight=== undefined ? "400"  : weight;
+export const Text: React.FC<TextProps> = ({ children, size, color, weight, opacity }) => {
+    size    = size    === undefined ? 16 : size;
+    color   = color   === undefined ? "#fff" : color;    
+    weight  = weight  === undefined ? "400"  : weight;
+    opacity = opacity === undefined ? "1" : opacity;
     return (
-        <span style={{fontFamily: "Lato", color: color, fontSize: size, fontWeight: weight}}>{children}</span>
+        <span style={{fontFamily: "Lato", color: color, fontSize: size, fontWeight: weight, opacity: opacity}}>{children}</span>
     )
 }
 
@@ -148,10 +150,22 @@ interface NavTemplateProps {
 }
 
 export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }) => {
+
+    const username: string = "trelta";
+    const discriminator: number = 0;
+
+    const [dropdownToggled, setDropdownToggled] = useState(false);
+    const dropdownRef = useRef(null);
+
+    const DropdownToggle = () => {
+
+    }
+
+
     return (
         <div className={`${styling.flex_col} ${styling.fill_height}`}>
             {/* NavBar */}
-            <div style={{height:80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
+            <div style={{height:80, minHeight: 80, maxHeight: 80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
                 
                 {/* Top Left Corner */}
                 <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
@@ -166,7 +180,13 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
 
                     {/* Username Dropdown */}
                     <div>
-                        <Text>Dope name</Text>
+
+                        {/* Username Group */}
+                        <div className={`${styling.flex_row}`}>
+                            <Text size={14}>{username}</Text>
+                            <Text size={14} opacity="0.5">#{discriminator}</Text>
+                        </div>
+
                     </div>
 
                 </div>
