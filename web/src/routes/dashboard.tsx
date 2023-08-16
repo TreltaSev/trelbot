@@ -3,13 +3,17 @@
  * Description: Dashboard, look in github
  */
 
-import React from "react"
+import React, { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 const Dashboard: React.FC = () => {
 
     let { guildId } = useParams();
-    
+
+    useEffect(() => {
+        console.log(guildId)
+    }, [])
+
     return (
         <div>
             Dashboard
