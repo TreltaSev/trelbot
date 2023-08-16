@@ -4,7 +4,6 @@ Discord bot with a backend server and frontend server for fun games... maybe...
 
 
 ## Plans
-`cache.trelbot.xyz/`
 
 
 >![finished](screenshots/finished.png)<br/>
@@ -15,10 +14,9 @@ Discord bot with a backend server and frontend server for fun games... maybe...
 > Highly customizable banner, (not my problem for now.)<br/>
 > Implement images as backgrounds (noper)<br/>
 > Change the colors of text (somehow didn't add)<br/>
-> A basic frontend website `Make the basic frontend website an advanced one by adding features such as edit settings sign in and out and maybe even games.`<br/>
 ---
 >![working_on_it](screenshots/working_on_it.png)<br/>
-> 
+> A basic frontend website `Make the basic frontend website an advanced one by adding features such as edit settings sign in and out and maybe even games.`<br/>
 ---
 
 
