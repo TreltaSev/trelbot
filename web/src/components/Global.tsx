@@ -110,13 +110,21 @@ interface TextProps {
     children: ReactNode;
     size? : number | string;
     color?: string;
+    weight?: number | string;
 }
 
-export const Text: React.FC<TextProps> = ({ children, size, color }) => {
+export const Text: React.FC<TextProps> = ({ children, size, color, weight }) => {
     size  = size  === undefined ? 16 : size;
     color = color === undefined ? "#fff" : color;    
+    weight= weight=== undefined ? "400"  : weight;
     return (
-        <span style={{fontFamily: "Lato", color: color, fontSize: size}}>{children}</span>
+        <span style={{fontFamily: "Lato", color: color, fontSize: size, fontWeight: weight}}>{children}</span>
+    )
+}
+
+export const Spacer: React.FC = () => {
+    return (
+        <div className={`${styling.fill_width} ${styling.fill_height}`}/>
     )
 }
 
@@ -135,7 +143,7 @@ export const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children, clas
 }
 
 interface NavTemplateProps {
-    children: ReactNode;
+    children?: ReactNode;
     classNames: string;
 }
 
@@ -147,12 +155,22 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
             <div style={{height:80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
                 
                 {/* Top Left Corner */}
-                <div style={{width: 250, padding: "5px 67px 5px 67px"}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center}`}>
-
+                <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+                    <SmallLogo/>
+                    <Text size={30}>Trelbot</Text>
                 </div>
 
-                {/* Username Dropdown */}
-                <div></div>
+                <Spacer/>
+
+                {/* Links */}
+                <div style={{gap: 10, padding: "0px 20px 0px 20px"}} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
+
+                    {/* Username Dropdown */}
+                    <div>
+                        <Text>Dope name</Text>
+                    </div>
+
+                </div>
             </div>
 
             <div className={`${styling.fill_height} ${classNames}`}>
