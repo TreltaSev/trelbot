@@ -29,11 +29,17 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
-            if (localStorage.getItem("login_refresh?") === "true") {
-                localStorage.removeItem("login_refresh?")
-                location.reload()                
+            const login_action: string | null = localStorage.getItem("login_action?")
+            if ( login_action === "refresh" ) {
+                localStorage.removeItem("login_action?")
                 clearInterval(refreshInterval);
+                location.href = "/dashboard"                
             }
+
+            if ( login_action === "error") {
+                // Display an error
+            }
+
         }, 500)
     }, [])
 

@@ -5,16 +5,24 @@
 import React, { useEffect } from "react";
 import { JsonForm } from "@components/Global";
 import config from "@assets/config";
+import Cookies from "js-cookie";
 
 const DiscordCallback: React.FC = () => {
 
     useEffect(() => {
         const discord_code: string | null = new URLSearchParams(window.location.search).get("code")
         fetch(`${config.backendUrl}/discord-callback`, JsonForm("post", {"code": discord_code})).then(data => data.json()).then(
-            _d => {console.log(_d)}
+            _d => {
+                if ("session" in _d) {
+                    Cookies.set("session", _d["session"])
+                    localStorage.setItem("login_action?", "refresh");
+                } else {
+                    localStorage.setItem("login_action?", "error");
+                }
+                window.close();
+            }
         )
-        localStorage.setItem("login_refresh?", "true");
-        // window.close();        
+  
         
     }, [])
 

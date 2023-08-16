@@ -11,10 +11,12 @@
   "author": "Trelta",
   "license": "MIT",
   "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
+    "js-cookie": "^3.0.5",
     "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
@@ -25,7 +27,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0"
