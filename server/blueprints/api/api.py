@@ -16,17 +16,16 @@ async def root():
    
     _https_connection = JsonConnection(quart.request)
 
-    # Checks if the request is json
     try:
         await _https_connection.checkValidated()
         await _https_connection.checkValue("code")
         await _https_connection.cacheValue("code")
-        access_token: str = oauth2.Oauth2.retrieveAccessToken(code=_https_connection.code)
+        access_token, expires_in = oauth2.Oauth2.retrieveAccessToken(code=_https_connection.code)
         await _https_connection.cacheValue("access_token", access_token)
     except Exception as error:
         if hasattr(error, "jsonstr"):
-            return error.jsontr
+            return error.jsonstr
         return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020)
     
-    session: str = oauth2.Session.add(access_token)    
-    return quart.json.jsonify({"session": session})
+    session: str = oauth2.Session.add(access_token, expires_in)    
+    return quart.json.jsonify({"session": session, "expires_in": expires_in})

@@ -11,17 +11,17 @@ class Session:
     sessions: dict = {}
 
     @classmethod
-    def add(cls, secret_code) -> str:
+    def add(cls, discord_code, expires_in: int) -> str:
         """Adds a secret code to the session cache and returns the session id that was just created."""
         session_id: str = secrets.token_hex(64)
-        cls.sessions[session_id] = secret_code
+        cls.sessions[session_id] = {"access_token": discord_code, "expires_in": expires_in}
         return session_id
         
 
     @classmethod
-    def replace(cls, session_id: str, new_access_token: str) -> None:
+    def replace(cls, session_id: str, access_token: str, expires_in: int) -> None:
         """Replaces the access token of a session with a new one"""
-        cls.sessions[session_id] = new_access_token
+        cls.sessions[session_id] = {"access_token": access_token, "expires_in": expires_in}
         return None
 
     @classmethod
@@ -58,4 +58,4 @@ class Oauth2:
         if "error" in response:
             raise errors.BaseServerRouteException(f"Error while getting accesstoken: {response['error_description']}", code=1020)
 
-        return response["access_token"]
+        return [response["access_token"], response["expires_in"]]

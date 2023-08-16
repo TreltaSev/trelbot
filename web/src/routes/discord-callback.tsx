@@ -14,7 +14,7 @@ const DiscordCallback: React.FC = () => {
         fetch(`${config.backendUrl}/discord-callback`, JsonForm("post", {"code": discord_code})).then(data => data.json()).then(
             _d => {
                 if ("session" in _d) {
-                    Cookies.set("session", _d["session"])
+                    Cookies.set("session", _d["session"], {expires: _d["expires_in"]})
                     localStorage.setItem("login_action?", "refresh");
                 } else {
                     localStorage.setItem("login_action?", "error");
