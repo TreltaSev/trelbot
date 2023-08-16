@@ -30,15 +30,13 @@ const Dashboard: React.FC = () => {
 
     const DashType: DashType = guildId === undefined ? "selector" : "editor";
 
-    useEffect(() => {
-        console.log(guildId)
-    }, [])
+    switch(DashType) {
+        case "selector":
+            return <Selector/>
 
-    return (
-        <div>
-            Dashboard
-        </div>
-    )
+        case "editor":
+            return <Editor/>
+    }
 }
 
 export default Dashboard
