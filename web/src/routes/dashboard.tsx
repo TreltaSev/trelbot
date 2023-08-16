@@ -3,24 +3,30 @@
  * Description: Dashboard, look in github
  */
 
+import { NavTemplate } from "@components/Global";
 import React, { useEffect } from "react"
 import { useParams } from "react-router-dom"
+import styling from "@assets/styling.module.css"
 
 type DashType = "selector" | "editor";
 
 const Selector: React.FC = () => {
     return (
-        <div>
-            Selector
-        </div>
+        <NavTemplate classNames={`${styling.dark}`}>
+            <div>
+                Selector
+            </div>
+        </NavTemplate>
     )
 }
 
 const Editor: React.FC = () => {
     return (
-        <div>
-            Editor
-        </div>
+        <NavTemplate classNames={`${styling.dark}`}>
+            <div>
+                Editor
+            </div>
+        </NavTemplate>
     )
 }
 

@@ -45,7 +45,7 @@ export const PartialLogo = () => {
 // Logo smol :)
 export const SmallLogo = () => {
     return (
-        <>
+        <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
               <g clip-path="url(#clip0_43_94)">
                 <mask id="mask0_43_94" style={{maskType: "luminance"}} maskUnits="userSpaceOnUse" x="0" y="0" width="41" height="40">
@@ -78,7 +78,7 @@ export const SmallLogo = () => {
                 </clipPath>
               </defs>
             </svg>
-        </>
+        </div>
     )
 }
 
@@ -149,13 +149,12 @@ interface NavTemplateProps {
 
 export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }) => {
     return (
-        <div>
-            
+        <div className={`${styling.flex_col} ${styling.fill_height}`}>
             {/* NavBar */}
             <div style={{height:80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
                 
                 {/* Top Left Corner */}
-                <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+                <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
                     <SmallLogo/>
                     <Text size={30}>Trelbot</Text>
                 </div>
