@@ -142,31 +142,3 @@ class BlueprintsManager:
         cls.load_from_spec(spec, name)
         return True
 
-
-class Session:
-    sessions: dict = {}
-
-    @classmethod
-    def add(cls, secret_code) -> str:
-        """Adds a secret code to the session cache and returns the session id that was just created."""
-        session_id: str = secrets.token_hex(64)
-        cls.sessions[session_id] = secret_code
-        return session_id
-        
-
-    @classmethod
-    def replace(cls, session_id: str, new_access_token: str) -> None:
-        """Replaces the access token of a session with a new one"""
-        cls.sessions[session_id] = new_access_token
-        return None
-
-    @classmethod
-    def expired(cls, access_token: str) -> bool:
-        """Checks if a access token is expired returns a boolean"""
-        pass
-
-    @classmethod
-    def remove(cls, session_id: str) -> None:
-        """Removes a session from the sessions dictionary"""
-        if session_id in cls.sessions:
-            del cls.sessions[session_id]
