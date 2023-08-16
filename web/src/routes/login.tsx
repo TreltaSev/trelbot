@@ -6,7 +6,6 @@ import React, { useEffect } from "react";
 import { DefaultTemplate, PartialLogo, DiscordLogo, Text, JsonForm } from "@components/Global";
 import styling from "@assets/styling.module.css"
 import custom from "@assets/custom.module.css"
-import config from "@assets/config";
 
 
 const DiscordLoginButton = () => {
