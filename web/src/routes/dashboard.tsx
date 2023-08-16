@@ -14,6 +14,14 @@ const Selector: React.FC = () => {
     )
 }
 
+const Editor: React.FC = () => {
+    return (
+        <div>
+            Editor
+        </div>
+    )
+}
+
 const Dashboard: React.FC = () => {
 
     let { guildId } = useParams();
