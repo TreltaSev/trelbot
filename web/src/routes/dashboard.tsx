@@ -6,6 +6,14 @@
 import React, { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
+const Selector: React.FC = () => {
+    return (
+        <div>
+            Selector
+        </div>
+    )
+}
+
 const Dashboard: React.FC = () => {
 
     let { guildId } = useParams();
