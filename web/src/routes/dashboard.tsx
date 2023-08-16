@@ -28,6 +28,8 @@ const Dashboard: React.FC = () => {
 
     let { guildId } = useParams();
 
+    const DashType: DashType = guildId === undefined ? "selector" : "editor";
+
     useEffect(() => {
         console.log(guildId)
     }, [])
