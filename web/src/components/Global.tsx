@@ -93,3 +93,31 @@ export const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children, clas
         </div>
     )
 }
+
+interface NavTemplateProps {
+    children: ReactNode;
+    classNames: string;
+}
+
+export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }) => {
+    return (
+        <div>
+            
+            {/* NavBar */}
+            <div style={{height:80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
+                
+                {/* Top Left Corner */}
+                <div style={{width: 250, padding: "5px 67px 5px 67px"}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center}`}>
+                    
+                </div>
+
+                {/* Username Dropdown */}
+                <div></div>
+            </div>
+
+            <div className={`${styling.fill_height} ${classNames}`}>
+                {children}
+            </div>
+        </div>
+    )
+}
