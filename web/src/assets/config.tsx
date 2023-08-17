@@ -29,7 +29,7 @@ const config: configInterface = {
     domain: domain,
     backendPort: backendPort,
     backendSecure: true,
-    backendUrl: `${backendSecure ? "https" : "http"}://api.${local ? "localhost" : domain}:${backendPort}`,
+    backendUrl: `${backendSecure ? "https" : "http"}://${local ? "localhost" : domain}:${backendPort}/api`,
 }
 
 export default config

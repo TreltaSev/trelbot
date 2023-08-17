@@ -267,6 +267,10 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
         let session = Cookies.get("session")
         if (session === undefined) {
             session = "none"
+            localStorage.setItem("login_action?", "error")
+            localStorage.setItem("login_error_message?", "hahah fuckeroo, not logged in :)")
+            localStorage.setItem("login_error_code?", "1020")
+            window.location.href = "/login"
         }
 
         fetch(`${config.backendUrl}/@me`, {method: "get", headers: {"Session": session}}).then((_d) => _d.json()).then((data) => {

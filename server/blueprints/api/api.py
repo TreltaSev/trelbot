@@ -9,10 +9,10 @@ config = {
     "ignore": False
 }
 
-blueprint = quart.Blueprint("api:cache", __name__, subdomain="api")
+blueprint = quart.Blueprint("api:cache", __name__)
 cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True)
 
-@blueprint.route("/discord-callback", methods=["POST"])
+@blueprint.route("/api/discord-callback", methods=["POST"])
 async def root():    
    
     _https_connection = JsonConnection(quart.request)
@@ -32,7 +32,7 @@ async def root():
     return quart.json.jsonify({"session": session, "expires_in": expires_in})
 
 
-@blueprint.route("/@me")
+@blueprint.route("/api/@me", methods=["GET"])
 async def me():
 
     try:
