@@ -2,7 +2,7 @@
  * Path: www.local.xyz/login
  * Description: Its a login page that always displays if the user isn't logged in.
  */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DefaultTemplate, PartialLogo, DiscordLogo, Text } from "@components/Global";
 import styling from "@assets/styling.module.css"
 import custom from "@assets/custom.module.css"
@@ -24,7 +24,25 @@ const DiscordLoginButton = () => {
     )
 }
 
+type errorTypes = {
+    active: boolean;
+    message?: string | null;
+    code?: string | null;
+}
+
+const Error: React.FC<errorTypes> = ({active, message, code}) => {
+    return (
+        <div style={{maxWidth: 200, minWidth: 100, padding: 10, position: "absolute", bottom: 50, right: 50}} className={`${styling.flex_col} ${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center}`}>
+            <div style={{borderBottom: "1px solid rgba(255,255,255,0.5)", padding: "2px 0px"}} className={`${styling.flex_row} ${styling.align_items_start} ${styling.fill_width}`}>
+                <Text size={10}>Notice</Text>
+            </div>
+            <Text size={10} opacity="0.5">{message} #{code}</Text>
+        </div>
+    )
+}
+
 const Login: React.FC = () => {
+    const [error, setError] = useState<errorTypes>({active: false})
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
@@ -37,6 +55,19 @@ const Login: React.FC = () => {
 
             if ( login_action === "error") {
                 // Display an error
+                const _errormessage = localStorage.getItem("login_error_message?")
+                const _errorcode = localStorage.getItem("login_error_code?")
+                
+                setError({active: true, message: _errormessage, code: _errorcode})
+                const _timeout = setTimeout(() => {
+                    setError({active: false})
+                    clearTimeout(_timeout)
+                }, 50*1000)
+
+                // Clear localstore of errors
+                localStorage.removeItem("login_action?")
+                localStorage.removeItem("login_error_message?")
+                localStorage.removeItem("login_error_code?")
             }
 
         }, 500)
@@ -57,6 +88,11 @@ const Login: React.FC = () => {
                 {/* Login Button */}
                 <DiscordLoginButton/> 
             </div>           
+
+            {
+                error.active === false ? <></> 
+                : <Error active={true} message={error.message} code={error.code}/>
+            }
         </DefaultTemplate>
     )
 }

@@ -26,7 +26,7 @@ export type CommonMeErrors = "SessionInvalid" | "FatalBackendError";
 export type me = {
     attempted: boolean;
     error?: CommonMeErrors;
-    user: user;
+    user?: user;
     guilds?: Array<guild>;
 }
 
@@ -223,6 +223,23 @@ export const useMe = () => {
     return context;
 }
 
+
+interface UsernameGroupProps {
+    me: me
+}
+
+const UsernameGroup: React.FC<UsernameGroupProps> = ({me}) => {
+    if (me.user === undefined) {
+        return <></>
+    }
+    return (
+        <div className={`${styling.flex_row}`}>
+            <Text size={14}>{me.user.name}</Text>
+            <Text size={14} opacity="0.5">#{me.user.discriminator}</Text>
+        </div>
+    )
+}
+
 interface NavTemplateProps {
     children?: ReactNode;
     classNames: string;
@@ -231,6 +248,11 @@ interface NavTemplateProps {
 export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }) => {
 
     const [dropdownToggled, setDropdownToggled] = useState(false);
+
+    const [me, setMe] = useState<me>({
+        attempted: false,        
+    })
+
     const dropdownButtonRef = useRef<HTMLDivElement>(null);
     const dropdownMenuRef   = useRef<HTMLDivElement>(null);
 
@@ -248,21 +270,38 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
         }
 
         fetch(`${config.backendUrl}/@me`, {method: "get", headers: {"Session": session}}).then((_d) => _d.json()).then((data) => {
-            console.log(data)
+            if ("code" in data) {
+                if (data["code"] === 1028 || data["code"] === 1020) {
+                    localStorage.setItem("login_action?", "error")
+                    localStorage.setItem("login_error_message?", data["message"])
+                    localStorage.setItem("login_error_code?", data["code"])
+                    window.location.href = "/login"
+                    return
+                }
+
+                console.error("Error in navtemplate: ", data)
+                
+                return
+            }
+            
+            const new_me: me = {
+                attempted: true,
+                user: {
+                    id: data.id,
+                    name: data.username,
+                    discriminator: data.discriminator,
+                    avatar: data.avatar_url
+                }
+            }
+
+            setMe(new_me)
+
         })
+
         if (dropdownMenuRef.current) {
             dropdownMenuRef.current.style.display = "none"
         }
-    }, [])
-
-    const me: me = {
-        attempted: false,
-        user: {
-            id: 12309867192736,
-            name: "trelta",
-            discriminator: "#0001"
-        }
-    }
+    }, [])    
 
     return (
         <MeContext.Provider value={me}>
@@ -285,17 +324,19 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
                         <div style={{gap: 10, position: "relative"}} className={`${styling.flex_row} ${styling.align_items_center}`}>
 
                             {/* Username Group */}
-                            <div className={`${styling.flex_row}`}>
-                                <Text size={14}>{me.user.name}</Text>
-                                <Text size={14} opacity="0.5">{me.user.discriminator}</Text>
-                            </div>
-
-                            <div onClick={() => DropdownToggle()} style={{width: 14, height: 14}} ref={dropdownButtonRef} className={`${styling.main}`}/>
+                            <UsernameGroup me={me}/>
+                            {
+                                me.user === undefined ? 
+                                <></> 
+                                :
+                                <div onClick={() => DropdownToggle()} style={{width: 14, height: 14}} ref={dropdownButtonRef} className={`${styling.main}`}/>
+                            }
+                            
 
                             {/* Actual Menu */}
                             <div ref={dropdownMenuRef} style={{padding: "5px 20px", borderRadius: 5, gap: 10, position: "absolute", top: 22, right: 0}} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.darksub} ${styling.border_box}`}>                            
                                 <NavItem name="Dashboard" href="/dashboard"/>
-                                <NavItem name="Logout" method={() => {Cookies.remove("session");window.location.href="/login"}}/>
+                                <NavItem name="Logout" method={() => {Cookies.remove("session");localStorage.setItem("login_action?", "error");localStorage.setItem("login_error_message?", "You have been logged out");localStorage.setItem("login_error_code?", "1020");window.location.href="/login"}}/>
                             </div>
 
                         </div>
