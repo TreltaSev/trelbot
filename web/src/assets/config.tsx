@@ -13,6 +13,10 @@ interface configInterface {
     backendUrl: string,
 }
 
+
+
+
+
 const local: boolean         = true
 const production: boolean    = false
 const domain: string         = "trelbot.xyz"

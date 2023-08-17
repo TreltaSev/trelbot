@@ -3,9 +3,31 @@
  * Holds global methods and variables such as svg objects in host for other files
  * to easily access them
  */
-import React, {ReactNode, useEffect, useRef, useState} from "react"
+import React, {ReactNode, createContext, useContext, useEffect, useRef, useState} from "react"
 import styling from "@assets/styling.module.css"
 import Cookies from "js-cookie"
+
+export type guild = {
+    id: number;
+    name: string;  
+    permissions: number;
+}
+
+export type user = {
+    id: number;
+    name: string;
+    discriminator: string;
+    avatar?: string;
+}
+
+export type CommonMeErrors = "SessionInvalid" | "FatalBackendError";
+
+export type me = {
+    attempted: boolean;
+    error?: CommonMeErrors;
+    user: user;
+    guilds?: Array<guild>;
+}
 
 export const JsonForm = (method: string, object: Object): RequestInit => {
     return {
@@ -190,6 +212,16 @@ export const NavItem: React.FC<NavItemProps> = ({ name, href, method }) => {
 }
 
 
+export const MeContext = createContext<me | undefined>(undefined);
+
+export const useMe = () => {
+    const context = useContext(MeContext);
+    if (context === undefined) {
+        throw new Error("useMe must be used within a MeProvider");
+    }
+    return context;
+}
+
 interface NavTemplateProps {
     children?: ReactNode;
     classNames: string;
@@ -217,48 +249,58 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
         }
     }, [])
 
+    const me: me = {
+        attempted: false,
+        user: {
+            id: 12309867192736,
+            name: "trelta",
+            discriminator: "#0001"
+        }
+    }
 
     return (
-        <div className={`${styling.flex_col} ${styling.fill_height}`}>
-            {/* NavBar */}
-            <div style={{height:80, minHeight: 80, maxHeight: 80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
-                
-                {/* Top Left Corner */}
-                <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
-                    <SmallLogo/>
-                    <Text size={30}>Trelbot</Text>
-                </div>
+        <MeContext.Provider value={me}>
+            <div className={`${styling.flex_col} ${styling.fill_height}`}>
+                {/* NavBar */}
+                <div style={{height:80, minHeight: 80, maxHeight: 80}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
 
-                <Spacer/>
+                    {/* Top Left Corner */}
+                    <div style={{width: 250, padding: "5px 67px 5px 67px", gap: 16}} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
+                        <SmallLogo/>
+                        <Text size={30}>Trelbot</Text>
+                    </div>
 
-                {/* Links */}
-                <div style={{gap: 10, padding: "0px 20px 0px 20px"}} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
+                    <Spacer/>
 
-                    {/* Username Dropdown */}
-                    <div style={{gap: 10, position: "relative"}} className={`${styling.flex_row} ${styling.align_items_center}`}>
+                    {/* Links */}
+                    <div style={{gap: 10, padding: "0px 20px 0px 20px"}} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
 
-                        {/* Username Group */}
-                        <div className={`${styling.flex_row}`}>
-                            <Text size={14}>{username}</Text>
-                            <Text size={14} opacity="0.5">#{discriminator}</Text>
-                        </div>
+                        {/* Username Dropdown */}
+                        <div style={{gap: 10, position: "relative"}} className={`${styling.flex_row} ${styling.align_items_center}`}>
 
-                        <div onClick={() => DropdownToggle()} style={{width: 14, height: 14}} ref={dropdownButtonRef} className={`${styling.main}`}/>
-                        
-                        {/* Actual Menu */}
-                        <div ref={dropdownMenuRef} style={{padding: "5px 20px", borderRadius: 5, gap: 10, position: "absolute", top: 22, right: 0}} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.darksub} ${styling.border_box}`}>                            
-                            <NavItem name="Dashboard" href="/dashboard"/>
-                            <NavItem name="Logout" method={() => {Cookies.remove("session");window.location.href="/login"}}/>
+                            {/* Username Group */}
+                            <div className={`${styling.flex_row}`}>
+                                <Text size={14}>{me.user.name}</Text>
+                                <Text size={14} opacity="0.5">{me.user.discriminator}</Text>
+                            </div>
+
+                            <div onClick={() => DropdownToggle()} style={{width: 14, height: 14}} ref={dropdownButtonRef} className={`${styling.main}`}/>
+
+                            {/* Actual Menu */}
+                            <div ref={dropdownMenuRef} style={{padding: "5px 20px", borderRadius: 5, gap: 10, position: "absolute", top: 22, right: 0}} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.darksub} ${styling.border_box}`}>                            
+                                <NavItem name="Dashboard" href="/dashboard"/>
+                                <NavItem name="Logout" method={() => {Cookies.remove("session");window.location.href="/login"}}/>
+                            </div>
+
                         </div>
 
                     </div>
+                </div>
 
+                <div className={`${styling.fill_height} ${classNames}`}>
+                    {children}
                 </div>
             </div>
-
-            <div className={`${styling.fill_height} ${classNames}`}>
-                {children}
-            </div>
-        </div>
+        </MeContext.Provider>
     )
 }
