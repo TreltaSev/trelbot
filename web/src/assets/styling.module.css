@@ -10,6 +10,10 @@
     --accentrgb: 253, 234, 254;
 }
 
+* {
+    user-select: none;
+}
+
 html, body {
     margin: 0;
     height: 100%;

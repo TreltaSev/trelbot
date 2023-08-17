@@ -3,8 +3,9 @@
  * Holds global methods and variables such as svg objects in host for other files
  * to easily access them
  */
-import React, {ReactNode, useRef, useState} from "react"
+import React, {ReactNode, useEffect, useRef, useState} from "react"
 import styling from "@assets/styling.module.css"
+import Cookies from "js-cookie"
 
 export const JsonForm = (method: string, object: Object): RequestInit => {
     return {
@@ -47,7 +48,7 @@ export const SmallLogo = () => {
     return (
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
-              <g clip-path="url(#clip0_43_94)">
+              <g clipPath="url(#clip0_43_94)">
                 <mask id="mask0_43_94" style={{maskType: "luminance"}} maskUnits="userSpaceOnUse" x="0" y="0" width="41" height="40">
                   <path d="M40.5 20C40.5 8.95431 31.5457 0 20.5 0C9.45431 0 0.5 8.95431 0.5 20C0.5 31.0457 9.45431 40 20.5 40C31.5457 40 40.5 31.0457 40.5 20Z" fill="white"/>
                 </mask>
@@ -144,6 +145,51 @@ export const DefaultTemplate: React.FC<DefaultTemplateProps> = ({ children, clas
     )
 }
 
+interface NavItemProps {
+    name: string;
+    href?: string;
+    method?: () => void;
+}
+
+export const NavItem: React.FC<NavItemProps> = ({ name, href, method }) => {
+
+    const componentRef = useRef<HTMLDivElement>(null);
+
+    const HoverOn = () => {
+        if (componentRef.current) {
+            componentRef.current.animate([{opacity: "1"}], {
+                duration: 500, fill: "forwards", easing: "ease-in-out"
+            })
+        }
+        
+    }
+
+    const HoverOff = () => {
+        if (componentRef.current) {
+            componentRef.current.animate([{opacity: "0.8"}], {
+                duration: 500, fill: "forwards", easing: "ease-in-out"
+            })
+        }
+    }
+
+    const Action = () => {
+        if (method !== undefined) {
+            method()
+        }
+
+        if (href !== undefined) {
+            window.location.href = href
+        }
+    }
+
+    return (
+        <div onClick={() => Action()} onMouseEnter={() => HoverOn()} onMouseLeave={() => HoverOff()} style={{opacity: 0.8, cursor: "pointer"}} ref={componentRef}>
+            <Text>{name}</Text>
+        </div>
+    )
+}
+
+
 interface NavTemplateProps {
     children?: ReactNode;
     classNames: string;
@@ -155,11 +201,21 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
     const discriminator: number = 0;
 
     const [dropdownToggled, setDropdownToggled] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownButtonRef = useRef<HTMLDivElement>(null);
+    const dropdownMenuRef   = useRef<HTMLDivElement>(null);
 
     const DropdownToggle = () => {
-
+        setDropdownToggled(!dropdownToggled);
+        if (dropdownMenuRef.current) {
+            dropdownMenuRef.current.style.display = dropdownToggled ? "none" : "flex";
+        }     
     }
+
+    useEffect(() => {
+        if (dropdownMenuRef.current) {
+            dropdownMenuRef.current.style.display = "none"
+        }
+    }, [])
 
 
     return (
@@ -179,12 +235,20 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
                 <div style={{gap: 10, padding: "0px 20px 0px 20px"}} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
 
                     {/* Username Dropdown */}
-                    <div>
+                    <div style={{gap: 10, position: "relative"}} className={`${styling.flex_row} ${styling.align_items_center}`}>
 
                         {/* Username Group */}
                         <div className={`${styling.flex_row}`}>
                             <Text size={14}>{username}</Text>
                             <Text size={14} opacity="0.5">#{discriminator}</Text>
+                        </div>
+
+                        <div onClick={() => DropdownToggle()} style={{width: 14, height: 14}} ref={dropdownButtonRef} className={`${styling.main}`}/>
+                        
+                        {/* Actual Menu */}
+                        <div ref={dropdownMenuRef} style={{padding: "5px 20px", borderRadius: 5, gap: 10, position: "absolute", top: 22, right: 0}} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.darksub} ${styling.border_box}`}>                            
+                            <NavItem name="Dashboard" href="/dashboard"/>
+                            <NavItem name="Logout" method={() => {Cookies.remove("session");window.location.href="/login"}}/>
                         </div>
 
                     </div>
