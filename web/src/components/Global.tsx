@@ -242,7 +242,12 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
     }
 
     useEffect(() => {
-        fetch(`${config.backendUrl}/@me`, {method: "get", credentials: "include"}).then((_d) => _d.json()).then((data) => {
+        let session = Cookies.get("session")
+        if (session === undefined) {
+            session = "none"
+        }
+
+        fetch(`${config.backendUrl}/@me`, {method: "get", headers: {"Session": session}}).then((_d) => _d.json()).then((data) => {
             console.log(data)
         })
         if (dropdownMenuRef.current) {

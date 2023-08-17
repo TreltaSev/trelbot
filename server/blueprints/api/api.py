@@ -34,5 +34,5 @@ async def root():
 
 @blueprint.route("/@me")
 async def me():
-    print(quart.request.access_control_request_headers)
+    print(quart.request.headers.get("Session"))
     return quart.json.jsonify({"hehehea": True})
