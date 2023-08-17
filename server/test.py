@@ -8,7 +8,9 @@ from exts.constants import oauth2
 
 
 try:
-    print(oauth2.Oauth2.retrieveAccessToken(code="5EnFjI1QeDmmJwQ16YfszFoRDuDCbi"))
+    _code = "t8PrhaGVSWvNUlzejuvob5MZllYbS1"
+    _user = oauth2.Oauth2.GetCurrentUser(_code)
+    print(_user.__dict__)
 except Exception as e:
     if hasattr(e, "jsonstr"):
         print(e.json)

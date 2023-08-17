@@ -6,6 +6,7 @@
 import secrets
 import requests
 from shared.core_tools import errors
+from shared import types
 
 class Session:
     sessions: dict = {}
@@ -35,13 +36,37 @@ class Session:
         if session_id in cls.sessions:
             del cls.sessions[session_id]
 
+    @classmethod
+    def exists(cls, session_id: str) -> bool:
+        """Returns a bool representing if the inputed `session_id` is inside Session.sessions"""
+        return session_id in cls.sessions
+    
+    @classmethod
+    def get(cls, session_id: str) -> str:
+        """
+        Returns the access_token of an inputed session_id, 
+        raises a nf error if the session id is not found inside Session.sessions
+        """
+        if not cls.exists(session_id):
+            raise errors.BaseServerRouteException("SessionID not found", code=1028)
+        
+        return cls.sessions[session_id]["access_token"]
+
 class Oauth2:
     client_id = "932999965498834954"
     client_secret = "l_4WyFqfOxxDIBnyuGVgBP1dtjP2GXGl"
     redirect_uri = "https://trelbot.xyz/discord-callback"
 
     @classmethod
-    def retrieveAccessToken(cls, code) -> str:
+    def __formAuthorization(cls, access_token: str) -> dict:
+        """
+        Creates a dictionary which contains the key Authorization, the value of this key
+        will always be "Bearer {access_token}", this method is `private` by default
+        """
+        return {"Authorization": f"Bearer {access_token}"}
+
+    @classmethod
+    def retrieveAccessToken(cls, code: str) -> str:
         """Attempts to get an access token from a code"""
         
         _request_payload = {
@@ -59,3 +84,17 @@ class Oauth2:
             raise errors.BaseServerRouteException(f"Error while getting accesstoken: {response['error_description']}", code=1020)
 
         return [response["access_token"], response["expires_in"]]
+    
+    @classmethod
+    def GetCurrentUser(cls, access_token: str) -> types.user:
+        """
+        Gets the user through an `access_token: str`, sends a get request to
+        `discord.com/api/users/@me`, the return object is of `user` contains values such as 
+        id, username, discriminator, avatar
+        """
+        response = requests.get(url="https://discord.com/api/users/@me", headers=cls.__formAuthorization(access_token)).json()
+        
+        if "code" in response:
+            raise errors.BaseServerRouteException(f"Error while getting current user: {response['message']}", code=1028)
+        
+        return types.user(response)

@@ -1,6 +1,6 @@
 import quart
 from quart_cors import cors
-from . import JsonConnection
+from . import JsonConnection, ApiConnection
 from shared.core_tools import errors
 from exts.constants import oauth2
 from http.cookies import SimpleCookie
@@ -26,7 +26,7 @@ async def root():
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
-        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020)
+        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020).jsonstr
     
     session: str = oauth2.Session.add(access_token, expires_in)    
     return quart.json.jsonify({"session": session, "expires_in": expires_in})
@@ -34,5 +34,14 @@ async def root():
 
 @blueprint.route("/@me")
 async def me():
-    print(quart.request.headers.get("Session"))
-    return quart.json.jsonify({"hehehea": True})
+
+    try:
+        _https_connection = ApiConnection(quart.request)
+        _access_token = oauth2.Session.get(_https_connection.session)
+        _user = oauth2.Oauth2.GetCurrentUser(_access_token)
+    except Exception as error:
+        if hasattr(error, "jsonstr"):
+            return error.jsonstr
+        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020).jsonstr
+
+    return quart.json.jsonify(_user.__dict__)
