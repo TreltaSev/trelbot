@@ -11,14 +11,16 @@ from exts.constants.App import App, BlueprintsManager
 
 _Application = App(__name__)
 
-_Application.config["SERVER_NAME"] = "localhost:1090"
+
 
 # Blueprints
 
 # Variables
-_LocalIp = "localhost"
+_Domain = "trelbot.xyz"
+_Production = True
+_LocalIp = "192.168.1.152"
 _LocalPort = 1090
-_Secure: bool = False
+_Secure: bool = True
 _SSLKey = "../.cert/server.key"
 _SSLCert = "../.cert/server.cert"
 _UvicornConfig = {
@@ -26,6 +28,11 @@ _UvicornConfig = {
     "port": _LocalPort,    
     "log_level": "info"
 }
+
+_Application.config["SERVER_NAME"] = f"{_LocalIp}:{_LocalPort}"
+if _Production:
+    _Application.config["SERVER_NAME"] = f"{_Domain}:{_LocalPort}"
+
 if _Secure:
     _UvicornConfig["ssl_keyfile"] = _SSLKey
     _UvicornConfig["ssl_certfile"] = _SSLCert

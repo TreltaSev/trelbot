@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --port 3000",
-    "build": "NODE_ENV=production webpack"
+    "build": "set NODE_ENV=production && webpack",
+    "server": "set NODE_ENV=production && webpack && npx serve -s dist --ssl-cert=\"../.cert/server.cert\" --ssl-key=\"../.cert/server.key\" --no-port-switching -p 443"
   },
   "author": "Trelta",
   "license": "MIT",

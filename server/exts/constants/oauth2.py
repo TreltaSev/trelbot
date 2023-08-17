@@ -38,7 +38,7 @@ class Session:
 class Oauth2:
     client_id = "932999965498834954"
     client_secret = "l_4WyFqfOxxDIBnyuGVgBP1dtjP2GXGl"
-    redirect_uri = "http://localhost:3000/discord-callback"
+    redirect_uri = "https://trelbot.xyz/discord-callback"
 
     @classmethod
     def retrieveAccessToken(cls, code) -> str:

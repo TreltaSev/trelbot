@@ -11,6 +11,7 @@ const DiscordCallback: React.FC = () => {
 
     useEffect(() => {
         const discord_code: string | null = new URLSearchParams(window.location.search).get("code")
+        console.log(config.backendUrl)
         fetch(`${config.backendUrl}/discord-callback`, JsonForm("post", {"code": discord_code})).then(data => data.json()).then(
             _d => {
                 if ("session" in _d) {

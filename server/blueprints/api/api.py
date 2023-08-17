@@ -3,13 +3,14 @@ from quart_cors import cors
 from . import JsonConnection
 from shared.core_tools import errors
 from exts.constants import oauth2
+from http.cookies import SimpleCookie
 
 config = {
     "ignore": False
 }
 
 blueprint = quart.Blueprint("api:cache", __name__, subdomain="api")
-cors(blueprint, allow_origin="http://localhost:3000")
+cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True)
 
 @blueprint.route("/discord-callback", methods=["POST"])
 async def root():    
@@ -29,3 +30,9 @@ async def root():
     
     session: str = oauth2.Session.add(access_token, expires_in)    
     return quart.json.jsonify({"session": session, "expires_in": expires_in})
+
+
+@blueprint.route("/@me")
+async def me():
+    print(quart.request.access_control_request_headers)
+    return quart.json.jsonify({"hehehea": True})

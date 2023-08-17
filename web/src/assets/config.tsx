@@ -17,11 +17,11 @@ interface configInterface {
 
 
 
-const local: boolean         = true
+const local: boolean         = false
 const production: boolean    = false
 const domain: string         = "trelbot.xyz"
 const backendPort: number    = 1090
-const backendSecure: boolean = false
+const backendSecure: boolean = true
 
 const config: configInterface = {
     local: local,

@@ -6,6 +6,7 @@
 import React, {ReactNode, createContext, useContext, useEffect, useRef, useState} from "react"
 import styling from "@assets/styling.module.css"
 import Cookies from "js-cookie"
+import config from "@assets/config";
 
 export type guild = {
     id: number;
@@ -229,9 +230,6 @@ interface NavTemplateProps {
 
 export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }) => {
 
-    const username: string = "trelta";
-    const discriminator: number = 0;
-
     const [dropdownToggled, setDropdownToggled] = useState(false);
     const dropdownButtonRef = useRef<HTMLDivElement>(null);
     const dropdownMenuRef   = useRef<HTMLDivElement>(null);
@@ -244,6 +242,9 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({ children, classNames }
     }
 
     useEffect(() => {
+        fetch(`${config.backendUrl}/@me`, {method: "get", credentials: "include"}).then((_d) => _d.json()).then((data) => {
+            console.log(data)
+        })
         if (dropdownMenuRef.current) {
             dropdownMenuRef.current.style.display = "none"
         }

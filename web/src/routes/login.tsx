@@ -12,7 +12,7 @@ const DiscordLoginButton = () => {
     const redirectLogin = () => {
         const width: number = 500;
         const height: number = 700;
-        const authorize_url = "https://discord.com/api/oauth2/authorize?client_id=932999965498834954&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord-callback&response_type=code&scope=identify%20guilds"        
+        const authorize_url = "https://discord.com/api/oauth2/authorize?client_id=932999965498834954&redirect_uri=https%3A%2F%2Ftrelbot.xyz%2Fdiscord-callback&response_type=code&scope=identify%20guilds"        
         window.open(authorize_url, "_blank", `width=${width}, height=${height}`);       
         
     }
