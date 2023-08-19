@@ -3,11 +3,19 @@
  * Description: Its a login page that always displays if the user isn't logged in.
  */
 import React, { useEffect, useState } from "react";
+
+/* Assets */
 import styling from "@assets/styling.module.css";
 import custom from "@assets/custom.module.css";
+
+/* Lib Templates */
 import DefaultTemplate from "@lib/templates/DefaultTemplate";
+
+/* Lib Svg */
 import PartialLogo from "@lib/svg/PartialLogo";
 import DiscordLogo from "@lib/svg/DiscordLogo";
+
+/* Lib Element */
 import Text from "@lib/element/Text";
 
 const DiscordLoginButton = () => {
