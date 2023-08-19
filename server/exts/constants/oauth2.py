@@ -8,6 +8,7 @@ import requests
 from shared.core_tools import errors
 from shared import types
 from typing import List
+from exts.constants import fetch
 
 class Session:
     sessions: dict = {}
@@ -57,14 +58,17 @@ class Oauth2:
     client_id = "932999965498834954"
     client_secret = "l_4WyFqfOxxDIBnyuGVgBP1dtjP2GXGl"
     redirect_uri = "https://trelbot.xyz/discord-callback"
+    token = "OTMyOTk5OTY1NDk4ODM0OTU0.GJoDm0.hnXOxg7Wm83MFCQcKNFun0x6Bw12I79Y043AN0"
 
     @classmethod
-    def __formAuthorization(cls, access_token: str) -> dict:
+    def __formAuthorization(cls, access_token: str, TYPE: str = "Bearer") -> dict:
         """
         Creates a dictionary which contains the key Authorization, the value of this key
         will always be "Bearer {access_token}", this method is `private` by default
         """
-        return {"Authorization": f"Bearer {access_token}"}
+        return {"Authorization": f"{TYPE} {access_token}"}
+    
+    
 
     @classmethod
     def retrieveAccessToken(cls, code: str) -> str:
@@ -107,12 +111,23 @@ class Oauth2:
         `discord.com/api/users/@me/guilds`, the return object is a `typing.List[types.guild]`,
         its just an array of the guilds returned.
         """
+
+        CurrentUserGuilds: dict = fetch.FetchCurrentUserGuilds(headers=cls.__formAuthorization(access_token)).response
+        CurrentBotGuilds: dict = fetch.FetchCurrentBotGuilds(headers=cls.__formAuthorization(access_token, "Bot")).response
+
         response = requests.get(url="https://discord.com/api/users/@me/guilds", headers=cls.__formAuthorization(access_token)).json()
+
+        return_guilds = []
 
         if "code" in response:
             raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)        
         
-        for guild in response:
+        for guild in CurrentBotGuilds:
+
+            # Check if bot has guild
+            if not cls.__in(CurrentBotGuilds, guild.get("id")):
+                continue
+
             guild_permissions: types.permissions = types.permissions(guild["permissions"])
             is_owner: bool = guild["owner"]
             is_admin: bool = guild_permissions.ADMINISTRATOR
@@ -126,9 +141,19 @@ class Oauth2:
                 continue
 
             guild["display"] = "None"
-            
-
         
         return response
 
+    @classmethod
+    def __in(cls, _guilds: list, _check: int) -> bool:
+        """
+        A method that returns true if _check which is a int
+        is present in guilds by checking guilds["id"] returns true 
+        if present else false
+        """
+        for guild in _guilds:
+            if guild["id"] == str(_check):
+                return True
+        return False
+                
         
