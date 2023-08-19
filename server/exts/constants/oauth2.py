@@ -127,16 +127,16 @@ class Oauth2:
             _guild.icon_url = f"https://cdn.discordapp.com/icons/{_guild.id}/{_guild.icon}.png" if _guild.icon is not None else "https://cdn.discordapp.com/attachments/964527554159607819/1087529162371248179/discordblue.png"
 
             if is_admin:
-                guild["display"] = "Administrator"
+                _guild.display = "Administrator"
 
             if is_owner:
-                guild["display"] = "Owner"
+                _guild.display = "Owner"
             
             if not is_admin and not is_owner:
                 continue
 
             # Check if bot has guild
-            _guild.present = cls.__in(CurrentBotGuilds, guild.get("id"))
+            _guild.present = cls.__in(CurrentBotGuilds, _guild.id)
             
             return_guilds.append(_guild.__dict__)            
         
