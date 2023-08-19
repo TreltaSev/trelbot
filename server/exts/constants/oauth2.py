@@ -112,6 +112,23 @@ class Oauth2:
         if "code" in response:
             raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)        
         
+        for guild in response:
+            guild_permissions: types.permissions = types.permissions(guild["permissions"])
+            is_owner: bool = guild["owner"]
+            is_admin: bool = guild_permissions.ADMINISTRATOR
+
+            if is_owner:
+                guild["display"] = "Owner"
+                continue
+
+            if is_admin:
+                guild["display"] = "Administrator"
+                continue
+
+            guild["display"] = "None"
+            
+
+        
         return response
 
         
