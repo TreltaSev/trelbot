@@ -6,9 +6,10 @@ interface TextProps {
   color?: string;
   weight?: number | string;
   opacity?: string;
+  classNames?: string;
 }
 
-const Text: React.FC<TextProps> = ({ children, size, color, weight, opacity }) => {
+const Text: React.FC<TextProps> = ({ children, size, color, weight, opacity, classNames }) => {
   size = size === undefined ? 16 : size;
   color = color === undefined ? "#fff" : color;
   weight = weight === undefined ? "400" : weight;
@@ -21,7 +22,8 @@ const Text: React.FC<TextProps> = ({ children, size, color, weight, opacity }) =
         fontSize: size,
         fontWeight: weight,
         opacity: opacity,
-      }}>
+      }}
+      className={classNames}>
       {children}
     </span>
   );
