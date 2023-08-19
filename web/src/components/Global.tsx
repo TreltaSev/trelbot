@@ -399,11 +399,34 @@ const UsernameGroup: React.FC<UsernameGroupProps> = ({ me }) => {
   );
 };
 
-const raiseError = (data: any) => {
-  localStorage.setItem("login_action?", "error");
-  localStorage.setItem("login_error_message?", data["message"]);
-  localStorage.setItem("login_error_code?", data["code"]);
-  window.location.href = "/login";
+
+const loginError = (action: string, message: string, code: string, fallback?: string) => {
+  if (fallback === undefined) {fallback = "/login"}
+  localStorage.setItem("login_action?", action);
+  localStorage.setItem("login_error_message?", message);
+  localStorage.setItem("login_error_code?", code);
+  window.location.href = fallback;
+}
+
+const errorCatcher = (data: any): boolean => {
+  if (data.hasOwnProperty("code")) {
+    const _code: number = data.code;
+    const _message: string = data.message;
+    
+    switch (_code) {
+      case 1020:
+      case 1028:
+        // Error 1020 || 1028
+        loginError("error", _message, _code.toString(), "/login")
+        break;
+      default:
+        console.error(`Error, Stack: ${data}`)
+        break
+    }
+
+    return true;
+  }
+  return false;
 }
 
 interface NavTemplateProps {
@@ -450,12 +473,8 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
     })
       .then((_d) => _d.json())
       .then((data) => {
-        if ("code" in data) {
-          if (data["code"] === 1028 || data["code"] === 1020) {
-            raiseError(data)
-            return;
-          }
-          console.error("Error in navtemplate: ", data);
+        
+        if (errorCatcher(data)) {
           return;
         }
 
@@ -478,7 +497,7 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
       headers: { Session: session },
     })
     .then((_unparsed) => _unparsed.json()).then((_parsed) => {
-      
+
     })
 
 
