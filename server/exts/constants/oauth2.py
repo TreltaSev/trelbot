@@ -7,6 +7,7 @@ import secrets
 import requests
 from shared.core_tools import errors
 from shared import types
+from typing import List
 
 class Session:
     sessions: dict = {}
@@ -98,3 +99,20 @@ class Oauth2:
             raise errors.BaseServerRouteException(f"Error while getting current user: {response['message']}", code=1028)
         
         return types.user(response)
+    
+    @classmethod
+    def GetCurrentUserGuilds(cls, access_token: str) -> List[types.guild]:
+        """
+        Gets the user's guilds by sending a request with `access_token: str` directly to
+        `discord.com/api/users/@me/guilds`, the return object is a `typing.List[types.guild]`,
+        its just an array of the guilds returned.
+        """
+        response = requests.get(url="https://discord.com/api/users/@me/guilds", headers=cls.__formAuthorization(access_token)).json()
+
+        if "code" in response:
+            raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)
+        
+        print(response)
+        return {"guilds": ["hehehah", "hwhajidhoubw"]}
+
+        
