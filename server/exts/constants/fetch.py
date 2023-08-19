@@ -1,6 +1,7 @@
 import requests
 from shared.core_tools import errors
 
+
 class BaseFetch:
     """
     Class that should be inherited from,
@@ -9,12 +10,14 @@ class BaseFetch:
     """
 
     def __init__(self, url: str, headers: dict):
-        
+
         self.response = requests.get(url=url, headers=headers).json()
 
         if "code" in self.response:
-            raise errors.BaseServerRouteException(f"Error attempting to fetch url \"{url}\": {self.response['message']}", code=1020)
-        
+            raise errors.BaseServerRouteException(
+                f"Error attempting to fetch url \"{url}\": {self.response['message']}", code=1020)
+
+
 class FetchCurrentUserGuilds(BaseFetch):
     """
     Fetches the current users guilds, 
@@ -26,6 +29,7 @@ class FetchCurrentUserGuilds(BaseFetch):
     def __init__(self, headers: dict):
         super().__init__("https://discord.com/api/users/@me/guilds", headers)
 
+
 class FetchCurrentBotGuilds(BaseFetch):
     """
     Fetches the current bots guilds,
@@ -36,4 +40,3 @@ class FetchCurrentBotGuilds(BaseFetch):
 
     def __init__(self, headers: dict):
         super().__init__("https://discord.com/api/users/@me/guilds", headers)
-        
