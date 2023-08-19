@@ -110,9 +110,8 @@ class Oauth2:
         response = requests.get(url="https://discord.com/api/users/@me/guilds", headers=cls.__formAuthorization(access_token)).json()
 
         if "code" in response:
-            raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)
+            raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)        
         
-        print(response)
-        return {"guilds": ["hehehah", "hwhajidhoubw"]}
+        return response
 
         
