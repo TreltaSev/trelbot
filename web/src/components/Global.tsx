@@ -457,14 +457,8 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
   useEffect(() => {
     let session = Cookies.get("session");
     if (session === undefined) {
-      session = "none";
-      localStorage.setItem("login_action?", "error");
-      localStorage.setItem(
-        "login_error_message?",
-        "hahah fuckeroo, not logged in :)"
-      );
-      localStorage.setItem("login_error_code?", "1020");
-      window.location.href = "/login";
+      loginError("error", "NLI", "1020", "/login");
+      return;
     }
 
     let _copiedMe: me = Object.assign({}, me)
