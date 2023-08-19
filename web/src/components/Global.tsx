@@ -467,28 +467,27 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
       window.location.href = "/login";
     }
 
+    let _copiedMe: me = Object.assign({}, me)
+    _copiedMe.attempted = true
+
     fetch(`${config.backendUrl}/@me`, {
       method: "get",
       headers: { Session: session },
     })
-      .then((_d) => _d.json())
-      .then((data) => {
-        
-        if (errorCatcher(data)) {
+      .then((_unparsed) => _unparsed.json())
+      .then((_jsonResponse) => {
+
+        if (errorCatcher(_jsonResponse)) {
           return;
         }
-
-        const new_me: me = {
-          attempted: true,
-          user: {
-            id: data.id,
-            name: data.username,
-            discriminator: data.discriminator,
-            avatar: data.avatar_url,
-          },
-        };
-
-        setMe(new_me);
+        
+        _copiedMe.user = {
+          id: _jsonResponse.id, 
+          name: _jsonResponse.username, 
+          discriminator: _jsonResponse.discriminator, 
+          avatar: _jsonResponse.avatar_url
+        }
+      
       });
 
     // Fetch request to /@me/guilds and save data to the guilds.
@@ -496,9 +495,14 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
       method: "get",
       headers: { Session: session },
     })
-    .then((_unparsed) => _unparsed.json()).then((_parsed) => {
-
+    .then((_unparsed) => _unparsed.json()).then((_jsonResponse) => {
+      if (errorCatcher(_jsonResponse)) {
+        return;
+      }
+      _copiedMe.guilds = _jsonResponse.guilds      
     })
+
+    setMe(_copiedMe)
 
 
     if (dropdownMenuRef.current) {
