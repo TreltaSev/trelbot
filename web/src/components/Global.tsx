@@ -472,6 +472,16 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
         setMe(new_me);
       });
 
+    // Fetch request to /@me/guilds and save data to the guilds.
+    fetch(`${config.backendUrl}/@me/guilds`, {
+      method: "get",
+      headers: { Session: session },
+    })
+    .then((_unparsed) => _unparsed.json()).then((_parsed) => {
+      
+    })
+
+
     if (dropdownMenuRef.current) {
       dropdownMenuRef.current.style.display = "none";
     }
