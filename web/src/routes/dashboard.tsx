@@ -7,23 +7,23 @@ import NavigationTemplate from "@lib/templates/NavigationTemplate";
 import React from "react";
 import { useParams } from "react-router-dom";
 import styling from "@assets/styling.module.css";
+import { useMe } from "@components/Global";
+import me from "@root/lib/types/me";
 
 type DashType = "selector" | "editor";
 
 const Selector: React.FC = () => {
-  return (
-    <NavigationTemplate classNames={`${styling.dark}`}>
-      <div>Selector</div>
-    </NavigationTemplate>
-  );
+  const meData: me = useMe();
+  
+  if (meData.attempted == false) {
+    return <div>Loading</div>
+  }
+
+  return <div>Selector</div>;
 };
 
 const Editor: React.FC = () => {
-  return (
-    <NavigationTemplate classNames={`${styling.dark}`}>
-      <div>Editor</div>
-    </NavigationTemplate>
-  );
+  return <div>Editor</div>;
 };
 
 const Dashboard: React.FC = () => {
@@ -33,10 +33,18 @@ const Dashboard: React.FC = () => {
 
   switch (DashType) {
     case "selector":
-      return <Selector />;
+      return (
+        <NavigationTemplate classNames={`${styling.dark}`}>
+          <Selector />
+        </NavigationTemplate>
+      );
 
     case "editor":
-      return <Editor />;
+      return (
+        <NavigationTemplate classNames={`${styling.dark}`}>
+          <Editor />
+        </NavigationTemplate>
+      );
   }
 };
 
