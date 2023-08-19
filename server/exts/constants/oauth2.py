@@ -9,6 +9,7 @@ from shared.core_tools import errors
 from shared import types
 from typing import List
 from exts.constants import fetch
+import json
 
 class Session:
     sessions: dict = {}
@@ -113,36 +114,33 @@ class Oauth2:
         """
 
         CurrentUserGuilds: dict = fetch.FetchCurrentUserGuilds(headers=cls.__formAuthorization(access_token)).response
-        CurrentBotGuilds: dict = fetch.FetchCurrentBotGuilds(headers=cls.__formAuthorization(access_token, "Bot")).response
-
-        response = requests.get(url="https://discord.com/api/users/@me/guilds", headers=cls.__formAuthorization(access_token)).json()
+        CurrentBotGuilds: dict = fetch.FetchCurrentBotGuilds(headers=cls.__formAuthorization(cls.token, "Bot")).response
 
         return_guilds = []
 
-        if "code" in response:
-            raise errors.BaseServerRouteException(f"Error while getting users guilds: {response['message']}", code=1028)        
-        
-        for guild in CurrentBotGuilds:
+        for guild in CurrentUserGuilds:
 
-            # Check if bot has guild
-            if not cls.__in(CurrentBotGuilds, guild.get("id")):
-                continue
+            
 
             guild_permissions: types.permissions = types.permissions(guild["permissions"])
             is_owner: bool = guild["owner"]
             is_admin: bool = guild_permissions.ADMINISTRATOR
 
-            if is_owner:
-                guild["display"] = "Owner"
-                continue
-
             if is_admin:
                 guild["display"] = "Administrator"
+
+            if is_owner:
+                guild["display"] = "Owner"
+            
+            if not is_admin and not is_owner:
                 continue
 
-            guild["display"] = "None"
+            # Check if bot has guild
+            guild["present"] =  cls.__in(CurrentBotGuilds, guild.get("id"))
+            
+            return_guilds.append(guild)            
         
-        return response
+        return return_guilds
 
     @classmethod
     def __in(cls, _guilds: list, _check: int) -> bool:

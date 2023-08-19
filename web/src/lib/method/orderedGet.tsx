@@ -35,6 +35,16 @@ const orderedGet = async (setMethod: (me: me) => void) => {
 
   setMethod(orderedMe);
 
+  console.log(orderedMe, _guilds)
+
+  console.log(":::")
+  setTimeout(() => {
+    console.log("lll")
+    console.log(orderedMe, _guilds)
+  }, 1000)
+
+  console.log("ywa")
+
   return orderedMe;
 };
 

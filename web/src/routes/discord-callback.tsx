@@ -19,7 +19,7 @@ const DiscordCallback: React.FC = () => {
         } else {
           localStorage.setItem("login_action?", "error");
         }
-        // window.close();
+        window.close();
       });
   }, []);
 
