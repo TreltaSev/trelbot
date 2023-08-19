@@ -399,6 +399,13 @@ const UsernameGroup: React.FC<UsernameGroupProps> = ({ me }) => {
   );
 };
 
+const raiseError = (data: any) => {
+  localStorage.setItem("login_action?", "error");
+  localStorage.setItem("login_error_message?", data["message"]);
+  localStorage.setItem("login_error_code?", data["code"]);
+  window.location.href = "/login";
+}
+
 interface NavTemplateProps {
   children?: ReactNode;
   classNames: string;
@@ -445,10 +452,7 @@ export const NavTemplate: React.FC<NavTemplateProps> = ({
       .then((data) => {
         if ("code" in data) {
           if (data["code"] === 1028 || data["code"] === 1020) {
-            localStorage.setItem("login_action?", "error");
-            localStorage.setItem("login_error_message?", data["message"]);
-            localStorage.setItem("login_error_code?", data["code"]);
-            window.location.href = "/login";
+            raiseError(data)
             return;
           }
           console.error("Error in navtemplate: ", data);
