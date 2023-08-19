@@ -3,32 +3,27 @@
  * Description: Discord callback handler, handles the code from the discord fallback link
  */
 import React, { useEffect } from "react";
-import { JsonForm } from "@components/Global";
+import jsonform from "@lib/form/jsonform";
 import config from "@assets/config";
 import Cookies from "js-cookie";
 
 const DiscordCallback: React.FC = () => {
+  useEffect(() => {
+    const discord_code: string | null = new URLSearchParams(window.location.search).get("code");
+    fetch(`${config.backendUrl}/discord-callback`, jsonform("post", { code: discord_code }))
+      .then((data) => data.json())
+      .then((_d) => {
+        if ("session" in _d) {
+          Cookies.set("session", _d["session"], { expires: _d["expires_in"] });
+          localStorage.setItem("login_action?", "refresh");
+        } else {
+          localStorage.setItem("login_action?", "error");
+        }
+        window.close();
+      });
+  }, []);
 
-    useEffect(() => {
-        const discord_code: string | null = new URLSearchParams(window.location.search).get("code")
-        fetch(`${config.backendUrl}/discord-callback`, JsonForm("post", {"code": discord_code})).then(data => data.json()).then(
-            _d => {
-                if ("session" in _d) {
-                    Cookies.set("session", _d["session"], {expires: _d["expires_in"]})
-                    localStorage.setItem("login_action?", "refresh");
-                } else {
-                    localStorage.setItem("login_action?", "error");
-                }
-                window.close();
-            }
-        )
-  
-        
-    }, [])
+  return <></>;
+};
 
-    return (
-        <></>
-    )
-}
-
-export default DiscordCallback
+export default DiscordCallback;

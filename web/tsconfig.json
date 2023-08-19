@@ -16,7 +16,8 @@
             "@components/*" : ["./src/components/*"],
             "@assets/*" : ["./src/assets/*"],
             "@routes/*" : ["./src/routes/*"],
-            "@root/*" : ["./src"]
+            "@root/*" : ["./src/*"],
+            "@lib/*": ["./src/lib/*"]
         },
         "plugins": [
             {
