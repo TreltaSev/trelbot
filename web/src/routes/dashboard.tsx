@@ -4,32 +4,55 @@
  */
 
 import NavigationTemplate from "@lib/templates/NavigationTemplate";
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styling from "@assets/styling.module.css";
 import { useMe } from "@components/Global";
-import me from "@root/lib/types/me";
+import me from "@lib/types/me";
 import Text from "@lib/element/Text";
-import GuildChip from "@root/lib/element/GuildChip";
-
+import GuildChip from "@lib/element/GuildChip";
+import sortGuildsAsMutable from "@lib/method/sortGuildsAsMutable";
 type DashType = "selector" | "editor";
+
+
 
 const Selector: React.FC = () => {
   const meData: me = useMe();
+
+  /*
+  This use effects loops every 500 ms checking if /guild-oauth created an entry to refresh to. 
+  */
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      const selector_action: string | null = localStorage.getItem("selector_action?");
+      const selector_redirect: string | null = localStorage.getItem("selector_redirect?");
+      if (selector_action === "redirect" && selector_redirect !== null) {
+        localStorage.removeItem("selector_action?");
+        localStorage.removeItem("selector_redirect?");
+        window.location.href = selector_redirect;
+        clearInterval(refreshInterval);
+      }
+    }, 500);
+  }, []);
 
   if (meData.attempted == false) {
     return <div>Loading</div>;
   }
 
+  sortGuildsAsMutable(meData);
+
   return (
-    <div style={{gap: 40}} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
-      
+    <div style={{ gap: 40 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
       {/* Text Group */}
-      <div style={{gap: 5}} className={`${styling.flex_col} ${styling.align_items_center}`}>
-        <Text size={30} weight={"700"}>Select a Server</Text>
-        <Text size={30} opacity="0.5">Choose a server by hitting the select or invite buttons!</Text>
+      <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.align_items_center}`}>
+        <Text size={30} weight={"700"}>
+          Select a Server
+        </Text>
+        <Text size={30} opacity='0.5'>
+          Choose a server by hitting the select or invite buttons!
+        </Text>
       </div>
-      
+
       {/* Guilds */}
       <div style={{ gap: 10 }} className={`${styling.flex_col}`}>
         {meData.guilds === undefined ? (
@@ -38,7 +61,6 @@ const Selector: React.FC = () => {
           meData.guilds.map((guild) => <GuildChip name={guild.name} image={guild.icon_url} display={guild.display} present={guild.present} id={guild.id} key={`${meData.user?.id}/${guild.id}/chip`} />)
         )}
       </div>
-
     </div>
   );
 };

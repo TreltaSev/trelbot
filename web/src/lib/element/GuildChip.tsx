@@ -2,6 +2,7 @@ import React from "react";
 import Text from "@lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import styling from "@assets/styling.module.css";
+import custom from "@assets/custom.module.css";
 
 interface GuildChipProperties {
   name: string;
@@ -14,13 +15,17 @@ interface GuildChipProperties {
 const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, present, id }) => {
   const button_color = present ? "#8C52FF" : "rgba(255,255,255,0.2)";
   const button_text: "Select" | "Invite" = present ? "Select" : "Invite";
-  const _staged_url = `https://discord.com/api/oauth2/authorize?client_id=932999965498834954&permissions=20919645613303&redirect_uri=https%3A%2F%2Ftrelbot.xyz%2Fdiscord-callback&scope=bot%20applications.commands&guild_id=${id}`;
+  const _guild_oauth_invite_url = `https://discord.com/api/oauth2/authorize?client_id=932999965498834954&permissions=20919645613303&response_type=code&redirect_uri=https%3A%2F%2Ftrelbot.xyz%2Fguild-oauth&scope=bot+applications.commands&guild_id=${id}`;
 
   const click = () => {
     switch (button_text) {
       case "Select":
+        window.location.href = `/dashboard/${id}`
         break;
       case "Invite":
+        const width: number = 500;
+        const height: number = 700;
+        window.open(_guild_oauth_invite_url, "_blank", `width=${width}, height=${height}`)
         break;
     }
   };
@@ -41,8 +46,9 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
       <Spacer />
 
       <div
-        style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, background: button_color, borderRadius: 5 }}
-        className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
+        onClick={() => click()}
+        style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, borderRadius: 5 }}
+        className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
         <Text size={16}>{button_text}</Text>
       </div>
     </div>
