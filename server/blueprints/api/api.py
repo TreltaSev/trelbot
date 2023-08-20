@@ -3,7 +3,7 @@ from quart_cors import cors
 from . import JsonConnection, ApiConnection
 from shared.core_tools import errors
 from exts.constants import oauth2
-from http.cookies import SimpleCookie
+import traceback
 
 config = {
     "ignore": False
@@ -26,7 +26,7 @@ async def root():
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
-        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020).jsonstr
+        return errors.BaseServerRouteException(f"Unregistered Error in /api/discord-callback: {error}", code=1020).jsonstr
     
     session: str = oauth2.Session.add(access_token, expires_in)    
     return quart.json.jsonify({"session": session, "expires_in": expires_in})
@@ -42,7 +42,7 @@ async def me():
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
-        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020).jsonstr
+        return errors.BaseServerRouteException(f"Unregistered Error in /api/@me: {error}", code=1020).jsonstr
 
     return quart.json.jsonify(_user.__dict__)
 
@@ -56,6 +56,7 @@ async def guilds():
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
-        return errors.BaseServerRouteException(f"Unregistered Error: {error}", code=1020).jsonstr
+        print(traceback.format_exc(error))
+        return errors.BaseServerRouteException(f"Unregistered Error in /api/@me/guilds: {error}", code=1020).jsonstr
     
     return quart.json.jsonify(_guilds)

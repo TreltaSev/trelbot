@@ -9,7 +9,6 @@ from shared.core_tools import errors
 from shared import types
 from typing import List
 from exts.constants import fetch
-import json
 
 class Session:
     sessions: dict = {}

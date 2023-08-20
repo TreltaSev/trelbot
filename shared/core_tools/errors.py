@@ -90,3 +90,8 @@ class ServerRouteJsonRequestMissingValue(BaseServerRouteException):
     """Raised whenever a json request doesn't have a value"""
     def __init__(self, valuename: str) -> None:
         super().__init__("Missing {valuename} in Request", code=Codes.Fatal)
+
+class ServerRouteDiscordApiRateLimit(BaseServerRouteException):
+    """Raised whever discord's api responds with a api rate limit message"""
+    def __init__(self) -> None:
+        super().__init__("You are being rate limited by discord :P", code=Codes.Fatal)
