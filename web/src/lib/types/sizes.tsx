@@ -20,4 +20,4 @@ const _form = (desktop: number, phone: number, tablet?: number): number => {
     return tablet;
 }
 
-const text_normal: number = _form(16, 20, 18);
+export const text_normal: number = _form(16, 20, 18);

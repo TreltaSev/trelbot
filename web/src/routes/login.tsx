@@ -15,6 +15,9 @@ import DefaultTemplate from "@lib/templates/DefaultTemplate";
 import PartialLogo from "@lib/svg/PartialLogo";
 import DiscordLogo from "@lib/svg/DiscordLogo";
 
+/* Lib Types */
+import { text_normal } from "@lib/types/sizes";
+
 /* Lib Element */
 import Text from "@lib/element/Text";
 
@@ -30,8 +33,8 @@ const DiscordLoginButton = () => {
       onClick={() => redirectLogin()}
       style={{ padding: "10px 20px", borderRadius: 10, gap: 10 }}
       className={`${custom.discordlogin} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
-      <DiscordLogo />
-      <Text>Login with Discord</Text>
+      <DiscordLogo width={text_normal} height={text_normal} />
+      <Text size={text_normal}>Login with Discord</Text>
     </div>
   );
 };
@@ -97,8 +100,8 @@ const Login: React.FC = () => {
         <PartialLogo />
 
         {/* Text under logo */}
-        <Text>Welcome to trelbot.xyz</Text>
-        <Text>Login with Discord to continue</Text>
+        <Text size={text_normal}>Welcome to trelbot.xyz</Text>
+        <Text size={text_normal}>Login with Discord to continue</Text>
 
         {/* Login Button */}
         <DiscordLoginButton />
