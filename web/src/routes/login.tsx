@@ -16,7 +16,7 @@ import PartialLogo from "@lib/svg/PartialLogo";
 import DiscordLogo from "@lib/svg/DiscordLogo";
 
 /* Lib Types */
-import { text_normal } from "@lib/types/sizes";
+import { form } from "@lib/types/sizes";
 
 /* Lib Element */
 import Text from "@lib/element/Text";
@@ -31,10 +31,10 @@ const DiscordLoginButton = () => {
   return (
     <div
       onClick={() => redirectLogin()}
-      style={{ padding: "10px 20px", borderRadius: 10, gap: 10 }}
-      className={`${custom.discordlogin} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
-      <DiscordLogo width={text_normal} height={text_normal} />
-      <Text size={text_normal}>Login with Discord</Text>
+      style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }}
+      className={`${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+      <DiscordLogo />
+      <Text size={16}>Login with Discord</Text>
     </div>
   );
 };
@@ -95,13 +95,15 @@ const Login: React.FC = () => {
     <DefaultTemplate classNames={`${styling.dark} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
       {/* Container */}
 
-      <div style={{ gap: 15 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
+      <div style={{ gap: 15, padding: 30 }} className={`${styling.fill_width} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
         {/* Logo from global.tsx */}
-        <PartialLogo />
+        {form(1, 0) === 1 ? <PartialLogo /> : <></>}
 
         {/* Text under logo */}
-        <Text size={text_normal}>Welcome to trelbot.xyz</Text>
-        <Text size={text_normal}>Login with Discord to continue</Text>
+        <Text size={16}>Welcome to Trelbot</Text>
+        <Text size={16} opacity='0.5' classNames={`${custom.login_text}`}>
+          A discord bot with a (soon to be) small variety of games, automation messages, multiple commands for moderation and some funnies ;)
+        </Text>
 
         {/* Login Button */}
         <DiscordLoginButton />

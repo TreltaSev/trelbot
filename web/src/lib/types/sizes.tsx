@@ -1,4 +1,14 @@
-const _form = (desktop: number, phone: number, tablet?: number): number => {
+
+export type strnum = string | number | undefined;
+
+/**
+ * Set values for diffenet screen sizes, defaults are not set.
+ * @param desktop
+ * @param phone 
+ * @param tablet 
+ * @returns 
+ */
+export const form = (desktop: strnum, phone: strnum, tablet?: strnum): strnum => {
     const _phoneThreshold: number = 500;
     const _desktopThreshold: number = 1280;
 
@@ -20,4 +30,4 @@ const _form = (desktop: number, phone: number, tablet?: number): number => {
     return tablet;
 }
 
-export const text_normal: number = _form(16, 20, 18);
+export const text_normal: strnum = form(16, 64);

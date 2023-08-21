@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
+import { strnum } from "@lib/types/sizes";
 
 interface TextProps {
   children: ReactNode;
-  size?: number | string;
+  size?: strnum;
   color?: string;
   weight?: number | string;
   opacity?: string;

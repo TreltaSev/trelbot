@@ -56,7 +56,6 @@ async def guilds():
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
-        print(traceback.format_exc(error))
         return errors.BaseServerRouteException(f"Unregistered Error in /api/@me/guilds: {error}", code=1020).jsonstr
     
     return quart.json.jsonify(_guilds)
