@@ -97,7 +97,7 @@ const Login: React.FC = () => {
 
       <div style={{ gap: 15, padding: 30 }} className={`${styling.fill_width} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
         {/* Logo from global.tsx */}
-        {form(1, 0) === 1 ? <PartialLogo /> : <></>}
+        <PartialLogo />
 
         {/* Text under logo */}
         <Text size={16}>Welcome to Trelbot</Text>

@@ -1,10 +1,9 @@
 import React from "react";
-import { form } from "../types/sizes";
 
 const PartialLogo = () => {
   return (
-    <div style={{width: form(70, 100), height: form(70, 100)}}>
-      <svg width='100%' height='100%' viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <>
+      <svg width='70' height='70' viewBox='0 0 70 70' fill='none' xmlns='http://www.w3.org/2000/svg'>
         <mask id='mask0_65_338' style={{maskType: "alpha"}} maskUnits='userSpaceOnUse' x='5' y='9' width='90' height='83'>
           <path
             d='M39.1749 16.125C43.9861 7.79167 56.0144 7.79166 60.8256 16.125L93.3015 72.375C98.1127 80.7084 92.0988 91.125 82.4763 91.125H17.5242C7.90171 91.125 1.8877 80.7084 6.69895 72.375L39.1749 16.125Z'
@@ -42,7 +41,7 @@ const PartialLogo = () => {
           />
         </g>
       </svg>
-    </div>
+    </>
   );
 };
 
