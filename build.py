@@ -20,3 +20,5 @@ os.system("pip install -r ./requirements.txt")
 os.chdir("web")
 
 os.system("npm i")
+
+print("Finished Building Project")
