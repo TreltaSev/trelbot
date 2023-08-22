@@ -10,6 +10,7 @@ import Text from "@lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import NavigationMenuItem from "@lib/element/NavigationMenuItem";
 import UsernameGroup from "@lib/element/UsernameGroup";
+import Arrow from "../svg/Arrow";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -27,6 +28,10 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
 
   const DropdownToggle = () => {
     setDropdownToggled(!dropdownToggled);
+    if (dropdownButtonRef.current) {
+      dropdownButtonRef.current.style.transform = `rotate(${dropdownToggled ? 0 : 180}deg)`
+    }
+    
     if (dropdownMenuRef.current) {
       dropdownMenuRef.current.style.display = dropdownToggled ? "none" : "flex";
     }
@@ -67,8 +72,8 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
             <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
               {/* Username Group */}
               <UsernameGroup me={me} />
-              {me.user === undefined ? <></> : <div onClick={() => DropdownToggle()} style={{ width: 14, height: 14 }} ref={dropdownButtonRef} className={`${styling.main}`} />}
-
+              {me.user === undefined ? <></> : <div style={{cursor: "pointer"}} onClick={() => DropdownToggle()} ref={dropdownButtonRef}><Arrow /></div>}
+                
               {/* Actual Menu */}
               <div
                 ref={dropdownMenuRef}
