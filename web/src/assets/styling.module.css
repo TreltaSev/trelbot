@@ -161,13 +161,12 @@ Different modifiers for text like no-wrap
   text-overflow: ellipsis;
 }
 
-
 /* |overflow modifiers|
 Overflow customization
 */
 
 .overflow_hidden {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 /* |Text align|
