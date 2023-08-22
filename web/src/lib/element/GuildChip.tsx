@@ -19,18 +19,20 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
   const click = () => {
     switch (button_text) {
       case "Select":
-        window.location.href = `/dashboard/${id}`
+        window.location.href = `/dashboard/${id}`;
         break;
       case "Invite":
         const width: number = 500;
         const height: number = 700;
-        window.open(_guild_oauth_invite_url, "_blank", `width=${width}, height=${height}`)
+        window.open(_guild_oauth_invite_url, "_blank", `width=${width}, height=${height}`);
         break;
     }
   };
 
   return (
-    <div style={{ minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub} ${custom.dashboard_select_guild_chip}`}>
+    <div
+      style={{ minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }}
+      className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub} ${custom.dashboard_select_guild_chip}`}>
       <img alt='' src={image} width={40} height={40} style={{ borderRadius: "50%" }} className={`${styling.no_shrink}`} />
 
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_start}`}>
