@@ -12,9 +12,10 @@ import me from "@lib/types/me";
 import Text from "@lib/element/Text";
 import GuildChip from "@lib/element/GuildChip";
 import sortGuildsAsMutable from "@lib/method/sortGuildsAsMutable";
+import { form } from "@root/lib/types/sizes";
+import custom from "@assets/custom.module.css";
+
 type DashType = "selector" | "editor";
-
-
 
 const Selector: React.FC = () => {
   const meData: me = useMe();
@@ -44,11 +45,11 @@ const Selector: React.FC = () => {
   return (
     <div style={{ gap: 40 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
       {/* Text Group */}
-      <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.align_items_center}`}>
-        <Text size={30} weight={"700"}>
+      <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.align_items_center} ${custom.dashboard_select_text_padding}`}>
+        <Text size={form(30, 24)} weight={"700"}>
           Select a Server
         </Text>
-        <Text size={30} opacity='0.5'>
+        <Text size={form(30, 24)} classNames={styling.text_align_center} opacity='0.5'>
           Choose a server by hitting the select or invite buttons!
         </Text>
       </div>
@@ -60,6 +61,7 @@ const Selector: React.FC = () => {
         ) : (
           meData.guilds.map((guild) => <GuildChip name={guild.name} image={guild.icon_url} display={guild.display} present={guild.present} id={guild.id} key={`${meData.user?.id}/${guild.id}/chip`} />)
         )}
+        <div style={{ height: 40, width: 40, content: "", background: "transparent" }} />
       </div>
     </div>
   );

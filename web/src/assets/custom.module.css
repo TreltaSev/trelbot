@@ -44,4 +44,22 @@ this adds some hover effect.
     .login_text {
         max-width: 300px;
     }
+
+    .dashboard_select_guild_chip {
+        width: 800px;
+        flex-grow: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard_select_guild_chip {
+        width: 100% !important;
+        flex-grow: 0;
+    }
+
+    .dashboard_select_text_padding {
+        box-sizing: border-box;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
 }

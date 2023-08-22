@@ -48,15 +48,13 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
 
   return (
     <MeContext.Provider value={me}>
-      <div className={`${styling.flex_col} ${styling.fill_height}`}>
+      <div style={{ overflowY: "scroll" }} className={`${styling.flex_col} ${styling.fill_height} ${styling.dark}`}>
         {/* NavBar */}
         <div
-          style={{ height: 80, minHeight: 80, maxHeight: 80 }}
-          className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
+          style={{ height: 80, minHeight: 80, maxHeight: 80, paddingLeft: 40, paddingRight: 40 }}
+          className={`${styling.border_box} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
           {/* Top Left Corner */}
-          <div
-            style={{ width: 250, padding: "5px 67px 5px 67px", gap: 16 }}
-            className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
+          <div style={{ gap: 16 }} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
             <SmallLogo />
             <Text size={30}>Trelbot</Text>
           </div>
@@ -64,7 +62,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
           <Spacer />
 
           {/* Links */}
-          <div style={{ gap: 10, padding: "0px 20px 0px 20px" }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
+          <div style={{ gap: 10 }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.justify_content_end} ${styling.border_box}`}>
             {/* Username Dropdown */}
             <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
               {/* Username Group */}

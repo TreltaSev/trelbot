@@ -169,3 +169,11 @@ Overflow customization
 .overflow_hidden {
     overflow: hidden;
 }
+
+/* |Text align|
+Text aligns
+*/
+
+.text_align_center {
+  text-align: center;
+}

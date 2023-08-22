@@ -13,7 +13,6 @@ interface GuildChipProperties {
 }
 
 const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, present, id }) => {
-  const button_color = present ? "#8C52FF" : "rgba(255,255,255,0.2)";
   const button_text: "Select" | "Invite" = present ? "Select" : "Invite";
   const _guild_oauth_invite_url = `https://discord.com/api/oauth2/authorize?client_id=932999965498834954&permissions=20919645613303&response_type=code&redirect_uri=https%3A%2F%2Ftrelbot.xyz%2Fguild-oauth&scope=bot+applications.commands&guild_id=${id}`;
 
@@ -31,7 +30,7 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
   };
 
   return (
-    <div style={{ width: 800, minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub}`}>
+    <div style={{ minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub} ${custom.dashboard_select_guild_chip}`}>
       <img alt='' src={image} width={40} height={40} style={{ borderRadius: "50%" }} className={`${styling.no_shrink}`} />
 
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_start}`}>
