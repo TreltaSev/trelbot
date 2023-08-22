@@ -32,7 +32,7 @@ const DiscordLoginButton = () => {
     <div
       onClick={() => redirectLogin()}
       style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }}
-      className={`${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+      className={`${custom.button} ${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
       <DiscordLogo />
       <Text size={16}>Login with Discord</Text>
     </div>

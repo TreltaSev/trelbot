@@ -47,7 +47,7 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
       <div
         onClick={() => click()}
         style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, borderRadius: 5 }}
-        className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
+        className={`${custom.button} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
         <Text size={16}>{button_text}</Text>
       </div>
     </div>
