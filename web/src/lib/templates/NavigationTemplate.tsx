@@ -29,17 +29,16 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
   const DropdownToggle = () => {
     setDropdownToggled(!dropdownToggled);
     if (dropdownButtonRef.current) {
-      dropdownButtonRef.current.style.transform = `rotate(${dropdownToggled ? 0 : 180}deg)`
+      dropdownButtonRef.current.style.transform = `rotate(${dropdownToggled ? 0 : 180}deg)`;
     }
-    
+
     if (dropdownMenuRef.current) {
       dropdownMenuRef.current.style.display = dropdownToggled ? "none" : "flex";
     }
   };
 
   useEffect(() => {
-    let session = Cookies.get("session");
-    if (session === undefined) {
+    if (Cookies.get("session") === undefined) {
       loginError("error", "NLI", "1020", "/login");
       return;
     }
@@ -72,8 +71,14 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
             <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
               {/* Username Group */}
               <UsernameGroup me={me} />
-              {me.user === undefined ? <></> : <div style={{cursor: "pointer"}} onClick={() => DropdownToggle()} ref={dropdownButtonRef}><Arrow /></div>}
-                
+              {me.user === undefined ? (
+                <></>
+              ) : (
+                <div style={{ cursor: "pointer" }} onClick={() => DropdownToggle()} ref={dropdownButtonRef}>
+                  <Arrow />
+                </div>
+              )}
+
               {/* Actual Menu */}
               <div
                 ref={dropdownMenuRef}
