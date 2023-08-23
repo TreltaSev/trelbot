@@ -4,6 +4,7 @@ import Login from "@routes/login";
 import DiscordCallback from "@routes/discord-callback";
 import Dashboard from "@routes/dashboard";
 import GuildOauth from "@routes/guild-oauth";
+import Test from "@routes/test";
 
 /* Main router that controls everything being displayed depending on the route. */
 const App: React.FC = () => {
@@ -18,6 +19,7 @@ const App: React.FC = () => {
             <Route path=':guildId' element={<Dashboard />} />
             <Route path='' element={<Dashboard />} />
           </Route>
+          <Route path="/test" element={<Test/>}/>
         </Routes>
       </Router>
     </>
