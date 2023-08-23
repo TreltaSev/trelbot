@@ -2,13 +2,12 @@
  * Path: www.local.xyz/dashboard
  * Description: Dashboard, look in github
  */
-
-import NavigationTemplate from "@lib/templates/NavigationTemplate";
 import React from "react";
 import { useParams } from "react-router-dom";
 import styling from "@assets/styling.module.css";
-import DashboardSelector from "@lib/element/DashboardSelector";
-import DashboardEditor from "@lib/element/DashboardEditor";
+import NavigationTemplate from "@lib/templates/NavigationTemplate";
+import DashboardSelector from "@lib/element/dashboard/DashboardSelector";
+import DashboardEditor from "@lib/element/dashboard/DashboardEditor";
 type DashType = "selector" | "editor";
 
 const Dashboard: React.FC = () => {
