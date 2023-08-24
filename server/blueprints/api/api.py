@@ -16,9 +16,8 @@ cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True)
 @blueprint.route("/api/discord-callback", methods=["POST"])
 async def root():
 
-    _https_connection = JsonConnection(quart.request)
-
     try:
+        _https_connection = JsonConnection(quart.request)
         await _https_connection.checkValidated()
         await _https_connection.checkValue("code")
         await _https_connection.cacheValue("code")
@@ -66,6 +65,7 @@ async def guilds():
 
 @blueprint.route("/api/guilds/<string:guild_id>")
 async def guild(guild_id: str):
+
     try:
         _https_connection = ApiConnection(quart.request)
         _access_token = oauth2.Session.get(_https_connection.session)
