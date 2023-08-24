@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
 
     case "editor":
       return (
-        <NavigationTemplate classNames={`${styling.dark}`}>
+        <NavigationTemplate classNames={`${styling.dark} ${styling.fill_all} ${styling.flex_col}`}>
           <DashboardEditor guild_id={guildId}/>
         </NavigationTemplate>
       );
