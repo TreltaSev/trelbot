@@ -16,8 +16,8 @@ const DashboardEditor: React.FC<type_DashboardEditor> = ({guild_id}) => {
     })
   }, [])
   return (
-  <div>
-
+  <div className={`${styling.flex_row} ${styling.fill_all} ${styling.justify_content_start} ${styling.align_items_center}`}>
+    
   </div>
   );
 };
