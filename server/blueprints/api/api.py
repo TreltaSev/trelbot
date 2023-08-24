@@ -12,23 +12,25 @@ config = {
 blueprint = quart.Blueprint("api:cache", __name__)
 cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True)
 
+
 @blueprint.route("/api/discord-callback", methods=["POST"])
-async def root():    
-   
+async def root():
+
     _https_connection = JsonConnection(quart.request)
 
     try:
         await _https_connection.checkValidated()
         await _https_connection.checkValue("code")
         await _https_connection.cacheValue("code")
-        access_token, expires_in = oauth2.Oauth2.retrieveAccessToken(code=_https_connection.code)
+        access_token, expires_in = oauth2.Oauth2.retrieveAccessToken(
+            code=_https_connection.code)
         await _https_connection.cacheValue("access_token", access_token)
     except Exception as error:
         if hasattr(error, "jsonstr"):
             return error.jsonstr
         return errors.BaseServerRouteException(f"Unregistered Error in /api/discord-callback: {error}", code=1020).jsonstr
-    
-    session: str = oauth2.Session.add(access_token, expires_in)    
+
+    session: str = oauth2.Session.add(access_token, expires_in)
     return quart.json.jsonify({"session": session, "expires_in": expires_in})
 
 
@@ -46,6 +48,7 @@ async def me():
 
     return quart.json.jsonify(_user.__dict__)
 
+
 @blueprint.route("/api/@me/guilds", methods=["GET"])
 async def guilds():
 
@@ -57,5 +60,5 @@ async def guilds():
         if hasattr(error, "jsonstr"):
             return error.jsonstr
         return errors.BaseServerRouteException(f"Unregistered Error in /api/@me/guilds: {error}", code=1020).jsonstr
-    
+
     return quart.json.jsonify(_guilds)
