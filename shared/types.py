@@ -55,6 +55,7 @@ class guild:
         self.approximate_member_count: int
         self.approximate_presence_count: int
         self.__dict__.update(__values)
+        self.icon_url = f"https://cdn.discordapp.com/icons/{self.id}/{self.icon}.png"
 
 
 class permissions:
