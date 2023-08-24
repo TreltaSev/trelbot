@@ -16,6 +16,8 @@ import "@lib/element/dashboard/pages/automations/OnBan"
 import "@lib/element/dashboard/pages/Logging"
 import { get } from "@root/lib/element/dashboard/loader";
 
+import "@lib/element/dashboard/pages/automations"
+
 type DashType = "selector" | "editor";
 
 const Dashboard: React.FC = () => {
