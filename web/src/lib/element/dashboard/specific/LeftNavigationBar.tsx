@@ -4,7 +4,7 @@ import FlexColumnComponent from "../../FlexColumnComponent";
 
 const LeftNavigationBar: React.FC = () => {
   return (
-    <FlexColumnComponent classNames={`${styling.fill_height}`}>
+    <FlexColumnComponent style={{width: 300}} className={`${styling.fill_height}`}>
 
     </FlexColumnComponent>
   );
