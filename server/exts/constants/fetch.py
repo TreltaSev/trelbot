@@ -12,7 +12,8 @@ class BaseFetch:
 
     def __init__(self, url: str, headers: dict):
 
-        self.response = requests.get(url=url, headers=headers).json()
+        self.pack = requests.get(url=url, headers=headers)
+        self.response = self.pack.json()
 
         if "message" in self.response and "retry_after" in self.response:
             raise errors.ServerRouteDiscordApiRateLimit()
@@ -57,6 +58,7 @@ class FetchCurrentBotGuilds(UpperLevelFetch):
 
     def __init__(self, headers: dict):
         super().__init__("https://discord.com/api/users/@me/guilds", headers)
+
 
 class FetchGuild(UpperLevelFetch):
     """
