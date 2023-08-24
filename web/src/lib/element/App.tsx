@@ -7,7 +7,7 @@ import GuildOauth from "@routes/guild-oauth";
 import route from "@root/lib/types/route";
 
 /* Main router that controls everything being displayed depending on the route. */
-const App: React.FC = () => {  
+const App: React.FC = () => {
   const [routes, setRoutes] = useState<Array<route>>([]);
 
   return (
@@ -22,9 +22,7 @@ const App: React.FC = () => {
             <Route path='' element={<Dashboard />} />
           </Route>
 
-          {
-            routes.length == 0 ? <></> : routes.map((route) => <Route path={route.path} element={route.element} key={`${route.path};;;render`}/>)
-          }
+          {routes.length == 0 ? <></> : routes.map((route) => <Route path={route.path} element={route.element} key={`${route.path};;;render`} />)}
         </Routes>
       </Router>
     </>
