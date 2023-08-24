@@ -21,8 +21,6 @@ const Dashboard: React.FC = () => {
 
   const DashType: DashType = guildId === undefined ? "selector" : "editor";
 
-  console.log(get())
-
   switch (DashType) {
     case "selector":
       return (
