@@ -140,6 +140,17 @@ class Oauth2:
             return_guilds.append(_guild.__dict__)            
         
         return return_guilds
+    
+    @classmethod
+    def GetGuild(cls, access_token: str, guild_id: str | int) -> List[types.guild] | None:
+      """
+      Gets a guild by going through multiple checks and sending a request with `access_token: str`
+      to `discord.com/api/guilds/{guild_id}`, the return object is a `types.guild`.
+      """
+
+      Guild: dict = fetch.FetchGuild(headers=cls.__formAuthorization(access_token)).response
+      print(Guild)
+      return None
 
     @classmethod
     def __in(cls, _guilds: list, _check: int) -> bool:

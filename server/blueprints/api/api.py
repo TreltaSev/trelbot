@@ -62,3 +62,17 @@ async def guilds():
         return errors.BaseServerRouteException(f"Unregistered Error in /api/@me/guilds: {error}", code=1020).jsonstr
 
     return quart.json.jsonify(_guilds)
+
+
+@blueprint.route("/api/guilds/<string:guild_id>")
+async def guild(guild_id: str):
+    try:
+        _https_connection = ApiConnection(quart.request)
+        _access_token = oauth2.Session.get(_https_connection.session)
+        _guild = oauth2.Oauth2.GetGuild(_access_token, guild_id)
+    except Exception as error:
+        if hasattr(error, "jsonstr"):
+            return error.jsonstr
+        return errors.BaseServerRouteException(f"Unregistered Error in /api/guilds/{guild_id}: {error}", code=1020).jsonstr
+
+    return quart.json.jsonify({})

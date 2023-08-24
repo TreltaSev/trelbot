@@ -57,3 +57,14 @@ class FetchCurrentBotGuilds(UpperLevelFetch):
 
     def __init__(self, headers: dict):
         super().__init__("https://discord.com/api/users/@me/guilds", headers)
+
+class FetchGuild(UpperLevelFetch):
+    """
+    Fetches a guild from the guild id
+    returns a dict as the response
+    access response with self.response.
+    sends a get request to `https://discord.com/api/guilds/{guild.id}`
+    """
+
+    def __init__(self, headers: dict, guild_id: str | int):
+        super().__init__("https://discord.com/api/users/@me/guilds", headers)
