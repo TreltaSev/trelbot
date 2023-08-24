@@ -7,7 +7,7 @@ type type_FlexColumnComponent = {
   style?: React.CSSProperties;
 }
 
-const FlexColumnComponent: React.FC<type_FlexColumnComponent> = ({children, className, style}) => {
+const FlexColumn: React.FC<type_FlexColumnComponent> = ({children, className, style}) => {
   return (
     <div style={style} className={`${styling.flex_col} ${className}`}>
       {children}
@@ -15,4 +15,4 @@ const FlexColumnComponent: React.FC<type_FlexColumnComponent> = ({children, clas
   )
 }
 
-export default FlexColumnComponent
+export default FlexColumn

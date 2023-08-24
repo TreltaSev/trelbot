@@ -1,12 +1,16 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
-import FlexColumnComponent from "../../FlexColumnComponent";
+import FlexColumn from "../../FlexColumn";
+import { get } from "@lib/element/dashboard/loader";
 
-const LeftNavigationBar: React.FC = () => {
+type type_LeftNavigationBar = {}
+
+const LeftNavigationBar: React.FC<type_LeftNavigationBar> = () => {
+  console.log(get())
   return (
-    <FlexColumnComponent style={{width: 300}} className={`${styling.fill_height}`}>
-
-    </FlexColumnComponent>
+    <FlexColumn style={{width: 250, gap:10, padding: "0 10px 0 10px"}} className={`${styling.fill_height} ${styling.align_items_center} ${styling.dark}`}>
+      
+    </FlexColumn>
   );
 }
 
