@@ -67,4 +67,4 @@ class FetchGuild(UpperLevelFetch):
     """
 
     def __init__(self, headers: dict, guild_id: str | int):
-        super().__init__("https://discord.com/api/users/@me/guilds", headers)
+        super().__init__(f"https://discord.com/api/guilds/{guild_id}", headers)

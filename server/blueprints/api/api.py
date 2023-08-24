@@ -75,4 +75,4 @@ async def guild(guild_id: str):
             return error.jsonstr
         return errors.BaseServerRouteException(f"Unregistered Error in /api/guilds/{guild_id}: {error}", code=1020).jsonstr
 
-    return quart.json.jsonify({})
+    return quart.json.jsonify(_guild.__dict__)
