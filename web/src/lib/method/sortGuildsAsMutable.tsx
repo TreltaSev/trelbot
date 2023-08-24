@@ -1,7 +1,7 @@
-import me from "@lib/types/me";
+import guild from "@lib/types/guild";
 
-const sortGuildsAsMutable = (_inData: me) => {
-  _inData.guilds?.sort((a, b) => {
+const sortGuildsAsMutable = (guilds: guild[]) => {
+  guilds?.sort((a, b) => {
     if (a.present === undefined || b.present === undefined) {
       return 0;
     }
