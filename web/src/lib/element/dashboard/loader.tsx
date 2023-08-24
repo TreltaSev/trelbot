@@ -22,6 +22,7 @@ export const loader = (name: string, element: React.ReactNode, parent?: string, 
     if (!_parentMatch) {
       throw `Match not found ${parent}`;
     }
+    delete _page.parent
     _parentMatch.contents.push(_page);
   } else {
     dashboardPages.push(_page);
