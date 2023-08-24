@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import loginError from "@lib/method/loginError";
-import orderedGet from "@lib/method/orderedGet";
 import me from "@lib/types/me";
 import SmallLogo from "@lib/svg/SmallLogo";
 import styling from "@assets/styling.module.css";
@@ -10,7 +9,8 @@ import Text from "@lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import NavigationMenuItem from "@lib/element/NavigationMenuItem";
 import UsernameGroup from "@lib/element/UsernameGroup";
-import Arrow from "../svg/Arrow";
+import Arrow from "@lib/svg/Arrow";
+import cache_me from "@lib/method/cache@me";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -43,7 +43,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
       return;
     }
 
-    orderedGet(setMe);
+    cache_me(setMe);
 
     if (dropdownMenuRef.current) {
       dropdownMenuRef.current.style.display = "none";
@@ -54,9 +54,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
     <MeContext.Provider value={me}>
       <div style={{ overflowY: "scroll" }} className={`${styling.flex_col} ${styling.fill_height} ${styling.dark}`}>
         {/* NavBar */}
-        <div
-          style={{ height: 80, minHeight: 80, maxHeight: 80, paddingLeft: 40, paddingRight: 40 }}
-          className={`${styling.border_box} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
+        <div style={{ height: 80, minHeight: 80, maxHeight: 80, paddingLeft: 40, paddingRight: 40 }} className={`${styling.border_box} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
           {/* Top Left Corner */}
           <div style={{ gap: 16 }} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
             <SmallLogo />

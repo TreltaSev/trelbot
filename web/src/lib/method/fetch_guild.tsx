@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import config from "@assets/config";
-import nli_transfer from "./nli_transfer";
+import nli_transfer from "@lib/method/nli_transfer";
 
 const fetch_guild = async (guild_id: string | number | undefined) => {
   let session = Cookies.get("session");

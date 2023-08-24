@@ -19,7 +19,7 @@ const orderedGet = async (setMethod: (me: me) => void) => {
   const _guilds = await guildsResponse.json();
 
   if (errorCatcher(_me) || errorCatcher(_guilds)) {
-    throw new Error("response contains error in `json`");
+    throw new Error("response contains error for me in `json`");
   }
 
   const orderedMe: me = {

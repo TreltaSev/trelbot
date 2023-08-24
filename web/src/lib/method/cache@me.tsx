@@ -1,0 +1,35 @@
+import Cookies from "js-cookie";
+import config from "@assets/config";
+import errorCatcher from "@lib/method/errorCatcher";
+import nli_transfer from "@lib/method/nli_transfer";
+import me from "@lib/types/me";
+
+
+const cache_me = async (set: (me: me) => void): Promise<me> => {
+  const session = Cookies.get("session");
+  nli_transfer(session);
+
+  const _request: RequestInit = { method: "get", headers: { Session: session as string } };
+  const _meResponse = await fetch(`${config.backendUrl}/@me`, _request);
+  const _me = await _meResponse.json();
+
+  if (errorCatcher(_me)) {
+    throw new Error(`Response contains error for @me in json ${_me}`);
+  }
+
+  const me: me = {
+    attempted: true,
+    user: {
+      id: _me.id,
+      name: _me.username,
+      discriminator: _me.discriminator,
+      avatar: _me.avatar_url,
+    },
+  };
+
+  set(me);
+
+  return me;
+};
+
+export default cache_me;
