@@ -48,6 +48,13 @@ class ToggleButton extends React.Component<props_ToggleButton, state_ToggleButto
     }
   }
 
+  /**
+   * returns this.state.active
+   */
+  get(): boolean | undefined {
+    return this.state.active;
+  }
+
   componentDidMount(): void {
     const _v: boolean = defaultValue(this.props.initialValue, false, undefined);
 
