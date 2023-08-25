@@ -19,7 +19,7 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
         <Text preset='1em-normal' style={{ color: "white" }}>
           {guild?.name}
         </Text>
-        <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer" }}>
+        <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer" }} href="/dashboard">
           Go to Selector
         </Url>
       </TextGroup>
