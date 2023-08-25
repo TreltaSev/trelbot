@@ -1,15 +1,10 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
+import component from "@lib/types/component";
 
-type type_InlineFlex = {
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const InlineFlex: React.FC<type_InlineFlex> = ({children, className, style}) => {
+const InlineFlex: React.FC<component> = ({children, className, style, onMouseEnter, onMouseLeave, onClick}) => {
   return (
-    <div style={style} className={`${styling.inline_flex} ${className}`}>
+    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={style} className={`${styling.inline_flex} ${className}`}>
       {children}
     </div>
   )

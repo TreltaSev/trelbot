@@ -1,15 +1,10 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
+import component from "@lib/types/component";
 
-type type_FlexColumnComponent = {
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const FlexColumn: React.FC<type_FlexColumnComponent> = ({children, className, style}) => {
+const FlexColumn: React.FC<component> = ({children, className, style, onMouseEnter, onMouseLeave, onClick}) => {
   return (
-    <div style={style} className={`${styling.flex_col} ${className}`}>
+    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={style} className={`${styling.flex_col} ${className}`}>
       {children}
     </div>
   )

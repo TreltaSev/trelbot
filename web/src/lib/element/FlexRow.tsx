@@ -1,15 +1,10 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
+import component from "@lib/types/component";
 
-type type_FlexRow = {
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-const FlexRow: React.FC<type_FlexRow> = ({children, className, style}) => {
+const FlexRow: React.FC<component> = ({children, className, style, onMouseEnter, onMouseLeave, onClick}) => {
   return (
-    <div style={style} className={`${styling.flex_row} ${className}`}>
+    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={style} className={`${styling.flex_row} ${className}`}>
       {children}
     </div>
   )
