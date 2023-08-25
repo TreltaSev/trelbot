@@ -1,13 +1,7 @@
-import React from "react";
+import React, { Component, HTMLProps, LegacyRef, MutableRefObject } from "react";
 
-type component = {
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  ref?: React.RefObject<HTMLDivElement>;
-  onClick?: () => void;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+type component =  HTMLProps<HTMLDivElement> & {
+  innerref? : React.RefObject<HTMLDivElement>
 };
 
 export default component;
