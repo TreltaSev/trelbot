@@ -58,6 +58,10 @@ to apply flex styling to different components.
   flex-direction: column;
 }
 
+.inline_flex {
+  display: inline-flex;
+}
+
 /* |Border Box|
 Borderbox making sketches in figma actually accurate without having to rely
 on modifing margin.
