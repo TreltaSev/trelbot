@@ -4,7 +4,7 @@ type component = {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement>;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;

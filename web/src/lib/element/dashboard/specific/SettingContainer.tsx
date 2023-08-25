@@ -10,8 +10,10 @@ type type_SettingContainer = component & {
 }
 
 const SettingContainer: React.FC<type_SettingContainer> = ({ name, icon }) => {
+  const container_ref = React.useRef(null);
+
   return (
-    <FlexRow style={{gap: 10, padding:10, borderRadius: 5}} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
+    <FlexRow ref={container_ref} style={{gap: 10, padding:10, borderRadius: 5}} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
       <Text preset="1em-normal" style={{color: "white", fontSize: 16}}>{name}</Text>
     </FlexRow>
   );
