@@ -3,13 +3,13 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import user from "@lib/types/user";
 import SmallLogo from "@lib/svg/SmallLogo";
 import styling from "@assets/styling.module.css";
-import DepracatedText from "@root/lib/element/DepracatedText";
+import Text from "@lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import NavigationMenuItem from "@lib/element/NavigationMenuItem";
 import UsernameGroup from "@lib/element/UsernameGroup";
 import Arrow from "@lib/svg/Arrow";
 import cache_me from "@lib/method/cache@me";
-import nli_transfer from "../method/nli_transfer";
+import nli_transfer from "@lib/method/nli_transfer";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -50,7 +50,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
         {/* Top Left Corner */}
         <div style={{ gap: 16 }} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
           <SmallLogo />
-          <DepracatedText size={30}>Trelbot</DepracatedText>
+          <Text preset="normal" style={{fontSize: 30}}>Trelbot</Text>
         </div>
 
         <Spacer />
