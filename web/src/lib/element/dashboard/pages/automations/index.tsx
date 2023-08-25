@@ -9,7 +9,7 @@ import styling from "@assets/styling.module.css";
 
 const Automations: React.FC = () => {
   return (
-    <FlexColumn style={{width: 800, padding: 10, gap: 25}} className={`${styling.align_items_flex_start} ${styling.border_box}}`}>
+    <FlexColumn style={{width: 800, padding: 10, gap: 25, borderRadius: 5}} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
       <OnJoin/>
       <OnLeave/>
       <OnBan/>
