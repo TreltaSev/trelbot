@@ -1,7 +1,7 @@
 import React from "react";
 import component from "@lib/types/component";
 
-type type_Text = component & {
+export type type_Text = component & {
   preset?: string;
 };
 
@@ -10,12 +10,12 @@ type type_presets = {
 };
 
 const presets: type_presets = {
-  "1em-norm": { fontSize: "1em", fontWeight: "400", font: "lato" },
+  "1em-normal": { fontSize: "1em", fontWeight: "400", font: "lato" },
 };
 
 const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset }) => {
   if (preset) {
-    style = presets[preset];
+    style = {...style, ...presets[preset]};
   }
 
   return (

@@ -16,8 +16,8 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
       {/* Image */}
       <img alt="" src={guild?.icon_url} style={{borderRadius: "50%"}} width={40} height={40}/>
       <TextGroup>
-        <Text>{guild?.name}</Text>
-        <Url>Go to Selector</Url>
+        <Text preset="1em-normal">{guild?.name}</Text>
+        <Url preset="1em-normal" style={{color: "rgba(255,255,255,0.5)"}}>Go to Selector</Url>
       </TextGroup>
       
     </FlexRow>

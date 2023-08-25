@@ -1,8 +1,8 @@
 import React from "react";
-import component from "@lib/types/component";
 import Text from "./Text";
+import { type_Text } from "@lib/element/Text";
 
-type type_Url = component & {
+type type_Url = type_Text & {
   href?: string;
 };
 
