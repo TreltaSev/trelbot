@@ -8,8 +8,8 @@ const OnJoin: React.FC = () => {
     <>
     <FlexColumn>
       <TextGroup>
-        <Text>On Join Event</Text>
-        <Text>Sends some sort of message based on the configuration below</Text>
+        <Text preset="1.5em-normal" style={{color: "white", fontWeight: "700"}}>On Join Event</Text>
+        <Text preset="1.5em-normal" style={{color: "white", opacity: "0.5"}}>Sends some sort of message based on the configuration below</Text>
       </TextGroup>
     </FlexColumn>
     

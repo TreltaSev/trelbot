@@ -11,6 +11,7 @@ type type_presets = {
 
 const presets: type_presets = {
   "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato" },
+  "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato"}
 };
 
 const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset }) => {
