@@ -1,17 +1,18 @@
 import React from "react";
 
 type props_ToggleButton = {
+  ontoggle?: (...args: any[]) => any;
 }
 
 type state_ToggleButton = {
 
 }
 
-class ToggleButton extends React.Component {
+class ToggleButton extends React.Component<props_ToggleButton> {
   private toggleRef: React.RefObject<HTMLDivElement>;
   private innerRef: React.RefObject<HTMLDivElement>;
 
-  constructor(props: state_ToggleButton) {
+  constructor(props: props_ToggleButton) {
     super(props);    
     this.toggleRef = React.createRef();
     this.innerRef = React.createRef();
@@ -22,6 +23,11 @@ class ToggleButton extends React.Component {
    */
   toggle() {
     console.log("toggle")
+
+    if (this.props.ontoggle) {
+      this.props.ontoggle();
+    }
+  
   }
 
   render() {
