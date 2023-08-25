@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styling from "@assets/styling.module.css";
-
 import Text from "@lib/element/Text";
 import GuildChip from "@lib/element/GuildChip";
 import sortGuildsAsMutable from "@lib/method/sortGuildsAsMutable";
@@ -17,8 +16,8 @@ const DashboardSelector: React.FC = () => {
   */
   useEffect(() => {
     cache_guilds().then((get_guilds: guild[]) => {
-      setGuilds(get_guilds)
-    })
+      setGuilds(get_guilds);
+    });
     const refreshInterval = setInterval(() => {
       const selector_action: string | null = localStorage.getItem("selector_action?");
       const selector_redirect: string | null = localStorage.getItem("selector_redirect?");
@@ -41,10 +40,10 @@ const DashboardSelector: React.FC = () => {
     <div style={{ gap: 40 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
       {/* Text Group */}
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.align_items_center} ${custom.dashboard_select_text_padding}`}>
-        <Text preset="normal" style={{fontSize: form(30, 24), fontWeight: "700"}}>
+        <Text preset='normal' style={{ fontSize: form(30, 24), fontWeight: "700" }}>
           Select a Server
         </Text>
-        <Text preset="normal" style={{fontSize: form(30, 24), opacity: "0.5"}} className={styling.text_align_center}>
+        <Text preset='normal' style={{ fontSize: form(30, 24), opacity: "0.5" }} className={styling.text_align_center}>
           Choose a server by hitting the select or invite buttons!
         </Text>
       </div>
