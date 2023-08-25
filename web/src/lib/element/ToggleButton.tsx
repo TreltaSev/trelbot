@@ -57,7 +57,7 @@ class ToggleButton extends React.Component<props_ToggleButton, state_ToggleButto
   render() {
     return (
       <div onClick={() => this.toggle()} ref={this.toggleRef} style={{ background: "#E45853", width: 50, height: 20, position: "relative", borderRadius: 5, cursor: "pointer" }}>
-        <div ref={this.innerRef} style={{ width: 16, height: 16, background: "rgba(255,255,255,0.5)", borderRadius: 5, position: "absolute", top: 2, border: "4px solid rgba(255,255,255,0.5)" }} />
+        <div ref={this.innerRef} style={{ width: 16, height: 16, background: "rgba(255,255,255,0.5)", borderRadius: 5, position: "absolute", top: 2, border: "4px solid rgba(255,255,255,0.5)", boxSizing: "border-box" }} />
       </div>
     );
   }
