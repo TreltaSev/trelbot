@@ -13,13 +13,12 @@ type type_GuildContainer = {
 const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
   return (
     <FlexRow style={{ padding: 10, gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
-      {/* Image */}
       <img alt='' src={guild?.icon_url} style={{ borderRadius: "50%" }} width={40} height={40} />
       <TextGroup style={{ gap: 5 }}>
-        <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: 150}}>
+        <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: 150 }}>
           {guild?.name}
         </Text>
-        <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer" }} href="/dashboard">
+        <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer" }} href='/dashboard'>
           Go to Selector
         </Url>
       </TextGroup>
