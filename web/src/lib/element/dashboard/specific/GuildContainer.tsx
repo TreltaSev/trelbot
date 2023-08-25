@@ -16,8 +16,8 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
       {/* Image */}
       <img alt='' src={guild?.icon_url} style={{ borderRadius: "50%" }} width={40} height={40} />
       <TextGroup style={{ gap: 5 }}>
-        <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden"}}>
-          {guild?.name}dawdwadadwdw
+        <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: 150}}>
+          {guild?.name}
         </Text>
         <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer" }} href="/dashboard">
           Go to Selector
