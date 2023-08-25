@@ -1,6 +1,5 @@
 /**
- * Takes in an _input, if the input equals the check then returns _default, else
- * it returns _input
+ * Takes in a bool, returns _true if true _false if false
  * @param _input
  * @param _default
  * @param _check

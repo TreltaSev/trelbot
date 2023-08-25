@@ -9,7 +9,7 @@ const defaultValue = (_input?: any, _default?: any, _check?: any): any => {
   if (_input === _check) {
     return _default;
   }
-  return _default;
+  return _input;
 };
 
 export default defaultValue;

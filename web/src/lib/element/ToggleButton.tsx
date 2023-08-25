@@ -20,6 +20,9 @@ class ToggleButton extends React.Component<props_ToggleButton, state_ToggleButto
     super(props);
     this.toggleRef = React.createRef();
     this.innerRef = React.createRef();
+    this.state = {
+      initial: props.initialValue,
+    };
   }
 
   /**
@@ -35,16 +38,10 @@ class ToggleButton extends React.Component<props_ToggleButton, state_ToggleButto
     if (!this.innerRef.current) {
       return;
     }
-    
-    const _nv = defaultValue(this.state.active, !this.state.initial, undefined);
-    const _x = boolValue(_nv, 30, 4);
 
-    this.innerRef.current.animate({ transform: `translateX(${_x}px)` }, { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" });
-  
-    this.setState({
-      active: _nv,
-    });
-  
+    let _nv: boolean | undefined = defaultValue(!this.state.active, this.state.initial, undefined);
+    this.innerRef.current.animate({ transform: `translateX(${boolValue(_nv, 30, 4)}px)` }, { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" });
+    this.setState({ active: _nv });
   }
 
   componentDidMount(): void {
