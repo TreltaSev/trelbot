@@ -11,11 +11,15 @@ type type_LeftNavigationBar = {
 }
 
 const LeftNavigationBar: React.FC<type_LeftNavigationBar> = ({ guild }) => {
-  console.log(get())
+  
   return (
     <FlexColumn style={{width: 250, gap:10, padding: "0 10px 0 10px", flexShrink: 0}} className={`${styling.fill_height} ${styling.align_items_center} ${styling.border_box} ${styling.dark}`}>
       <GuildContainer guild={guild}/>
-      <SettingContainer name="Automations"/>
+      {
+        get().map((child) => (
+          <SettingContainer name={child.name} key={`${child.name}--container`}/>
+        ))
+      }
     </FlexColumn>
   );
 }

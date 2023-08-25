@@ -1,11 +1,11 @@
-type dashboardPage = {
+export type dashboardPage = {
   name: string;
   element: React.ReactNode;
   parent?: string;
   priority?: number;
 };
 
-type parent = {
+export type parent = {
   name: string;
   contents: dashboardPage[];
   icon?: React.ReactNode;
