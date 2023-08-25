@@ -2,6 +2,17 @@ import React from "react";
 import styling from "@assets/styling.module.css";
 import component from "@root/lib/types/component";
 
-type type_SettingContainer = component &{
-
+type type_SettingContainer = component & {
+  name?: string;  
+  icon?: string;
 }
+
+const SettingContainer: React.FC<type_SettingContainer> = ({ guild }) => {
+  return (
+    <>
+      <></>
+    </>
+  );
+};
+
+export default SettingContainer;
