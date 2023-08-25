@@ -8,7 +8,7 @@ const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
   return (
     <>
-    <FlexColumn>
+    <FlexColumn style={{gap: 20}}>
       <TextGroup>
         <Text preset="1.5em-normal" style={{color: "white", fontWeight: "700"}}>On Join Event</Text>
         <Text preset="1.5em-normal" style={{color: "white", opacity: "0.5"}}>Sends some sort of message based on the configuration below</Text>
