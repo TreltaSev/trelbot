@@ -4,7 +4,7 @@ const dim_element = (ref: React.RefObject<HTMLDivElement>): Animation | undefine
   if (!ref.current) {
     return null
   }
-  return ref.current.animate({opacity: "0.8"}, {duration: 300, fill: "forwards", easing: "cubic-bezier(0.68, -0.6, 0.32, 1.6)"})
+  return ref.current.animate({opacity: "0.8"}, {duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)"})
 }
 
 export default dim_element
