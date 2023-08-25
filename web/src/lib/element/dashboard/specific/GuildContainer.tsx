@@ -5,6 +5,8 @@ import FlexRow from "@lib/element/FlexRow";
 import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
 import Url from "@lib/element/Url";
+import InlineFlex from "@lib/element/InlineFlex";
+
 type type_GuildContainer = {
   guild: guild | undefined;
 };
@@ -18,11 +20,11 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
           {guild?.name}
         </Text>
 
-        <div style={{ display: "inline-flex" }}>
+        <InlineFlex>
           <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer", display: "inline-block" }} href='/dashboard'>
             Go to Selector
           </Url>
-        </div>
+        </InlineFlex>
       </TextGroup>
     </FlexRow>
   );
