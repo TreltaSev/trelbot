@@ -19,7 +19,7 @@ import DiscordLogo from "@lib/svg/DiscordLogo";
 import { form } from "@lib/types/sizes";
 
 /* Lib Element */
-import DepracatedText from "@root/lib/element/DepracatedText";
+import Text from "@root/lib/element/Text";
 
 const DiscordLoginButton = () => {
   const redirectLogin = () => {
@@ -34,7 +34,7 @@ const DiscordLoginButton = () => {
       style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }}
       className={`${custom.button} ${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
       <DiscordLogo />
-      <DepracatedText size={16}>Login with Discord</DepracatedText>
+      <Text preset="1em-normal">Login with Discord</Text>
     </div>
   );
 };
@@ -51,11 +51,11 @@ const Error: React.FC<errorTypes> = ({ active, message, code }) => {
       style={{ maxWidth: 200, minWidth: 100, padding: 10, position: "absolute", bottom: 50, right: 50 }}
       className={`${styling.flex_col} ${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center}`}>
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.5)", padding: "2px 0px" }} className={`${styling.flex_row} ${styling.align_items_start} ${styling.fill_width}`}>
-        <DepracatedText size={10}>Notice</DepracatedText>
+        <Text preset="normal" style={{fontSize: 10}}>Notice</Text>
       </div>
-      <DepracatedText size={10} opacity='0.5'>
+      <Text preset="normal" style={{fontSize: 10, opacity: "0.5"}}>
         {message} #{code}
-      </DepracatedText>
+      </Text>
     </div>
   );
 };
@@ -100,10 +100,10 @@ const Login: React.FC = () => {
         <PartialLogo />
 
         {/* Text under logo */}
-        <DepracatedText size={16}>Welcome to Trelbot</DepracatedText>
-        <DepracatedText size={16} opacity='0.5' classNames={`${custom.login_text}`}>
+        <Text preset="1em-normal">Welcome to Trelbot</Text>
+        <Text preset="1em-normal" style={{opacity: "0.5"}} className={`${custom.login_text}`}>
           A discord bot with a (soon to be) small variety of games, automation messages, multiple commands for moderation and some funnies ;)
-        </DepracatedText>
+        </Text>
 
         {/* Login Button */}
         <DiscordLoginButton />
