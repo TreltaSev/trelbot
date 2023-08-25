@@ -21,7 +21,7 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
         </Text>
 
         <InlineFlex>
-          <Url preset='1em-normal' style={{ color: "rgba(255,255,255,0.5)", cursor: "pointer", display: "inline-block" }} href='/dashboard'>
+          <Url preset='1em-normal' style={{ opacity: "0.5", cursor: "pointer", display: "inline-block" }} href='/dashboard'>
             Go to Selector
           </Url>
         </InlineFlex>
