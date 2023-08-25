@@ -1,6 +1,5 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
-import { get } from "@lib/element/dashboard/loader";
 import guild from "@lib/types/guild";
 import FlexRow from "@lib/element/FlexRow";
 import TextGroup from "@lib/element/TextGroup";
