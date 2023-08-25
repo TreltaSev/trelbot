@@ -1,6 +1,6 @@
 import React from "react";
 import styling from "@assets/styling.module.css";
-import Text from "@lib/element/Text";
+import DepracatedText from "@root/lib/element/DepracatedText";
 import user from "../types/user";
 
 interface UsernameGroupProps {
@@ -13,10 +13,10 @@ const UsernameGroup: React.FC<UsernameGroupProps> = ({ user }) => {
   }
   return (
     <div className={`${styling.flex_row}`}>
-      <Text size={14}>{user.name}</Text>
-      <Text size={14} opacity='0.5'>
+      <DepracatedText size={14}>{user.name}</DepracatedText>
+      <DepracatedText size={14} opacity='0.5'>
         #{user.discriminator}
-      </Text>
+      </DepracatedText>
     </div>
   );
 };

@@ -1,30 +1,25 @@
-import React, { ReactNode } from "react";
-import { strnum } from "@lib/types/sizes";
+import React from "react";
+import component from "@lib/types/component";
 
-interface TextProps {
-  children: ReactNode;
-  size?: strnum;
-  color?: string;
-  weight?: number | string;
-  opacity?: string;
-  classNames?: string;
-}
+type type_Text = component & {
+  preset?: string;
+};
 
-const Text: React.FC<TextProps> = ({ children, size, color, weight, opacity, classNames }) => {
-  size = size === undefined ? 16 : size;
-  color = color === undefined ? "#fff" : color;
-  weight = weight === undefined ? "400" : weight;
-  opacity = opacity === undefined ? "1" : opacity;
+type type_presets = {
+  [key: string]: React.CSSProperties;
+};
+
+const presets: type_presets = {
+  "1em-norm": { fontSize: "1em", fontWeight: "400", font: "lato" },
+};
+
+const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset }) => {
+  if (preset) {
+    style = presets[preset];
+  }
+
   return (
-    <span
-      style={{
-        fontFamily: "Lato",
-        color: color,
-        fontSize: size,
-        fontWeight: weight,
-        opacity: opacity,
-      }}
-      className={classNames}>
+    <span style={style} onClick={onClick} className={className}>
       {children}
     </span>
   );

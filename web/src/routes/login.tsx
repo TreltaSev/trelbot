@@ -19,7 +19,7 @@ import DiscordLogo from "@lib/svg/DiscordLogo";
 import { form } from "@lib/types/sizes";
 
 /* Lib Element */
-import Text from "@lib/element/Text";
+import DepracatedText from "@root/lib/element/DepracatedText";
 
 const DiscordLoginButton = () => {
   const redirectLogin = () => {
@@ -34,7 +34,7 @@ const DiscordLoginButton = () => {
       style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }}
       className={`${custom.button} ${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
       <DiscordLogo />
-      <Text size={16}>Login with Discord</Text>
+      <DepracatedText size={16}>Login with Discord</DepracatedText>
     </div>
   );
 };
@@ -51,11 +51,11 @@ const Error: React.FC<errorTypes> = ({ active, message, code }) => {
       style={{ maxWidth: 200, minWidth: 100, padding: 10, position: "absolute", bottom: 50, right: 50 }}
       className={`${styling.flex_col} ${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center}`}>
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.5)", padding: "2px 0px" }} className={`${styling.flex_row} ${styling.align_items_start} ${styling.fill_width}`}>
-        <Text size={10}>Notice</Text>
+        <DepracatedText size={10}>Notice</DepracatedText>
       </div>
-      <Text size={10} opacity='0.5'>
+      <DepracatedText size={10} opacity='0.5'>
         {message} #{code}
-      </Text>
+      </DepracatedText>
     </div>
   );
 };
@@ -100,10 +100,10 @@ const Login: React.FC = () => {
         <PartialLogo />
 
         {/* Text under logo */}
-        <Text size={16}>Welcome to Trelbot</Text>
-        <Text size={16} opacity='0.5' classNames={`${custom.login_text}`}>
+        <DepracatedText size={16}>Welcome to Trelbot</DepracatedText>
+        <DepracatedText size={16} opacity='0.5' classNames={`${custom.login_text}`}>
           A discord bot with a (soon to be) small variety of games, automation messages, multiple commands for moderation and some funnies ;)
-        </Text>
+        </DepracatedText>
 
         {/* Login Button */}
         <DiscordLoginButton />

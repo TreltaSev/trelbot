@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import user from "@lib/types/user";
 import SmallLogo from "@lib/svg/SmallLogo";
 import styling from "@assets/styling.module.css";
-import Text from "@lib/element/Text";
+import DepracatedText from "@root/lib/element/DepracatedText";
 import Spacer from "@lib/element/Spacer";
 import NavigationMenuItem from "@lib/element/NavigationMenuItem";
 import UsernameGroup from "@lib/element/UsernameGroup";
@@ -50,7 +50,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
         {/* Top Left Corner */}
         <div style={{ gap: 16 }} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
           <SmallLogo />
-          <Text size={30}>Trelbot</Text>
+          <DepracatedText size={30}>Trelbot</DepracatedText>
         </div>
 
         <Spacer />

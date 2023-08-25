@@ -1,0 +1,33 @@
+import React, { ReactNode } from "react";
+import { strnum } from "@lib/types/sizes";
+
+interface DepracatedTextProps {
+  children: ReactNode;
+  size?: strnum;
+  color?: string;
+  weight?: number | string;
+  opacity?: string;
+  classNames?: string;
+}
+
+const DepracatedText: React.FC<DepracatedTextProps> = ({ children, size, color, weight, opacity, classNames }) => {
+  size = size === undefined ? 16 : size;
+  color = color === undefined ? "#fff" : color;
+  weight = weight === undefined ? "400" : weight;
+  opacity = opacity === undefined ? "1" : opacity;
+  return (
+    <span
+      style={{
+        fontFamily: "Lato",
+        color: color,
+        fontSize: size,
+        fontWeight: weight,
+        opacity: opacity,
+      }}
+      className={classNames}>
+      {children}
+    </span>
+  );
+};
+
+export default DepracatedText;

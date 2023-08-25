@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styling from "@assets/styling.module.css";
 
-import Text from "@lib/element/Text";
+import DepracatedText from "@root/lib/element/DepracatedText";
 import GuildChip from "@lib/element/GuildChip";
 import sortGuildsAsMutable from "@lib/method/sortGuildsAsMutable";
 import { form } from "@lib/types/sizes";
@@ -41,12 +41,12 @@ const DashboardSelector: React.FC = () => {
     <div style={{ gap: 40 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center}`}>
       {/* Text Group */}
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.align_items_center} ${custom.dashboard_select_text_padding}`}>
-        <Text size={form(30, 24)} weight={"700"}>
+        <DepracatedText size={form(30, 24)} weight={"700"}>
           Select a Server
-        </Text>
-        <Text size={form(30, 24)} classNames={styling.text_align_center} opacity='0.5'>
+        </DepracatedText>
+        <DepracatedText size={form(30, 24)} classNames={styling.text_align_center} opacity='0.5'>
           Choose a server by hitting the select or invite buttons!
-        </Text>
+        </DepracatedText>
       </div>
 
       {/* Guilds */}
