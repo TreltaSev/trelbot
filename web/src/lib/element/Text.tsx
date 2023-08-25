@@ -10,6 +10,7 @@ type type_presets = {
 };
 
 const presets: type_presets = {
+  "normal": {fontWeight: "400", fontFamily: "Lato", color: "white"},
   "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato", color: "white"},
   "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white"}
 };

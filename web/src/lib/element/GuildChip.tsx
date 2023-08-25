@@ -1,5 +1,5 @@
 import React from "react";
-import DepracatedText from "@root/lib/element/DepracatedText";
+import Text from "@root/lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import styling from "@assets/styling.module.css";
 import custom from "@assets/custom.module.css";
@@ -36,12 +36,12 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
       <img alt='' src={image} width={40} height={40} style={{ borderRadius: "50%" }} className={`${styling.no_shrink}`} />
 
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_start}`}>
-        <DepracatedText size={14} classNames={`${styling.white_space_nowrap} ${styling.text_overflow_ellipsis} ${styling.overflow_hidden}`}>
+        <Text preset="normal" style={{fontSize: 14}} className={`${styling.white_space_nowrap} ${styling.text_overflow_ellipsis} ${styling.overflow_hidden}`}>
           {name}
-        </DepracatedText>
-        <DepracatedText size={14} opacity='0.5'>
+        </Text>
+        <Text preset="normal" style={{opacity: "0.5"}}>
           {display}
-        </DepracatedText>
+        </Text>
       </div>
 
       <Spacer />
@@ -50,7 +50,7 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
         onClick={() => click()}
         style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, borderRadius: 5 }}
         className={`${custom.button} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
-        <DepracatedText size={16}>{button_text}</DepracatedText>
+        <Text preset="1em-normal">{button_text}</Text>
       </div>
     </div>
   );
