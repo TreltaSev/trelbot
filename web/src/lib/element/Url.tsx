@@ -6,7 +6,7 @@ type type_Url = type_Text & {
   href?: string;
 };
 
-const Url: React.FC<type_Url> = ({ children, className, style, href }) => {
+const Url: React.FC<type_Url> = ({ children, className, style, preset, href }) => {
   const redirect = () => {
     if (!href) {
       return;
@@ -14,7 +14,7 @@ const Url: React.FC<type_Url> = ({ children, className, style, href }) => {
     window.location.href = href;
   };
   return (
-    <Text onClick={() => redirect()} className={className} style={style}>
+    <Text onClick={() => redirect()} className={className} style={style} preset={preset}>
       {children}
     </Text>
   );
