@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import DepracatedText from "@root/lib/element/DepracatedText";
+import Text from "@lib/element/Text";
 
 interface NavigationMenuItemProperties {
   name: string;
@@ -42,7 +42,7 @@ const NavigationMenuItem: React.FC<NavigationMenuItemProperties> = ({ name, href
 
   return (
     <div onClick={() => Action()} onMouseEnter={() => HoverOn()} onMouseLeave={() => HoverOff()} style={{ opacity: 0.8, cursor: "pointer" }} ref={componentRef}>
-      <DepracatedText>{name}</DepracatedText>
+      <Text preset="1em-normal">{name}</Text>
     </div>
   );
 };
