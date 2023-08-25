@@ -12,7 +12,7 @@ type type_GuildContainer = {
 
 const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
   return (
-    <FlexRow style={{ padding: 10, gap: 10 }} className={`${styling.align_items_center} ${styling.align_self_stretch}`}>
+    <FlexRow style={{ padding: 10, gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
       {/* Image */}
       <img alt='' src={guild?.icon_url} style={{ borderRadius: "50%" }} width={40} height={40} />
       <TextGroup style={{ gap: 5 }}>
