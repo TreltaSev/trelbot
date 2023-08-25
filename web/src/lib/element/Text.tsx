@@ -10,7 +10,7 @@ type type_presets = {
 };
 
 const presets: type_presets = {
-  "1em-normal": { fontSize: "1em", fontWeight: "400", font: "lato" },
+  "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato" },
 };
 
 const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset }) => {
