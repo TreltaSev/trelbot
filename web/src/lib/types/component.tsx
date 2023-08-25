@@ -5,6 +5,8 @@ type component = {
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 export default component;
