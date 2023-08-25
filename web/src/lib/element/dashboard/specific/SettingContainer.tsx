@@ -11,11 +11,11 @@ type type_SettingContainer = component & {
   icon?: string;
 }
 
-const SettingContainer: React.FC<type_SettingContainer> = ({ name, icon }) => {
+const SettingContainer: React.FC<type_SettingContainer> = ({ name, icon, onClick }) => {
   const container_ref = React.useRef<HTMLDivElement | null>(null);
 
   return (
-    <FlexRow onMouseEnter={() => light_element(container_ref)} onMouseLeave={() => dim_element(container_ref)} innerref={container_ref} style={{gap: 10, padding:10, borderRadius: 5, cursor: "pointer", opacity: "0.8"}} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
+    <FlexRow onClick={onClick} onMouseEnter={() => light_element(container_ref)} onMouseLeave={() => dim_element(container_ref)} innerref={container_ref} style={{gap: 10, padding:10, borderRadius: 5, cursor: "pointer", opacity: "0.8"}} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
       <Text preset="1em-normal" style={{color: "white", fontSize: 16}}>{name}</Text>
     </FlexRow>
   );
