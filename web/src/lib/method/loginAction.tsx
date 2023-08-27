@@ -14,6 +14,13 @@ class loginAction {
   }
 
   /**
+   * Sets the action of ling from localstorage
+   */
+  setAction(value: string): void {
+    localStorage.setItem("login_action?", value);
+  }
+
+  /**
    * Sets the error by using localStorage
    * @param action
    * @param message
