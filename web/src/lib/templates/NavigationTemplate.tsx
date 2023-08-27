@@ -10,6 +10,7 @@ import UsernameGroup from "@lib/element/UsernameGroup";
 import Arrow from "@lib/svg/Arrow";
 import cache_me from "@lib/method/cache@me";
 import nli_transfer from "@lib/method/nli_transfer";
+import loginAction from "@lib/method/loginAction";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -50,7 +51,9 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
         {/* Top Left Corner */}
         <div style={{ gap: 16 }} className={`${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box} ${styling.fill_height}`}>
           <SmallLogo />
-          <Text preset="normal" style={{fontSize: 30}}>Trelbot</Text>
+          <Text preset='normal' style={{ fontSize: 30 }}>
+            Trelbot
+          </Text>
         </div>
 
         <Spacer />
@@ -89,9 +92,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
                 name='Logout'
                 method={() => {
                   Cookies.remove("session");
-                  localStorage.setItem("login_action?", "error");
-                  localStorage.setItem("login_error_message?", "You have been logged out");
-                  localStorage.setItem("login_error_code?", "1020");
+                  new loginAction().setError("error", "You have been logged out", "1020", "/login");
                   window.location.href = "/login";
                 }}
               />
