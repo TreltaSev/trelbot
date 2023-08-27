@@ -71,10 +71,8 @@ const Login: React.FC = () => {
       if (login_action === "error") {
         // Display an error
         const _error = new loginAction().getError();
-        const _errormessage = sessionStorage.getItem("login_error_message?");
-        const _errorcode = sessionStorage.getItem("login_error_code?");
 
-        setError({ active: true, message: _error.login_error_message, code: _errorcode });
+        setError({ active: true, message: _error.login_error_message, code: _error.login_error_code });
         const _timeout = setTimeout(() => {
           setError({ active: false });
           clearTimeout(_timeout);

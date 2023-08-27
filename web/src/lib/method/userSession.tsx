@@ -1,7 +1,7 @@
 class userSession {
   /**
-   * Sets re-used user data inside `SessionStorage`, key of data is `"user.volatile"`
-   * the data inside user.volatile is either a json serializable string containing the `avatar url`, `name`,
+   * Sets re-used user data inside `LocalStorage`, key of data is `"user.persistant"`
+   * the data inside user.persistant is either a json serializable string containing the `avatar url`, `name`,
    * and `discriminator` of the user or a null | undefined object.
    */
   set(name: string, discriminator: string | number, avatar: string): void {
@@ -10,21 +10,21 @@ class userSession {
       discriminator: discriminator,
       avatar: avatar,
     };
-    sessionStorage.setItem("user.volatile", JSON.stringify(userobj));
+    localStorage.setItem("user.persistant", JSON.stringify(userobj));
   }
 
   /**
-   * uses sessionStorage remove to remove the user data stored in user.volatile of sessionStorage
+   * uses localStorage remove to remove the user data stored in user.persistant of localStorage
    */
   remove(): void {
-    sessionStorage.removeItem("user.volatile");
+    localStorage.removeItem("user.persistant");
   }
 
   /**
-   * Returns the json object of `user.volatile`, its either a `object` or `null` | `undefined`
+   * Returns the json object of `user.persistant`, its either a `object` or `null` | `undefined`
    */
   get(): object | null {
-    const userstr: string | null = sessionStorage.getItem("user.volatile");
+    const userstr: string | null = localStorage.getItem("user.persistant");
     if (!userstr) {
       return null;
     }

@@ -14,7 +14,7 @@ class loginAction {
   }
 
   /**
-   * Sets the error by using sessionStorage
+   * Sets the error by using localStorage
    * @param action
    * @param message
    * @param code
@@ -31,7 +31,7 @@ class loginAction {
   }
 
   /**
-   * Removes sessionStorage key login_action?;login_error_message?; and login_error_code;
+   * Removes localStorage key login_action?;login_error_message?; and login_error_code;
    */
   removeError() {
     localStorage.removeItem("login_action?");

@@ -19,11 +19,11 @@ const DashboardSelector: React.FC = () => {
       setGuilds(get_guilds);
     });
     const refreshInterval = setInterval(() => {
-      const selector_action: string | null = sessionStorage.getItem("selector_action?");
-      const selector_redirect: string | null = sessionStorage.getItem("selector_redirect?");
+      const selector_action: string | null = localStorage.getItem("selector_action?");
+      const selector_redirect: string | null = localStorage.getItem("selector_redirect?");
       if (selector_action === "redirect" && selector_redirect !== null) {
-        sessionStorage.removeItem("selector_action?");
-        sessionStorage.removeItem("selector_redirect?");
+        localStorage.removeItem("selector_action?");
+        localStorage.removeItem("selector_redirect?");
         window.location.href = selector_redirect;
         clearInterval(refreshInterval);
       }

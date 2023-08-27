@@ -15,7 +15,7 @@ const DiscordCallback: React.FC = () => {
       .then((_d) => {
         if ("session" in _d) {
           Cookies.set("session", _d["session"], { expires: _d["expires_in"] });
-          sessionStorage.setItem("login_action?", "refresh");
+          localStorage.setItem("login_action?", "refresh");
         }
         window.close();
       });
