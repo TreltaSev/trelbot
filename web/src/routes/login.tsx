@@ -15,9 +15,6 @@ import DefaultTemplate from "@lib/templates/DefaultTemplate";
 import PartialLogo from "@lib/svg/PartialLogo";
 import DiscordLogo from "@lib/svg/DiscordLogo";
 
-/* Lib Types */
-import { form } from "@lib/types/sizes";
-
 /* Lib Element */
 import Text from "@root/lib/element/Text";
 
