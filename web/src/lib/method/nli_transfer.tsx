@@ -3,7 +3,7 @@
  * Transfers the client back to /login if use isn't logged in
  */
 
-import loginError from "@lib/method/loginError";
+import set from "@root/lib/method/loginAction";
 
 /**
  * Sends a user back to login if input value is undefined
@@ -12,7 +12,7 @@ import loginError from "@lib/method/loginError";
  */
 const nli_transfer = (value: any): void => {
   if (value === undefined) {
-    loginError("error", "You dont seem to be logged in, or maybe you cleared your cookies.", "1020", "/login");
+    set("error", "You dont seem to be logged in, or maybe you cleared your cookies.", "1020", "/login");
   }
   return;
 };

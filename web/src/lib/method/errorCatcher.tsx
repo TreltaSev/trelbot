@@ -1,4 +1,4 @@
-import loginError from "@lib/method/loginError";
+import set from "@root/lib/method/loginAction";
 
 const errorCatcher = (data: any): boolean => {
   if (data.hasOwnProperty("code")) {
@@ -9,7 +9,7 @@ const errorCatcher = (data: any): boolean => {
       case 1020:
       case 1028:
         // Error 1020 || 1028
-        loginError("error", _message, _code.toString(), "/login");
+        set("error", _message, _code.toString(), "/login");
         break;
       default:
         console.error(`Error, Stack: ${data}`);
