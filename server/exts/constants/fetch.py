@@ -70,3 +70,25 @@ class FetchGuild(UpperLevelFetch):
 
     def __init__(self, headers: dict, guild_id: str | int):
         super().__init__(f"https://discord.com/api/guilds/{guild_id}", headers)
+
+class FetchChannels(UpperLevelFetch):
+    """
+    Fetches a guilds cahnnels from the guild id
+    returens a dict as teh response
+    access the response with self.response.
+    sends a get request to `https://discord.com/api/guilds/{guild.id}/channels`
+    """
+
+    def __init__(self, headers: dict, guild_id: str | int):
+        super().__init__(f"https://discord.com/api/guilds/{guild_id}/channels", headers)
+
+class FetchCurrentUserGuildMember(UpperLevelFetch):
+    """
+    Fetches the current user guild member object
+    returns a dict as the response.
+    access the resposne with self.response
+    sends a get request to `https://discord.com/api/users/@me/guilds/{guild.id}/member
+    """
+
+    def __init__(self, headers: dict, guild_id: str):
+        super().__init__(f"https://discord.com/api/users/@me/guilds/{guild_id}/member", headers)

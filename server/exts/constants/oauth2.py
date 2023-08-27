@@ -65,7 +65,7 @@ class Oauth2:
     token = "OTMyOTk5OTY1NDk4ODM0OTU0.GJoDm0.hnXOxg7Wm83MFCQcKNFun0x6Bw12I79Y043AN0"
 
     @classmethod
-    def __formAuthorization(cls, access_token: str, TYPE: str = "Bearer") -> dict:
+    def formAuthorization(cls, access_token: str, TYPE: str = "Bearer") -> dict:
         """
         Creates a dictionary which contains the key Authorization, the value of this key
         will always be "Bearer {access_token}", this method is `private` by default
@@ -82,7 +82,7 @@ class Oauth2:
             "grant_type": "authorization_code",
             "code": code,
             "redirect_uri": cls.redirect_uri,
-            "scope": "identify%20email%20guilds"
+            "scope": "identify%20email%20guilds%20guilds.join"
         }
 
         response = requests.post(
@@ -102,7 +102,7 @@ class Oauth2:
         id, username, discriminator, avatar
         """
         response = requests.get(url="https://discord.com/api/users/@me",
-                                headers=cls.__formAuthorization(access_token)).json()
+                                headers=cls.formAuthorization(access_token)).json()
 
         if "code" in response:
             raise errors.BaseServerRouteException(
@@ -119,9 +119,9 @@ class Oauth2:
         """
 
         CurrentUserGuilds: dict = fetch.FetchCurrentUserGuilds(
-            headers=cls.__formAuthorization(access_token)).response
+            headers=cls.formAuthorization(access_token)).response
         CurrentBotGuilds: dict = fetch.FetchCurrentBotGuilds(
-            headers=cls.__formAuthorization(cls.token, "Bot")).response
+            headers=cls.formAuthorization(cls.token, "Bot")).response
 
         return_guilds = []
 
@@ -157,7 +157,7 @@ class Oauth2:
         to `discord.com/api/guilds/{guild_id}`, the return object is a `types.guild`.
         """
         CurrentUserGuilds: dict = fetch.FetchCurrentUserGuilds(
-            headers=cls.__formAuthorization(access_token)).response
+            headers=cls.formAuthorization(access_token)).response
 
         _valid: bool = False
 
@@ -178,15 +178,52 @@ class Oauth2:
 
         if not _valid:
             raise errors.BaseServerRouteException(
-                f"Error while getting guild: {_valid} has not passed the vibe check. (make sure you're an owner or admin and that trelbot is in the server)", code=1020
+                f"Error while getting guild: {guild_id} has not passed the vibe check. (make sure you're an owner or admin and that trelbot is in the server)", code=1020
             )
 
-        Guild: dict = fetch.FetchGuild(headers=cls.__formAuthorization(
+        Guild: dict = fetch.FetchGuild(headers=cls.formAuthorization(
             cls.token, "Bot"), guild_id=guild_id).response
 
         _MatchGuild = types.guild(Guild)
 
         return _MatchGuild
+
+    @classmethod
+    def GetChannels(cls, access_token: str, guild_id: str | int) -> List[types.channel] | dict:
+        """
+        Gets a guild's channels by sending a request with `access_token: str`, replicating
+        the function for `getguilds` and `getguild`, the main request is `discord.com/api/guilds/{guild_id}/channels`,
+        the return object is a `typing.List[types.channel]`
+        """
+
+        CurrentUserGuilds: dict = fetch.FetchCurrentUserGuilds(
+            headers=cls.formAuthorization(access_token)).response
+
+        _valid: bool = False
+
+        for guild in CurrentUserGuilds:
+            _guild = types.guild(guild)
+            if str(_guild.id) != str(guild_id):
+                continue
+
+            _guild_permissions: types.permissions = types.permissions(
+                _guild.permissions)
+
+            is_owner: bool = _guild.owner
+            is_admin: bool = _guild_permissions.ADMINISTRATOR
+
+            if not is_admin and not is_owner:
+                break
+
+            _valid = True
+
+        if not _valid:
+            raise errors.BaseServerRouteException(
+                f"Error while getting the channels of: {guild_id}, has not passed the vibe check. (Make sure you have administrator privilages or that you're an owner)", code=1020
+            )
+
+        Channels: dict = fetch.FetchChannels(headers=cls.formAuthorization(access_token=cls.token, TYPE="Bot"), guild_id=guild_id).response
+        return Channels
 
     @classmethod
     def __in(cls, _guilds: list, _check: int) -> bool:
