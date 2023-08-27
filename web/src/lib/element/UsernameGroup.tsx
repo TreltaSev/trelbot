@@ -4,7 +4,7 @@ import Text from "@lib/element/Text";
 import user from "@lib/types/user";
 
 interface UsernameGroupProps {
-  user: user;
+  user: user | undefined;
 }
 
 const UsernameGroup: React.FC<UsernameGroupProps> = ({ user }) => {
