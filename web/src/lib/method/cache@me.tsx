@@ -14,6 +14,7 @@ const cache_me = async (set: (user: user) => void): Promise<user> => {
   const _me = await _meResponse.json();
 
   if (errorCatcher(_me)) {
+    new userSession().remove()
     throw new Error(`Response contains error for @me in json ${_me}`);
   }
 
@@ -24,7 +25,7 @@ const cache_me = async (set: (user: user) => void): Promise<user> => {
     avatar: _me.avatar_url,
   };
 
-  new userSession().set(_me.username, _me.discriminator as string, _me.avatar_url)
+  new userSession().set(_me.username, _me.id, _me.discriminator as string, _me.avatar_url)
 
   set(me);
 

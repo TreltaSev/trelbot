@@ -11,6 +11,7 @@ import Arrow from "@lib/svg/Arrow";
 import cache_me from "@lib/method/cache@me";
 import nli_transfer from "@lib/method/nli_transfer";
 import loginAction from "@lib/method/loginAction";
+import userSession from "../method/userSession";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -36,6 +37,11 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
 
   useEffect(() => {
     nli_transfer(Cookies.get("session"));
+
+    const localUser: user | null = new userSession().get()
+    if (localUser) {
+      setUser(localUser)
+    }
 
     cache_me(setUser);
 

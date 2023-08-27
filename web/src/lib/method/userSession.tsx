@@ -1,12 +1,15 @@
+import user from "@lib/types/user";
+
 class userSession {
   /**
    * Sets re-used user data inside `LocalStorage`, key of data is `"user.persistant"`
    * the data inside user.persistant is either a json serializable string containing the `avatar url`, `name`,
    * and `discriminator` of the user or a null | undefined object.
    */
-  set(name: string, discriminator: string | number, avatar: string): void {
+  set(name: string, id: number, discriminator: string | number, avatar: string): void {
     const userobj = {
       name: name,
+      id: id,
       discriminator: discriminator,
       avatar: avatar,
     };
@@ -23,7 +26,7 @@ class userSession {
   /**
    * Returns the json object of `user.persistant`, its either a `object` or `null` | `undefined`
    */
-  get(): object | null {
+  get(): user | null {
     const userstr: string | null = localStorage.getItem("user.persistant");
     if (!userstr) {
       return null;
