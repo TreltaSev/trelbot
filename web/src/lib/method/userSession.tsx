@@ -30,6 +30,13 @@ class userSession {
     }
     return JSON.parse(userstr);
   }
+
+  /**
+   * @returns a boolean representing if user.persistant from localstorage is set or not.
+   */
+  isEmpty(): boolean {
+    return localStorage.getItem("user.persistant") === null;
+  }
 }
 
 export default userSession;
