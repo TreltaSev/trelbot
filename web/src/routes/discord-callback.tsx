@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import jsonform from "@lib/form/jsonform";
 import config from "@assets/config";
 import Cookies from "js-cookie";
+import loginAction from "@root/lib/method/loginAction";
 
 const DiscordCallback: React.FC = () => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const DiscordCallback: React.FC = () => {
       .then((_d) => {
         if ("session" in _d) {
           Cookies.set("session", _d["session"], { expires: _d["expires_in"] });
-          localStorage.setItem("login_action?", "refresh");
+          new loginAction().setAction("refresh");
         }
         window.close();
       });

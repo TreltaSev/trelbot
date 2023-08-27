@@ -63,7 +63,7 @@ const Login: React.FC = () => {
       const login_action: string | null = new loginAction().getAction();
 
       if (login_action === "refresh") {
-        sessionStorage.removeItem("login_action?");
+        new loginAction().removeAction()
         clearInterval(refreshInterval);
         location.href = "/dashboard";
       }
@@ -78,7 +78,7 @@ const Login: React.FC = () => {
           clearTimeout(_timeout);
         }, 50 * 1000);
 
-        // Clear sessionStorage of errors
+        // Clear localStorage of errors
         new loginAction().removeError();
       }
     }, 500);

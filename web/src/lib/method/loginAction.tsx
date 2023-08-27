@@ -21,6 +21,13 @@ class loginAction {
   }
 
   /**
+   * removes action of login from localstorage
+   */
+  removeAction() {
+    localStorage.removeItem("login_action?")
+  }
+
+  /**
    * Sets the error by using localStorage
    * @param action
    * @param message
