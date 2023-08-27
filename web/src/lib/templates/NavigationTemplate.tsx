@@ -12,6 +12,7 @@ import cache_me from "@lib/method/cache@me";
 import nli_transfer from "@lib/method/nli_transfer";
 import loginAction from "@lib/method/loginAction";
 import userSession from "../method/userSession";
+import EmptyIfUndefined from "../element/EmptyIfUndefined";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -70,16 +71,12 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
           <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
             {/* Username Group */}
 
-            {user === undefined ? (
-              <></>
-            ) : (
-              <>
-                <UsernameGroup user={user} />
-                <div style={{ cursor: "pointer" }} onClick={() => DropdownToggle()} ref={dropdownButtonRef}>
-                  <Arrow />
-                </div>
-              </>
-            )}
+            <EmptyIfUndefined value={user}>            
+              <UsernameGroup user={user} />
+              <div style={{ cursor: "pointer" }} onClick={() => DropdownToggle()} ref={dropdownButtonRef}>
+                <Arrow />
+              </div>              
+            </EmptyIfUndefined>
 
             {/* Actual Menu */}
             <div
