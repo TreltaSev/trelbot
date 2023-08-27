@@ -1,4 +1,4 @@
-import set from "@root/lib/method/loginAction";
+import { set } from "@lib/method/loginAction";
 
 const errorCatcher = (data: any): boolean => {
   if (data.hasOwnProperty("code")) {
