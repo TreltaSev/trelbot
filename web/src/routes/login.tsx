@@ -27,12 +27,9 @@ const DiscordLoginButton = () => {
     window.open(authorize_url, "_blank", `width=${width}, height=${height}`);
   };
   return (
-    <div
-      onClick={() => redirectLogin()}
-      style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }}
-      className={`${custom.button} ${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+    <div onClick={() => redirectLogin()} style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }} className={`${custom.button} ${custom.discordlogin} ${custom.discordbutton} ${styling.flex_row} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
       <DiscordLogo />
-      <Text preset="1em-normal">Login with Discord</Text>
+      <Text preset='1em-normal'>Login with Discord</Text>
     </div>
   );
 };
@@ -45,13 +42,13 @@ type errorTypes = {
 
 const Error: React.FC<errorTypes> = ({ active, message, code }) => {
   return (
-    <div
-      style={{ maxWidth: 200, minWidth: 100, padding: 10, position: "absolute", bottom: 50, right: 50 }}
-      className={`${styling.flex_col} ${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center}`}>
+    <div style={{ maxWidth: 200, minWidth: 100, padding: 10, position: "absolute", bottom: 50, right: 50 }} className={`${styling.flex_col} ${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center}`}>
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.5)", padding: "2px 0px" }} className={`${styling.flex_row} ${styling.align_items_start} ${styling.fill_width}`}>
-        <Text preset="normal" style={{fontSize: 10}}>Notice</Text>
+        <Text preset='normal' style={{ fontSize: 10 }}>
+          Notice
+        </Text>
       </div>
-      <Text preset="normal" style={{fontSize: 10, opacity: "0.5"}}>
+      <Text preset='normal' style={{ fontSize: 10, opacity: "0.5" }}>
         {message} #{code}
       </Text>
     </div>
@@ -63,7 +60,8 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
-      const login_action: string | null = sessionStorage.getItem("login_action?");
+      const login_action: string | null = new loginAction().getAction();
+
       if (login_action === "refresh") {
         sessionStorage.removeItem("login_action?");
         clearInterval(refreshInterval);
@@ -72,10 +70,11 @@ const Login: React.FC = () => {
 
       if (login_action === "error") {
         // Display an error
+        const _error = new loginAction().getError();
         const _errormessage = sessionStorage.getItem("login_error_message?");
         const _errorcode = sessionStorage.getItem("login_error_code?");
 
-        setError({ active: true, message: _errormessage, code: _errorcode });
+        setError({ active: true, message: _error.login_error_message, code: _errorcode });
         const _timeout = setTimeout(() => {
           setError({ active: false });
           clearTimeout(_timeout);
@@ -96,8 +95,8 @@ const Login: React.FC = () => {
         <PartialLogo />
 
         {/* Text under logo */}
-        <Text preset="1em-normal">Welcome to Trelbot</Text>
-        <Text preset="1em-normal" style={{opacity: "0.5"}} className={`${custom.login_text}`}>
+        <Text preset='1em-normal'>Welcome to Trelbot</Text>
+        <Text preset='1em-normal' style={{ opacity: "0.5" }} className={`${custom.login_text}`}>
           A discord bot with a (soon to be) small variety of games, automation messages, multiple commands for moderation and some funnies ;)
         </Text>
 

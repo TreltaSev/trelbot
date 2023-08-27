@@ -1,4 +1,18 @@
+type type_loginAction = {
+  login_action?: string | null;
+  login_error_message?: string | null;
+  login_error_code?: string | null;
+};
+
 class loginAction {
+  /**
+   * gets the action of login from localStorage
+   * @returns login_action
+   */
+  getAction(): string | null {
+    return localStorage.getItem("login_action?");
+  }
+
   /**
    * Sets the error by using sessionStorage
    * @param action
@@ -10,9 +24,9 @@ class loginAction {
     if (fallback === undefined) {
       fallback = "/login";
     }
-    sessionStorage.setItem("login_action?", action);
-    sessionStorage.setItem("login_error_message?", message);
-    sessionStorage.setItem("login_error_code?", code);
+    localStorage.setItem("login_action?", action);
+    localStorage.setItem("login_error_message?", message);
+    localStorage.setItem("login_error_code?", code);
     window.location.href = fallback;
   }
 
@@ -20,21 +34,21 @@ class loginAction {
    * Removes sessionStorage key login_action?;login_error_message?; and login_error_code;
    */
   removeError() {
-    sessionStorage.removeItem("login_action?");
-    sessionStorage.removeItem("login_error_message?");
-    sessionStorage.removeItem("login_error_code?");
+    localStorage.removeItem("login_action?");
+    localStorage.removeItem("login_error_message?");
+    localStorage.removeItem("login_error_code?");
   }
 
   /**
    *
    * @returns Error data as object
    */
-  getError(): object {
+  getError(): type_loginAction {
     return {
-      login_action: sessionStorage.getItem("login_action?"),
-      login_error_message: sessionStorage.getItem("login_error_message?"),
-      login_error_code: sessionStorage.getItem("login_error_code?"),
-    };
+      login_action: localStorage.getItem("login_action?"),
+      login_error_message: localStorage.getItem("login_error_message?"),
+      login_error_code: localStorage.getItem("login_error_code?"),
+    } as type_loginAction;
   }
 }
 
