@@ -17,6 +17,7 @@ import DiscordLogo from "@lib/svg/DiscordLogo";
 
 /* Lib Element */
 import Text from "@root/lib/element/Text";
+import loginAction from "@root/lib/method/loginAction";
 
 const DiscordLoginButton = () => {
   const redirectLogin = () => {
@@ -62,17 +63,17 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
-      const login_action: string | null = localStorage.getItem("login_action?");
+      const login_action: string | null = sessionStorage.getItem("login_action?");
       if (login_action === "refresh") {
-        localStorage.removeItem("login_action?");
+        sessionStorage.removeItem("login_action?");
         clearInterval(refreshInterval);
         location.href = "/dashboard";
       }
 
       if (login_action === "error") {
         // Display an error
-        const _errormessage = localStorage.getItem("login_error_message?");
-        const _errorcode = localStorage.getItem("login_error_code?");
+        const _errormessage = sessionStorage.getItem("login_error_message?");
+        const _errorcode = sessionStorage.getItem("login_error_code?");
 
         setError({ active: true, message: _errormessage, code: _errorcode });
         const _timeout = setTimeout(() => {
@@ -80,10 +81,8 @@ const Login: React.FC = () => {
           clearTimeout(_timeout);
         }, 50 * 1000);
 
-        // Clear localstore of errors
-        localStorage.removeItem("login_action?");
-        localStorage.removeItem("login_error_message?");
-        localStorage.removeItem("login_error_code?");
+        // Clear sessionStorage of errors
+        new loginAction().removeError();
       }
     }, 500);
   }, []);
