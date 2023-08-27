@@ -13,6 +13,7 @@ import nli_transfer from "@lib/method/nli_transfer";
 import loginAction from "@lib/method/loginAction";
 import userSession from "../method/userSession";
 import EmptyIfUndefined from "../element/EmptyIfUndefined";
+import FlexRow from "../element/FlexRow";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -39,9 +40,9 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
   useEffect(() => {
     nli_transfer(Cookies.get("session"));
 
-    const localUser: user | null = new userSession().get()
+    const localUser: user | null = new userSession().get();
     if (localUser) {
-      setUser(localUser)
+      setUser(localUser);
     }
 
     cache_me(setUser);
@@ -71,11 +72,13 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
           <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
             {/* Username Group */}
 
-            <EmptyIfUndefined value={user}>            
-              <UsernameGroup user={user} />
-              <div style={{ cursor: "pointer" }} onClick={() => DropdownToggle()} ref={dropdownButtonRef}>
-                <Arrow />
-              </div>              
+            <EmptyIfUndefined value={user}>
+              <FlexRow style={{ cursor: "pointer" }} onClick={() => DropdownToggle()}>
+                <UsernameGroup user={user} />
+                <div ref={dropdownButtonRef}>
+                  <Arrow />
+                </div>
+              </FlexRow>
             </EmptyIfUndefined>
 
             {/* Actual Menu */}
