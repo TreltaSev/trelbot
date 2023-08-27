@@ -3,6 +3,7 @@ import config from "@assets/config";
 import errorCatcher from "@lib/method/errorCatcher";
 import nli_transfer from "@lib/method/nli_transfer";
 import user from "@lib/types/user";
+import userSession from "@lib/method/userSession";
 
 const cache_me = async (set: (user: user) => void): Promise<user> => {
   const session = Cookies.get("session");
@@ -22,6 +23,8 @@ const cache_me = async (set: (user: user) => void): Promise<user> => {
     discriminator: _me.discriminator,
     avatar: _me.avatar_url,
   };
+
+  new userSession().set(_me.username, _me.discriminator as string, _me.avatar_url)
 
   set(me);
 
