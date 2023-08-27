@@ -1,11 +1,12 @@
 const path = require("path")
-const prod = process.env.NODE_ENV === 'production';
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
+let _mode: string = process.env.se_mode?.trim() || "development";
+
 module.exports = {
-    mode: prod ? "production": "development",
+    mode: _mode,
     entry: "./src/index.tsx",
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -28,7 +29,7 @@ module.exports = {
             }
         ]
     },
-    devtool: prod ? undefined : 'source-map',
+    devtool: _mode === "production" ? false : 'source-map',
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/index.html',

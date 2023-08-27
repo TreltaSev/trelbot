@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --port 3000",
     "build": "set NODE_ENV=production && webpack",
-    "server": "set NODE_ENV=production && webpack && npx serve -s dist --ssl-cert=\"../.cert/server.cert\" --ssl-key=\"../.cert/server.key\" --no-port-switching -p 443"
+    "production": "set se_mode=production && webpack && terser ./dist/bundle.js -o ./dist/bundle.js && npx serve -s dist --ssl-cert=\"../.cert/server.cert\" --ssl-key=\"../.cert/server.key\" --no-port-switching -p 443",
+    "development": "set se_mode=development && webpack && npx serve -s dist --ssl-cert=\"../.cert/server.cert\" --ssl-key=\"../.cert/server.key\" --no-port-switching -p 443"
   },
   "author": "Trelta",
   "license": "MIT",
@@ -34,6 +35,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
+    "terser": "^5.19.2",
     "ts-node": "^10.9.1"
   }
 }
