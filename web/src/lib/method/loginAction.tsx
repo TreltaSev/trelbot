@@ -24,17 +24,17 @@ class loginAction {
     sessionStorage.removeItem("login_error_message?");
     sessionStorage.removeItem("login_error_code?");
   }
-  
+
   /**
-   * 
+   *
    * @returns Error data as object
    */
   getError(): object {
     return {
       login_action: sessionStorage.getItem("login_action?"),
       login_error_message: sessionStorage.getItem("login_error_message?"),
-      login_error_code: sessionStorage.getItem("login_error_code?")
-    }
+      login_error_code: sessionStorage.getItem("login_error_code?"),
+    };
   }
 }
 
