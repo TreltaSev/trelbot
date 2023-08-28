@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import styling from "@assets/styling.module.css";
 import FlexColumn from "@lib/element/FlexColumn";
-import { dashboardPage, get, parent } from "@lib/element/dashboard/loader";
+import { get, parent } from "@lib/element/dashboard/loader";
 import guild from "@lib/types/guild";
 import GuildContainer from "@lib/element/dashboard/specific/GuildContainer";
 import SettingContainer from "./SettingContainer";
 import { update } from "../DashboardEditor";
 import {  } from "@lib/element/dashboard/loader";
+
+import advanced from "@assets/advanced.module.scss";
+
+console.log(advanced.button)
 
 type type_LeftNavigationBar = {
   guild: guild | undefined
