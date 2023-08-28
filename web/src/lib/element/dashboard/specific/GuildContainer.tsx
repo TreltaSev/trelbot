@@ -19,14 +19,13 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
   if (!guild) {
     return (
       <FlexRow style={main_style} className={`${main_class} ${styling.justify_content_center}`}>
-        <LoadingAnimated />
+        <LoadingAnimated size="8px" gap="4px" heightoffset="6px" amount={3} duration={0.5}  />
       </FlexRow>
     );
   }
 
   return (
     <FlexRow style={main_style} className={main_class}>
-      <LoadingAnimated />
       <img alt='' src={guild?.icon_url} style={{ borderRadius: "50%" }} width={40} height={40} />
       <TextGroup style={{ gap: 5 }}>
         <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: 150 }}>
