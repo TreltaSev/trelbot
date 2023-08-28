@@ -7,6 +7,8 @@ import { form } from "@lib/types/sizes";
 import guild from "@lib/types/guild";
 import custom from "@assets/custom.module.css";
 import cache_guilds from "@lib/method/cache@guilds";
+import LoadingAnimated from "../LoadingAnimated";
+import FlexColumn from "../FlexColumn";
 
 const DashboardSelector: React.FC = () => {
   const [guilds, setGuilds] = useState<guild[] | undefined>(undefined);
@@ -31,7 +33,11 @@ const DashboardSelector: React.FC = () => {
   }, []);
 
   if (guilds === undefined) {
-    return <div>Loading</div>;
+    return (
+      <FlexColumn className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`}>
+        <LoadingAnimated size={30} gap={15} heightoffset={20}/>
+      </FlexColumn>
+    );
   }
 
   sortGuildsAsMutable(guilds);
