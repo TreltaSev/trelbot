@@ -13,13 +13,13 @@ type type_GuildContainer = {
 };
 
 const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
-  const main_style: React.CSSProperties = {  paddingLeft: 10, paddingRight: 10, gap: 10, borderRadius: 5, height: 65, flexShrink: 0 };
+  const main_style: React.CSSProperties = { paddingLeft: 10, paddingRight: 10, gap: 10, borderRadius: 5, height: 65, flexShrink: 0 };
   const main_class: string = `${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`;
 
   if (!guild) {
     return (
       <FlexRow style={main_style} className={`${main_class} ${styling.justify_content_center}`}>
-        <LoadingAnimated size={8} gap={4} heightoffset={6} amount={3} duration={0.5}  />
+        <LoadingAnimated size={8} gap={4} heightoffset={6} amount={3} duration={0.5} />
       </FlexRow>
     );
   }
