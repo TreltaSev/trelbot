@@ -7,8 +7,8 @@ import { form } from "@lib/types/sizes";
 import guild from "@lib/types/guild";
 import custom from "@assets/custom.module.css";
 import cache_guilds from "@lib/method/cache@guilds";
-import LoadingAnimated from "../LoadingAnimated";
-import FlexColumn from "../FlexColumn";
+import LoadingAnimated from "@lib/element/LoadingAnimated";
+import FlexColumn from "@lib/element/FlexColumn";
 
 const DashboardSelector: React.FC = () => {
   const [guilds, setGuilds] = useState<guild[] | undefined>(undefined);
