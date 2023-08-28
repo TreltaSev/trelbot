@@ -1,0 +1,74 @@
+$white: #ffffff;
+$dark: #1a181b;
+$darksub: #242225;
+$main: #8c52ff;
+$accent: #fdeafe;
+$timing: cubic-bezier(0.11, 0.07, 0.04, 0.98);
+
+$small: 0.5em;
+$medium: 0.75em;
+$large: 1em;
+
+@mixin circle($size) {
+  flex-shrink: 0;
+  background-color: $main;
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+  position: absolute;
+  bottom: 0;
+}
+
+@mixin children($elements, $size) {
+  @for $i from 0 to $elements {
+    div:nth-child(#{$i + 1}) {
+      @if $i == 1 {
+        left: calc(50% - (#{$size} / 2));
+      }
+
+      @include circle($size);
+    }
+  }
+}
+
+.animationcontainer.small {
+  @include children(3, $small);
+}
+
+.animationcontainer.medium {
+  @include children(3, $medium);
+}
+
+.animationcontainer.large {
+  @include children(3, $large);
+}
+
+.animationcontainer {
+  position: relative;
+
+  $elements: 3;
+  @for $i from 0 to $elements {
+    div:nth-child(#{$i + 1}) {
+      @if $i == 0 {
+        left: 0;
+      }
+
+      @if $i == 2 {
+        right: 0;
+      }
+      animation: loading 1s $timing calc(222ms * #{$i}) infinite alternate;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: translateY(-10px);
+  }
+}
