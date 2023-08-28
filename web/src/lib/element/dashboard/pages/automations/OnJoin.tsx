@@ -2,7 +2,8 @@ import FlexColumn from "@lib/element/FlexColumn";
 import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
 import React from "react";
-import ToggleButton from "@root/lib/element/ToggleButton";
+import ToggleButton from "@lib/element/ToggleButton";
+import Dropdown from "@lib/element/Dropdown";
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
@@ -18,6 +19,7 @@ const OnJoin: React.FC = () => {
           </Text>
         </TextGroup>
         <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
+        <Dropdown/>
       </FlexColumn>
     </>
   );

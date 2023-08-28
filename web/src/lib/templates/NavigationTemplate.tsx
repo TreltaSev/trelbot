@@ -78,7 +78,7 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
               <FlexRow style={{ cursor: "pointer" }} onClick={() => DropdownToggle()}>
                 <UsernameGroup user={user} />
                 <div ref={dropdownButtonRef}>
-                  <Arrow />
+                  <Arrow style={{minWidth: 14, minHeight: 14, width: 14, height: 14}} />
                 </div>
               </FlexRow>
             </AlternativeIfUndefined>

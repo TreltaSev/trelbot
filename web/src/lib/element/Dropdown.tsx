@@ -13,12 +13,12 @@ const Dropdown: React.ForwardRefRenderFunction<HTMLDivElement, type_dropdown> = 
   return (
     <>
       <FlexRow style={{ width: 300, height: 30, flexShrink: 0, padding: "0 10px", gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.dark}`}>
-        <ChannelTag />
-        <Text preset='1em-normal' style={{ opacity: "0.8" }}>
+        <ChannelTag style={{minWidth: 16, minHeight: 16, width: 16, height: 16}}/>
+        <Text preset='1em-normal' style={{ opacity: "0.8", whiteSpace: "nowrap" }}>
           Select a Channel
         </Text>
         <Spacer />
-        <Arrow width={10} height={10} />
+        <Arrow style={{minWidth: 20, minHeight: 20, width: 20, height: 20}} />
       </FlexRow>
     </>
   );
