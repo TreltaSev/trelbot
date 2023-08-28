@@ -22,7 +22,7 @@ const App: React.FC = () => {
             <Route path='' element={<Dashboard />} />
           </Route>
 
-          {routes.length == 0 ? <></> : routes.map((route) => <Route path={route.path} element={route.element} key={`${route.path};;;render`} />)}
+          {routes.length == 0 ? <></> : routes.map((route) => <Route path={route.path} element={route.element} key={`${route.path}/render`} />)}
         </Routes>
       </Router>
     </>
