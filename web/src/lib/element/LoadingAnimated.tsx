@@ -2,7 +2,7 @@ import React from "react";
 import styling from "@assets/styling.module.css";
 import FlexRow from "@lib/element/FlexRow";
 import { strnum } from "@lib/types/sizes";
-import defaultValue from "../method/defaultValue";
+import defaultValue from "@lib/method/defaultValue";
 import { cubicBezier, motion } from "framer-motion";
 import { uuidv7 } from "uuidv7";
 
