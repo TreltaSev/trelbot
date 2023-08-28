@@ -1,10 +1,11 @@
 import React from "react";
-import styling from "@assets/styling.module.css";
 import FlexRow from "@lib/element/FlexRow";
-import { strnum } from "@lib/types/sizes";
+import styling from "@assets/styling.module.css";
 import defaultValue from "@lib/method/defaultValue";
-import { cubicBezier, motion } from "framer-motion";
+
 import { uuidv7 } from "uuidv7";
+import { strnum } from "@lib/types/sizes";
+import { cubicBezier, motion } from "framer-motion";
 
 type type_LoadingAnimated = {
   size?: strnum;
@@ -27,7 +28,7 @@ const LoadingAnimated: React.FC<type_LoadingAnimated> = ({ size, gap, heightoffs
           style={{ width: _size, height: _size, flexShrink: 0, borderRadius: "50%" }}
           initial={{ opacity: 1, transform: `translateY(${_size / 2}px)`, y: "0" }}
           animate={{ opacity: [1.0, 0.5], transform: [`translateY(${_size / 2}px`, `translateY(-${_size / 2}px`] }}
-          transition={{ duration: _duration, repeat: Infinity, repeatType: "reverse", ease: cubicBezier(0.11, 0.07, 0.04, 0.98), delay: (_duration / _amount) * i}}
+          transition={{ duration: _duration, repeat: Infinity, repeatType: "reverse", ease: cubicBezier(0.11, 0.07, 0.04, 0.98), delay: (_duration / _amount) * i }}
           className={styling.main}
           key={`${uuidv7()}`}
         />
