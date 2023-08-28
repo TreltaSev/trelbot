@@ -1,42 +1,37 @@
 import React from "react";
+import styling from "@assets/styling.module.css";
 import FlexRow from "@lib/element/FlexRow";
-import FlexColumn from "@lib/element/FlexColumn";
-
-import scss_LoadingAnimated from "@assets/LoadingAnimated.module.scss";
+import { strnum } from "@lib/types/sizes";
+import defaultValue from "../method/defaultValue";
+import { cubicBezier, motion } from "framer-motion";
+import { uuidv7 } from "uuidv7";
 
 type type_LoadingAnimated = {
-  size?: "small" | "medium" | "large";
+  size?: strnum;
+  gap?: strnum;
+  heightoffset?: strnum;
+  amount?: number;
+  duration?: any;
 };
 
-const LoadingAnimated: React.FC<type_LoadingAnimated> = ({ size }) => {
-  if (!size) {
-    size = "small";
-  }
-  let heightvalue: string = "0";
-  let widthvalue: number = 0;
-  let sizeclass: string = "";
-  switch (size) {
-    case "small":
-      sizeclass = scss_LoadingAnimated.small;
-      widthvalue = 35;
-      heightvalue = "0.5em";
-      break;
-    case "medium":
-      sizeclass = scss_LoadingAnimated.medium;
-      widthvalue = 45;
-      heightvalue = "0.75em";
-      break;
-    case "large":
-      sizeclass = scss_LoadingAnimated.large;
-      widthvalue = 70;
-      heightvalue = "1em";
-      break;
-  }
+const LoadingAnimated: React.FC<type_LoadingAnimated> = ({ size, gap, heightoffset, amount, duration }) => {
+  const _size = defaultValue(size, "1em", undefined);
+  const _gap = defaultValue(gap, "5px", undefined);
+  const _heightoffset = defaultValue(heightoffset, "10px", undefined);
+  const _amount = defaultValue(amount, 3, undefined);
+  const _duration = defaultValue(duration, 0.5, undefined);
   return (
-    <FlexRow style={{ height: `calc(${heightvalue} + 10px)`, width: `${widthvalue}px` }} className={`${scss_LoadingAnimated.animationcontainer} ${sizeclass}`}>
-      <FlexColumn />
-      <FlexColumn />
-      <FlexColumn />
+    <FlexRow style={{ height: `calc(${_heightoffset} + ${_size})`, gap: _gap }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
+      {[...Array(_amount).keys()].map((i) => (
+        <motion.div
+          style={{ width: _size, height: _size, flexShrink: 0, borderRadius: "50%" }}
+          initial={{ opacity: 1, transform: "translateY(0)", y: "0" }}
+          animate={{ opacity: [1.0, 0.5], transform: [`translateY(0)`, `translateY(-${_heightoffset})`] }}
+          transition={{ duration: _duration, repeat: Infinity, repeatType: "reverse", ease: cubicBezier(0.11, 0.07, 0.04, 0.98), delay: (_duration / _amount) * i}}
+          className={styling.main}
+          key={`${uuidv7()}`}
+        />
+      ))}
     </FlexRow>
   );
 };
