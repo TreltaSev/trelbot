@@ -19,7 +19,7 @@ const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
   if (!guild) {
     return (
       <FlexRow style={main_style} className={`${main_class} ${styling.justify_content_center}`}>
-        <LoadingAnimated size="8px" gap="4px" heightoffset="6px" amount={3} duration={0.5}  />
+        <LoadingAnimated size={8} gap={4} heightoffset={6} amount={3} duration={0.5}  />
       </FlexRow>
     );
   }
