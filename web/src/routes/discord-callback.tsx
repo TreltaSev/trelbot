@@ -35,7 +35,7 @@ const DiscordCallback: React.FC = () => {
   }, []);
 
   return (
-    <FlexRow className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`}>
+    <FlexRow className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center} ${styling.dark}`}>
       <LoadingAnimated size={30} gap={15} heightoffset={20} />
     </FlexRow>
   );
