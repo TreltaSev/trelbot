@@ -14,6 +14,8 @@ import loginAction from "@lib/method/loginAction";
 import userSession from "../method/userSession";
 import EmptyIfUndefined from "../element/EmptyIfUndefined";
 import FlexRow from "../element/FlexRow";
+import AlternativeIfUndefined from "../element/AlternativeIfUndefined";
+import LoadingAnimated from "../element/LoadingAnimated";
 
 interface NavigationTemplateProps {
   children?: ReactNode;
@@ -72,14 +74,14 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
           <div style={{ gap: 10, position: "relative" }} className={`${styling.flex_row} ${styling.align_items_center}`}>
             {/* Username Group */}
 
-            <EmptyIfUndefined value={user}>
+            <AlternativeIfUndefined value={user} alternative={<LoadingAnimated size={4} gap={2} heightoffset={3}/>}>
               <FlexRow style={{ cursor: "pointer" }} onClick={() => DropdownToggle()}>
                 <UsernameGroup user={user} />
                 <div ref={dropdownButtonRef}>
                   <Arrow />
                 </div>
               </FlexRow>
-            </EmptyIfUndefined>
+            </AlternativeIfUndefined>
 
             {/* Actual Menu */}
             <div
