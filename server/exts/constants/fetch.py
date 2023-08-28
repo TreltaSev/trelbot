@@ -92,3 +92,14 @@ class FetchCurrentUserGuildMember(UpperLevelFetch):
 
     def __init__(self, headers: dict, guild_id: str):
         super().__init__(f"https://discord.com/api/users/@me/guilds/{guild_id}/member", headers)
+
+class FetchBotGateway(UpperLevelFetch):
+    """
+    Fetches a bot gateway by sending a get request
+    returns a dict as the response
+    access the response with self.response
+    sends a get request to `https://discord.com/api/gateway/bot`
+    """
+
+    def __init__(self, headers: dict):
+        super().__init__("https://discord.com/api/gateway/bot", headers)
