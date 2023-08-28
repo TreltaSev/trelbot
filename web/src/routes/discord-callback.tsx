@@ -7,22 +7,38 @@ import jsonform from "@lib/form/jsonform";
 import config from "@assets/config";
 import Cookies from "js-cookie";
 import loginAction from "@root/lib/method/loginAction";
+import FlexRow from "@root/lib/element/FlexRow";
+import styling from "@assets/styling.module.css";
+import LoadingAnimated from "@root/lib/element/LoadingAnimated";
+
+const attempt_discord_callback = async (): Promise<void> => {
+  const discord_code: string | null = new URLSearchParams(window.location.search).get("code");
+  let _session: any = undefined;
+  try {
+    const _sessionResponse = await fetch(`${config.backendUrl}/discord-callback`, jsonform("post", { code: discord_code }));
+    _session = await _sessionResponse.json();
+  } catch (e) {
+    new loginAction().setError("error", "Failed to login", "1020");
+    window.close();
+  }
+
+  if ("session" in _session) {
+    Cookies.set("session", _session["session"], { expires: _session["expires_in"] });
+    new loginAction().setAction("refresh");
+  }
+  window.close();
+};
 
 const DiscordCallback: React.FC = () => {
   useEffect(() => {
-    const discord_code: string | null = new URLSearchParams(window.location.search).get("code");
-    fetch(`${config.backendUrl}/discord-callback`, jsonform("post", { code: discord_code }))
-      .then((data) => data.json())
-      .then((_d) => {
-        if ("session" in _d) {
-          Cookies.set("session", _d["session"], { expires: _d["expires_in"] });
-          new loginAction().setAction("refresh");
-        }
-        window.close();
-      });
+    attempt_discord_callback();
   }, []);
 
-  return <></>;
+  return (
+    <FlexRow className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`}>
+      <LoadingAnimated size={30} gap={15} heightoffset={20} />
+    </FlexRow>
+  );
 };
 
 export default DiscordCallback;
