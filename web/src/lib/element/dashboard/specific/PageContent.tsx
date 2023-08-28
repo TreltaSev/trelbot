@@ -11,7 +11,7 @@ type type_PageContent = {
 
 const PageContent: React.FC<type_PageContent> = ({ guild, content }) => {
   return (
-    <FlexColumn className={`${styling.fill_all} ${styling.align_items_flex_start} ${styling.justify_content_center} ${styling.dark}`}>
+    <FlexColumn className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_start} ${styling.dark}`}>
       {
         content === undefined ? <></> : content.map((part) => (
           <React.Fragment key={`${part.parent}/${part.name}/load`}>{part.element}</React.Fragment>
