@@ -6,7 +6,6 @@ import guild from "@lib/types/guild";
 import GuildContainer from "@lib/element/dashboard/specific/GuildContainer";
 import SettingContainer from "@lib/element/dashboard/specific/SettingContainer";
 import { update } from "@lib/element/dashboard/DashboardEditor";
-import LoadingAnimated from "@lib/element/dashboard/specific/LoadingAnimated";
 
 type type_LeftNavigationBar = {
   guild: guild | undefined;
@@ -22,7 +21,6 @@ const LeftNavigationBar: React.FC<type_LeftNavigationBar> = ({ guild }) => {
   };
   return (
     <FlexColumn style={{ width: 250, gap: 10, padding: "0 10px 0 10px", flexShrink: 0 }} className={`${styling.fill_height} ${styling.align_items_center} ${styling.border_box} ${styling.dark}`}>
-      <LoadingAnimated />
       <GuildContainer guild={guild} />
       {get().map((child) => (
         <SettingContainer onClick={() => change(child)} name={child.name} key={`${child.name}--container`} />

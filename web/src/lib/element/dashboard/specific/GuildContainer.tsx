@@ -6,14 +6,26 @@ import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
 import Url from "@lib/element/Url";
 import InlineFlex from "@lib/element/InlineFlex";
+import LoadingAnimated from "@lib/element/LoadingAnimated";
 
 type type_GuildContainer = {
   guild: guild | undefined;
 };
 
 const GuildContainer: React.FC<type_GuildContainer> = ({ guild }) => {
+  const main_style: React.CSSProperties = { padding: 10, gap: 10, borderRadius: 5 };
+  const main_class: string = `${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`;
+
+  if (!guild) {
+    return (
+      <FlexRow style={main_style} className={`${main_class} ${styling.justify_content_center}`}>
+        <LoadingAnimated size={"small"} />
+      </FlexRow>
+    );
+  }
+
   return (
-    <FlexRow style={{ padding: 10, gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.darksub}`}>
+    <FlexRow style={main_style} className={main_class}>
       <img alt='' src={guild?.icon_url} style={{ borderRadius: "50%" }} width={40} height={40} />
       <TextGroup style={{ gap: 5 }}>
         <Text preset='1em-normal' style={{ color: "white", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: 150 }}>
