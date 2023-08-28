@@ -100,8 +100,8 @@ const NavigationTemplate: React.FC<NavigationTemplateProps> = ({ children, class
                 name='Logout'
                 method={() => {
                   Cookies.remove("session");
+                  new userSession().remove()
                   new loginAction().setError("error", "You have been logged out", "1020", "/login");
-                  window.location.href = "/login";
                 }}
               />
             </div>
