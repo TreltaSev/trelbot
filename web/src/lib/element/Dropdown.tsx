@@ -30,6 +30,12 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       return;
     }
 
+    if (this._isopen) {
+      this._menu.current.style.display = "none";
+    } else {
+      this._menu.current.style.display = "flex";
+    }
+
     this._isopen = !this._isopen;
   }
 
