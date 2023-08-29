@@ -39,6 +39,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     this._isopen = !this._isopen;
   }
 
+  populate_options() {
+    
+  }
+
   render() {
     return (
       <>
