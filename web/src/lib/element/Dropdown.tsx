@@ -44,8 +44,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   render() {
     return (
-      <>
-        <FlexRow onClick={() => this.toggle_menu()} style={{ width: 300, height: 30, flexShrink: 0, padding: "0 10px", gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.dark}`}>
+      <FlexColumn style={{ width: 300, borderRadius: 5, gap: 0 }} className={`${styling.align_items_flex_start}`}>
+        {/* Select Button */}
+        <FlexRow onClick={() => this.toggle_menu()} style={{ height: 30, flexShrink: 0, padding: "10px", gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.border_box}`}>
           <ChannelTag style={{ minWidth: 16, minHeight: 16, width: 16, height: 16 }} />
           <Text preset='1em-normal' style={{ opacity: "0.8", whiteSpace: "nowrap" }}>
             Select a Channel
@@ -54,8 +55,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
 
-        <FlexColumn ref={this._menu} style={{ width: 300, height: 300, background: "red" }}></FlexColumn>
-      </>
+        {/* Menu */}
+        <FlexColumn ref={this._menu} className={`${styling.align_self_stretch}`} style={{ height: 300, background: "red" }}></FlexColumn>
+      </FlexColumn>
     );
   }
 }
