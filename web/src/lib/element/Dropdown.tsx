@@ -27,6 +27,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   toggle_menu() {
+    console.log("heheheha")
     if (!this._menu.current) {
       return;
     }
@@ -46,8 +47,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     return (
       <FlexColumn style={{ width: 300, borderRadius: 5, gap: 0 }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
-        <FlexRow onClick={() => this.toggle_menu()} style={{ height: 30, flexShrink: 0, padding: "10px", gap: 10, borderRadius: 5 }} className={`${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.border_box}`}>
-          <ChannelTag style={{ minWidth: 16, minHeight: 16, width: 16, height: 16 }} />
+        <FlexRow onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
           <Text preset='1em-normal' style={{ opacity: "0.8", whiteSpace: "nowrap" }}>
             Select a Channel
           </Text>
