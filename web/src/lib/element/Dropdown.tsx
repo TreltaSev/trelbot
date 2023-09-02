@@ -8,6 +8,7 @@ import Spacer from "@lib/element/Spacer";
 import Arrow from "@lib/svg/Arrow";
 import defaultValue from "@lib/method/defaultValue";
 import FlexColumn from "./FlexColumn";
+import closed from "./dashboard/declerations/closed";
 
 type props_Dropdown = {
   name?: string;
@@ -27,13 +28,12 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   toggle_menu() {
-    console.log("heheheha")
     if (!this._menu.current) {
       return;
     }
 
     if (this._isopen) {
-      this._menu.current.style.display = "none";
+      new closed(this._menu.current, "dropdown");
     } else {
       this._menu.current.style.display = "flex";
     }
@@ -42,6 +42,12 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   populate_options() {}
+
+  componentDidMount(): void {
+      if(this._menu.current) {
+        new closed(this._menu.current, "dropdown");
+      }
+  }
 
   render() {
     return (
@@ -56,7 +62,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn ref={this._menu} className={`${styling.align_self_stretch}`} style={{ height: 300, background: "red" }}></FlexColumn>
+        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch}`} style={{ height: 300, background: "red" }}></FlexColumn>
       </FlexColumn>
     );
   }
