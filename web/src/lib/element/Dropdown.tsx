@@ -16,13 +16,14 @@ type props_Dropdown = {
 type state_Dropdown = {};
 
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
-  private _menu = useRef<HTMLDivElement>(null);
+  private _menu: React.RefObject<HTMLDivElement>;
   private _name = defaultValue(this.props.name, "Select", undefined);
   private _isopen: boolean = false;
 
   constructor(props: props_Dropdown) {
     super(props);
     this.state = {} as state_Dropdown;
+    this._menu = React.createRef();
   }
 
   toggle_menu() {
@@ -39,9 +40,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     this._isopen = !this._isopen;
   }
 
-  populate_options() {
-    
-  }
+  populate_options() {}
 
   render() {
     return (
@@ -55,7 +54,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
 
-        <FlexColumn ref={this._menu}></FlexColumn>
+        <FlexColumn ref={this._menu} style={{ width: 300, height: 300, background: "red" }}></FlexColumn>
       </>
     );
   }
