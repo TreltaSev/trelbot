@@ -139,6 +139,10 @@ Different justify types such as justify content center
   justify-content: center;
 }
 
+.justify_content_space_between {
+  justify-content: space-between;
+}
+
 .justify_content_end {
   justify-content: end;
 }
