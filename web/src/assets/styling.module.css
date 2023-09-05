@@ -124,6 +124,10 @@ Different align types such as align center, start, end, and stretch
   align-self: stretch;
 }
 
+.align_items_stretch {
+  align-items: stretch;
+}
+
 .align_items_flex_start {
   align-items: flex-start;
 }
