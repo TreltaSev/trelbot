@@ -60,10 +60,33 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     this.setState({ button_content: new_created });
   }
 
+  private update_search_value(input?: string) {
+    // Update search value in state
+    this.setState({ search_value: input });
+
+    // Refresh filter items
+  }
+
   populate_options() {}
 
   test(event: React.FormEvent<HTMLInputElement>) {
-    console.log(event.currentTarget.value);
+    console.log(event);
+  }
+
+  private HandleText(event: React.FormEvent<HTMLInputElement>) {
+    this.update_search_value(event.currentTarget.value);
+  }
+
+  private HandleFocus(event: React.FocusEvent<HTMLInputElement> | undefined) {
+    switch (event?.type) {
+      case "blur":
+        // Focus off
+        break;
+
+      case "focus":
+        // Focus on
+        break;
+    }
   }
 
   componentDidMount(): void {
@@ -82,7 +105,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
               className={`${custom.input_no_border} ${custom.input_no_focus}`}
               style={{ background: "transparent", fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", color: "white" }}
               placeholder={this.state.button_content}
-              onChange={(event) => this.test(event)}></TextInput>
+              value={this.state.search_value}
+              onChange={(event) => this.HandleText(event)}
+              onFocus={(event) => this.HandleFocus(event)}
+              onFocusOut={(event) => this.HandleFocus(event)}></TextInput>
           </FlexColumn>
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
