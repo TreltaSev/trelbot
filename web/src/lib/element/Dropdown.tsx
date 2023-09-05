@@ -1,15 +1,12 @@
-import React, { useRef } from "react";
+import React from "react";
 import styling from "@assets/styling.module.css";
-import component from "@lib/types/component";
 import FlexRow from "@lib/element/FlexRow";
-import ChannelTag from "@lib/svg/ChannelTag";
 import Text from "@lib/element/Text";
 import Spacer from "@lib/element/Spacer";
 import Arrow from "@lib/svg/Arrow";
 import defaultValue from "@lib/method/defaultValue";
 import FlexColumn from "./FlexColumn";
 import dropdown_change from "./dashboard/declerations/dropdown_change";
-import opened from "./dashboard/declerations/opened";
 
 type props_Dropdown = {
   name?: string;
