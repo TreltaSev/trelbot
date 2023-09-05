@@ -44,11 +44,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       this.update_button_content(`Select a ${this._name}`);
 
       new dropdown_change(this._menu.current, "dropdown").onclose();
-      new dropdown_change(this._button.current, "button").onclose();      
+      new dropdown_change(this._button.current, "button").onclose();
     } else {
-      this._input.current?.focus()
+      this._input.current?.focus();
       this.update_button_content(`Search for a ${this._name}`);
-      
 
       new dropdown_change(this._menu.current, "dropdown").onopen();
       new dropdown_change(this._button.current, "button").onopen();
@@ -78,7 +77,12 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         {/* Select Button */}
         <FlexRow innerref={this._button} onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
           <FlexColumn className={`${styling.align_items_stretch}`}>
-            <TextInput innerref={this._input} className={`${custom.input_no_border} ${custom.input_no_focus}`} style={{background: "transparent", fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", color: "white"}} placeholder={this.state.button_content} onChange={(event) => this.test(event)}></TextInput>
+            <TextInput
+              innerref={this._input}
+              className={`${custom.input_no_border} ${custom.input_no_focus}`}
+              style={{ background: "transparent", fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", color: "white" }}
+              placeholder={this.state.button_content}
+              onChange={(event) => this.test(event)}></TextInput>
           </FlexColumn>
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
