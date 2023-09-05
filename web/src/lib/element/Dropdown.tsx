@@ -44,7 +44,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       new dropdown_change(this._button.current, "button").onclose();
     } else {
       this.setState({
-        button_content: `Select for a ${this._name}`,
+        button_content: `Search for a ${this._name}`,
       });
       new dropdown_change(this._menu.current, "dropdown").onopen();
       new dropdown_change(this._button.current, "button").onopen();
