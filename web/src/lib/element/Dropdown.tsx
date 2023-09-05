@@ -19,13 +19,13 @@ type state_Dropdown = {
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _menu: React.RefObject<HTMLDivElement>;
   private _button: React.RefObject<HTMLDivElement>;
-  private _name = defaultValue(this.props.name, "Select", undefined);
+  private _name = defaultValue(this.props.name, "Channel", undefined);
   private _isopen: boolean = false;
 
   constructor(props: props_Dropdown) {
     super(props);
     this.state = {
-      button_content: "Select a Channel",
+      button_content: `Select a ${this._name}`,
     } as state_Dropdown;
     this._menu = React.createRef();
     this._button = React.createRef();
@@ -38,13 +38,13 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
     if (this._isopen) {
       this.setState({
-        button_content: "Select a Channel",
+        button_content: `Select a ${this._name}`,
       });
       new dropdown_change(this._menu.current, "dropdown").onclose();
       new dropdown_change(this._button.current, "button").onclose();
     } else {
       this.setState({
-        button_content: "Search a Channel",
+        button_content: `Select for a ${this._name}`,
       });
       new dropdown_change(this._menu.current, "dropdown").onopen();
       new dropdown_change(this._button.current, "button").onopen();
