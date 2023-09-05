@@ -8,54 +8,67 @@ import Spacer from "@lib/element/Spacer";
 import Arrow from "@lib/svg/Arrow";
 import defaultValue from "@lib/method/defaultValue";
 import FlexColumn from "./FlexColumn";
-import closed from "./dashboard/declerations/closed";
+import dropdown_change from "./dashboard/declerations/dropdown_change";
+import opened from "./dashboard/declerations/opened";
 
 type props_Dropdown = {
   name?: string;
 };
 
-type state_Dropdown = {};
+type state_Dropdown = {
+  button_content?: string;
+};
 
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _menu: React.RefObject<HTMLDivElement>;
+  private _button: React.RefObject<HTMLDivElement>;
   private _name = defaultValue(this.props.name, "Select", undefined);
   private _isopen: boolean = false;
 
   constructor(props: props_Dropdown) {
     super(props);
-    this.state = {} as state_Dropdown;
+    this.state = {
+      button_content: "Select a Channel",
+    } as state_Dropdown;
     this._menu = React.createRef();
+    this._button = React.createRef();
   }
 
   toggle_menu() {
-    if (!this._menu.current) {
+    if (!this._menu.current || !this._button.current) {
       return;
     }
 
     if (this._isopen) {
-      new closed(this._menu.current, "dropdown");
+      this.setState({
+        button_content: "Select a Channel",
+      });
+      new dropdown_change(this._menu.current, "dropdown").onclose();
+      new dropdown_change(this._button.current, "button").onclose();
     } else {
-      this._menu.current.style.display = "flex";
+      this.setState({
+        button_content: "Search a Channel",
+      });
+      new dropdown_change(this._menu.current, "dropdown").onopen();
+      new dropdown_change(this._button.current, "button").onopen();
     }
-
     this._isopen = !this._isopen;
   }
 
   populate_options() {}
 
   componentDidMount(): void {
-      if(this._menu.current) {
-        new closed(this._menu.current, "dropdown");
-      }
+    new dropdown_change(this._menu.current, "dropdown").onclose();
+    new dropdown_change(this._button.current, "button").onclose();
   }
 
   render() {
     return (
       <FlexColumn style={{ width: 300, borderRadius: 5, gap: 0 }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
-        <FlexRow onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
+        <FlexRow innerref={this._button} onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
           <Text preset='1em-normal' style={{ opacity: "0.8", whiteSpace: "nowrap" }}>
-            Select a Channel
+            {this.state.button_content}
           </Text>
           <Spacer />
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
