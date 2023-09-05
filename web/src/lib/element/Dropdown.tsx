@@ -7,6 +7,7 @@ import Arrow from "@lib/svg/Arrow";
 import defaultValue from "@lib/method/defaultValue";
 import FlexColumn from "./FlexColumn";
 import dropdown_change from "./dashboard/declerations/dropdown_change";
+import TextInput from "./TextInput";
 
 type props_Dropdown = {
   name?: string;
@@ -14,6 +15,7 @@ type props_Dropdown = {
 
 type state_Dropdown = {
   button_content?: string;
+  search_value?: string;
 };
 
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
@@ -26,6 +28,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     super(props);
     this.state = {
       button_content: `Select a ${this._name}`,
+      search_value: "",
     } as state_Dropdown;
     this._menu = React.createRef();
     this._button = React.createRef();
@@ -54,6 +57,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   populate_options() {}
 
+  test(event: React.FormEvent<HTMLInputElement>) {
+    console.log(event.currentTarget.value)
+  }
+
   componentDidMount(): void {
     new dropdown_change(this._menu.current, "dropdown").onclose();
     new dropdown_change(this._button.current, "button").onclose();
@@ -64,9 +71,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       <FlexColumn style={{ width: 300, borderRadius: 5, gap: 0 }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
         <FlexRow innerref={this._button} onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
-          <Text preset='1em-normal' style={{ opacity: "0.8", whiteSpace: "nowrap" }}>
-            {this.state.button_content}
-          </Text>
+          <TextInput style={{fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", whiteSpace: "nowrap"}} placeholder={this.state.button_content} onChange={(event) => this.test(event)}>
+
+          </TextInput>
           <Spacer />
           <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
