@@ -25,6 +25,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _button: React.RefObject<HTMLDivElement>;
   private _input: React.RefObject<HTMLInputElement>;
   private _name = defaultValue(this.props.name, "Channel", undefined);
+  public _v = "";
 
   constructor(props: props_Dropdown) {
     super(props);
@@ -95,10 +96,16 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
    */
   public populate(pack: dropdown_item_shard | dropdown_item_shard[]): void {
     if (Array.isArray(pack)) {
-      // Add multiple Items      
+      // Add multiple Items
+      this.setState({
+        _items: pack,
+      });
       return;
     }
 
+    this.setState({
+      _items: [pack],
+    });
     // Add one item
     return;
   }
@@ -136,4 +143,4 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 }
 
-export default React.forwardRef((props: props_Dropdown, ref: React.Ref<Dropdown>) => <Dropdown {...props} ref={ref} />);
+export default Dropdown;

@@ -1,18 +1,25 @@
 import FlexColumn from "@lib/element/FlexColumn";
 import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import ToggleButton from "@lib/element/ToggleButton";
-import Dropdown from "@lib/element/Dropdown";
+import Dropdown  from "@lib/element/Dropdown";
 import { channels } from ".";
 import channel from "@lib/types/channel";
+import DropdownItem from "@root/lib/element/DropdownItem";
+import dropdown_item_shard from "@lib/types/dropdown_item_shard";
+
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
-  const channelsDropdownRef = React.useRef(null);
+  const channelsDropdownRef = React.useRef<Dropdown>(null);
   const v_channels: channel[] | undefined = useContext(channels)
   
-  console.log(channelsDropdownRef)
+  useEffect(() => {
+    const elem: dropdown_item_shard | undefined = channelsDropdownRef.current?.form("Some Server", <DropdownItem/>, 0);
+    console.log(elem)
+    
+  }, [])
   return (
     <>
       <FlexColumn style={{ gap: 20 }}>
