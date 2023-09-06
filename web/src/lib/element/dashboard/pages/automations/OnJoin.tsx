@@ -9,8 +9,10 @@ import channel from "@lib/types/channel";
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
+  const channelsDropdownRef = React.useRef(null);
   const v_channels: channel[] | undefined = useContext(channels)
-  console.log(v_channels)
+  
+  console.log(channelsDropdownRef)
   return (
     <>
       <FlexColumn style={{ gap: 20 }}>
@@ -23,7 +25,7 @@ const OnJoin: React.FC = () => {
           </Text>
         </TextGroup>
         <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
-        <Dropdown/>
+        <Dropdown ref={channelsDropdownRef}/>
       </FlexColumn>
     </>
   );
