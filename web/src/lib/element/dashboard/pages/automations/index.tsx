@@ -6,6 +6,8 @@ import { loader, register_parent } from "@lib/element/dashboard/loader";
 import FlexColumn from "@root/lib/element/FlexColumn";
 import styling from "@assets/styling.module.css";
 
+export const channels = React.createContext<null>(null);
+export const roles = React.createContext<null>(null);
 
 const Automations: React.FC = () => {
   return (
