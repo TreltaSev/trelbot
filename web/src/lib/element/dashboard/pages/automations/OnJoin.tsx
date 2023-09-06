@@ -20,7 +20,7 @@ const OnJoin: React.FC = () => {
       if (!channelsDropdownRef.current) {
         return;
       }
-      return Dropdown.form(_v.name as string, <DropdownItem />, 0);
+      return Dropdown.form(_v.name as string, <DropdownItem displayName={_v.name as string}/>, 0);
     });
   }
 
