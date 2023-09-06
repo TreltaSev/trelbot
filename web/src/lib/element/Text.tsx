@@ -1,7 +1,7 @@
 import React from "react";
-import component from "@lib/types/component";
+import span_component from "@lib/types/span_component";
 
-export type type_Text = component & {
+export type type_Text = span_component & {
   preset?: string;
 };
 
@@ -15,13 +15,13 @@ const presets: type_presets = {
   "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white"}
 };
 
-const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset }) => {
+const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset, innerref }) => {
   if (preset) {
     style = {...style, ...presets[preset]};
   }
 
   return (
-    <span style={style} onClick={onClick} className={className}>
+    <span ref={innerref} style={style} onClick={onClick} className={className}>
       {children}
     </span>
   );

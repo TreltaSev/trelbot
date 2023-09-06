@@ -4,9 +4,11 @@ import custom from "@assets/custom.module.css";
 import FlexRow from "@lib/element/FlexRow";
 import Arrow from "@lib/svg/Arrow";
 import defaultValue from "@lib/method/defaultValue";
-import FlexColumn from "./FlexColumn";
+import FlexColumn from "@lib/element/FlexColumn";
 import dropdown_change from "./dashboard/declerations/dropdown_change";
-import TextInput from "./TextInput";
+import TextInput from "@lib/element/TextInput";
+import Text from "@lib/element/Text";
+import DropdownItem from "@lib/element/DropdownItem";
 
 export type props_Dropdown = {
   name?: string;
@@ -22,7 +24,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _button: React.RefObject<HTMLDivElement>;
   private _input: React.RefObject<HTMLInputElement>;
   private _name = defaultValue(this.props.name, "Channel", undefined);
-  private _isopen: boolean = false;
 
   constructor(props: props_Dropdown) {
     super(props);
@@ -33,12 +34,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     this._menu = React.createRef();
     this._button = React.createRef();
     this._input = React.createRef();
-  }
-
-  toggle_menu() {
-    // Open or Close the Menu
-    this._isopen ? this.Close() : (this._input.current?.focus(), this.Open());
-    this._isopen = !this._isopen;
   }
 
   private update_button_content(new_content?: string) {
@@ -107,7 +102,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", zIndex: 100 }}></FlexColumn>
+        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 10 }}>
+          <DropdownItem/>
+        </FlexColumn>
       </FlexColumn>
     );
   }
