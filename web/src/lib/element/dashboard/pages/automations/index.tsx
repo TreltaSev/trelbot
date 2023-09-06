@@ -3,9 +3,9 @@ import OnBan from "@lib/element/dashboard/pages/automations/OnBan";
 import OnJoin from "@lib/element/dashboard/pages/automations/OnJoin";
 import OnLeave from "@lib/element/dashboard/pages/automations/OnLeave";
 import { loader, register_parent } from "@lib/element/dashboard/loader";
-import FlexColumn from "@root/lib/element/FlexColumn";
+import FlexColumn from "@lib/element/FlexColumn";
 import styling from "@assets/styling.module.css";
-import cache_channels from "@root/lib/method/cache@channels";
+import cache_channels from "@lib/method/cache@channels";
 import channel from "@lib/types/channel";
 import { useParams } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const Automations: React.FC = () => {
   const [v_channels, setChannels] = useState<channel[] | undefined>(undefined);
 
   useEffect(() => {
-    cache_channels(guildId, setChannels)
+    cache_channels(guildId, setChannels);
   }, []);
 
   return (
