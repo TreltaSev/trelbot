@@ -102,7 +102,8 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 10 }}>
+        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 5 }}>
+          <FlexRow style={{background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1}} className={`${styling.align_self_stretch}`}/>
           <DropdownItem/>
         </FlexColumn>
       </FlexColumn>

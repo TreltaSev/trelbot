@@ -13,7 +13,7 @@ const DropdownItem: React.FC<type_DropdownItem> = () => {
     <>
       <FlexRow
         innerref={dropdownItemRef}
-        style={{ borderRadius: 5, padding: 5 }}
+        style={{ borderRadius: 5, padding: 10, cursor: "pointer" }}
         onMouseEnter={() =>
           animate_background({
             ref: dropdownItemRef,
@@ -25,15 +25,15 @@ const DropdownItem: React.FC<type_DropdownItem> = () => {
         }
         onMouseLeave={() =>
           animate_background({
-            ref: dropdownItemRef,            
+            ref: dropdownItemRef,
             new_color: "rgba(0,0,0,0)",
             whileAnimate: () => {
               animate_color({ ref: dropdownTextRef, new_color: "rgba(255,255,255,0.5)" });
             },
           })
         }
-        className={`${styling.align_self_stretch} ${styling.align_items_center} ${styling.border_box} ${styling.main}`}>
-        <Text innerref={dropdownTextRef} preset='1em-normal'>
+        className={`${styling.align_self_stretch} ${styling.align_items_center} ${styling.border_box}`}>
+        <Text innerref={dropdownTextRef} preset='basic' style={{ fontSize: "1em", color: "rgba(255,255,255,0.5)" }}>
           Some Server
         </Text>
       </FlexRow>
