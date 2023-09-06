@@ -13,12 +13,10 @@ const OnJoin: React.FC = () => {
   const channelsDropdownRef = React.useRef<Dropdown>(null);
   const { value_channels } = React.useContext(channels);
   let shard_each: any = undefined;
+  
 
   if (value_channels) {
     shard_each = value_channels.map((_v) => {
-      if (!channelsDropdownRef.current) {
-        return;
-      }
       return Dropdown.form(_v.name as string, <DropdownItem displayName={_v.name as string} backing={<ChannelTag style={{width: 16, height: 16, opacity: 0.8}}/>} />, 0);
     });
   }

@@ -5,8 +5,9 @@ import styling from "@assets/styling.module.css";
 import animate_background from "@lib/method/animate@background";
 import animate_color from "../method/animate@color";
 import defaultValue from "../method/defaultValue";
+import component from "../types/component";
 
-type type_DropdownItem = {
+type type_DropdownItem = component & {
   displayName: string;
   nonActiveColor?: string;
   activeColor?: string;
@@ -14,7 +15,7 @@ type type_DropdownItem = {
   nonActiveBackground?: string;
   backing?: React.ReactNode;
 };
-const DropdownItem: React.FC<type_DropdownItem> = ({ displayName, nonActiveColor, activeColor, activeBackground, nonActiveBackground, backing }) => {
+const DropdownItem: React.FC<type_DropdownItem> = ({ onClick, displayName, nonActiveColor, activeColor, activeBackground, nonActiveBackground, backing }) => {
   const dropdownItemRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownTextRef = React.useRef<HTMLSpanElement | null>(null);
 
@@ -29,6 +30,7 @@ const DropdownItem: React.FC<type_DropdownItem> = ({ displayName, nonActiveColor
       <FlexRow
         innerref={dropdownItemRef}
         style={{ borderRadius: 5, padding: 10, cursor: "pointer", gap: 10 }}
+        onClick={onClick}
         onMouseEnter={() =>
           animate_background({
             ref: dropdownItemRef,

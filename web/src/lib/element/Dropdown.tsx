@@ -60,7 +60,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       case "blur":
         // Focus off
         this.update_button_content(`Select a ${this._name}`);
-        this.Close();
+        //this.Close();
         break;
 
       case "focus":
@@ -89,6 +89,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
    */
   static form(name: string, displayElement: React.ReactNode, position: number): dropdown_item_shard {
     return { name: name, displayElement: displayElement, position: position } as dropdown_item_shard;
+  }
+
+  public choose() {
+    console.log("Choosing")
   }
 
   componentDidMount(): void {

@@ -8,10 +8,13 @@ import styling from "@assets/styling.module.css";
 import cache_channels from "@lib/method/cache@channels";
 import channel from "@lib/types/channel";
 import { useParams } from "react-router-dom";
+import AlternativeIf from "@root/lib/element/AlternativeIf";
+import AlternativeIfUndefined from "@root/lib/element/AlternativeIfUndefined";
+import LoadingAnimated from "@root/lib/element/LoadingAnimated";
 
 export type type_channels_context = {
-  value_channels?: channel[];
-  get?: () => channel[];
+  value_channels?: channel[] | null;
+  get?: () => channel[] | null;
 };
 
 export const channels = React.createContext<type_channels_context>({});
@@ -19,10 +22,12 @@ export const roles = React.createContext<null>(null);
 
 const Automations: React.FC = () => {
   let { guildId } = useParams();
-  const [v_channels, setChannels] = useState<channel[]>([]);
+  const [v_channels, setChannels] = useState<channel[] | null>(null);
+  const [loaded, setLoaded] = useState<boolean | undefined>();
 
   useEffect(() => {
     cache_channels(guildId).then((cached_channels: channel[]) => {
+      setLoaded(true);
       setChannels(cached_channels);
     });
   }, []);
@@ -32,13 +37,17 @@ const Automations: React.FC = () => {
   };
 
   return (
-    <channels.Provider value={{ value_channels: v_channels, get: get_channels }}>
-      <FlexColumn style={{ width: 800, padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
-        <OnJoin />
-        <OnLeave />
-        <OnBan />
-      </FlexColumn>
-    </channels.Provider>
+    <>
+      <channels.Provider value={{ value_channels: v_channels, get: get_channels }}>
+        <AlternativeIf input_value={loaded} to_check={undefined} alternative={<LoadingAnimated size={30} gap={15} heightoffset={22.5}/>}>
+          <FlexColumn style={{ width: 800, padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
+            <OnJoin />
+            <OnLeave />
+            <OnBan />
+          </FlexColumn>
+        </AlternativeIf>
+      </channels.Provider>
+    </>
   );
 };
 
