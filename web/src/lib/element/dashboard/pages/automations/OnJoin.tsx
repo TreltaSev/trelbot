@@ -1,13 +1,12 @@
-import FlexColumn from "@lib/element/FlexColumn";
-import TextGroup from "@lib/element/TextGroup";
+import React from "react";
 import Text from "@lib/element/Text";
-import React, { useContext, useEffect } from "react";
-import ToggleButton from "@lib/element/ToggleButton";
+import ChannelTag from "@lib/svg/ChannelTag";
 import Dropdown from "@lib/element/Dropdown";
-import { channels } from ".";
-import channel from "@lib/types/channel";
-import DropdownItem from "@root/lib/element/DropdownItem";
-import dropdown_item_shard from "@lib/types/dropdown_item_shard";
+import TextGroup from "@lib/element/TextGroup";
+import FlexColumn from "@lib/element/FlexColumn";
+import ToggleButton from "@lib/element/ToggleButton";
+import DropdownItem from "@lib/element/DropdownItem";
+import { channels } from "@lib/element/dashboard/pages/automations";
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
@@ -20,7 +19,7 @@ const OnJoin: React.FC = () => {
       if (!channelsDropdownRef.current) {
         return;
       }
-      return Dropdown.form(_v.name as string, <DropdownItem displayName={_v.name as string}/>, 0);
+      return Dropdown.form(_v.name as string, <DropdownItem displayName={_v.name as string} backing={<ChannelTag style={{width: 16, height: 16, opacity: 0.8}}/>} />, 0);
     });
   }
 
