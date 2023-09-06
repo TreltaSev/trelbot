@@ -3,23 +3,27 @@ import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
 import React, { useContext, useEffect } from "react";
 import ToggleButton from "@lib/element/ToggleButton";
-import Dropdown  from "@lib/element/Dropdown";
+import Dropdown from "@lib/element/Dropdown";
 import { channels } from ".";
 import channel from "@lib/types/channel";
 import DropdownItem from "@root/lib/element/DropdownItem";
 import dropdown_item_shard from "@lib/types/dropdown_item_shard";
 
-
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
   const channelsDropdownRef = React.useRef<Dropdown>(null);
-  const v_channels: channel[] | undefined = useContext(channels)
-  
-  useEffect(() => {
-    const elem: dropdown_item_shard | undefined = channelsDropdownRef.current?.form("Some Server", <DropdownItem/>, 0);
-    console.log(elem)
-    
-  }, [])
+  const { value_channels } = React.useContext(channels);
+  let shard_each: any = [];
+
+  if (value_channels) {
+    shard_each = value_channels.map((_v) => {
+      if (!channelsDropdownRef.current) {
+        return;
+      }
+      return Dropdown.form(_v.name as string, <DropdownItem />, 0);
+    });
+  }
+
   return (
     <>
       <FlexColumn style={{ gap: 20 }}>
@@ -32,7 +36,7 @@ const OnJoin: React.FC = () => {
           </Text>
         </TextGroup>
         <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
-        <Dropdown ref={channelsDropdownRef}/>
+        <Dropdown ref={channelsDropdownRef} _items={shard_each} />
       </FlexColumn>
     </>
   );

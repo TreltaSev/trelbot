@@ -9,15 +9,16 @@ import dropdown_change from "./dashboard/declerations/dropdown_change";
 import TextInput from "@lib/element/TextInput";
 import DropdownItem from "@lib/element/DropdownItem";
 import dropdown_item_shard from "@lib/types/dropdown_item_shard";
+import { uuidv4 } from "uuidv7";
 
 export type props_Dropdown = {
   name?: string;
+  _items?: dropdown_item_shard[];
 };
 
 type state_Dropdown = {
   button_content?: string;
   search_value?: string;
-  _items?: dropdown_item_shard[] | dropdown_item_shard;
 };
 
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
@@ -87,27 +88,8 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
    * @param displayElement React node that will be displayed as the item
    * @param position Position, 0 at the top
    */
-  public form(name: string, displayElement: React.ReactNode, position: number): dropdown_item_shard {
+  static form(name: string, displayElement: React.ReactNode, position: number): dropdown_item_shard {
     return { name: name, displayElement: displayElement, position: position } as dropdown_item_shard;
-  }
-
-  /**
-   * Takes an array of the return value of this.form
-   */
-  public populate(pack: dropdown_item_shard | dropdown_item_shard[]): void {
-    if (Array.isArray(pack)) {
-      // Add multiple Items
-      this.setState({
-        _items: pack,
-      });
-      return;
-    }
-
-    this.setState({
-      _items: [pack],
-    });
-    // Add one item
-    return;
   }
 
   componentDidMount(): void {
@@ -134,9 +116,11 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 5 }}>
+        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 30, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 5 }}>
           <FlexRow style={{ background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1 }} className={`${styling.align_self_stretch}`} />
-          <DropdownItem />
+          {this.props._items?.map((value) => (
+            <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>
+          ))}
         </FlexColumn>
       </FlexColumn>
     );

@@ -21,7 +21,15 @@ const cache_channels = async (guild_id: strnum, set?: (channels: channel[]) => v
     set(_channels)
   }
 
-  return _channels;
+  const parsed: channel[] = []
+
+  _channels.map((value: channel) => {
+    parsed.push(value)
+  })
+
+  console.log(parsed, typeof parsed)
+
+  return parsed
 }
 
 export default cache_channels;
