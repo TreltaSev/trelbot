@@ -1,12 +1,16 @@
 import FlexColumn from "@lib/element/FlexColumn";
 import TextGroup from "@lib/element/TextGroup";
 import Text from "@lib/element/Text";
-import React from "react";
+import React, { useContext } from "react";
 import ToggleButton from "@lib/element/ToggleButton";
 import Dropdown from "@lib/element/Dropdown";
+import { channels } from ".";
+import channel from "@lib/types/channel";
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
+  const v_channels: channel[] | undefined = useContext(channels)
+  console.log(v_channels)
   return (
     <>
       <FlexColumn style={{ gap: 20 }}>

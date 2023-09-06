@@ -13,7 +13,14 @@ const cache_channels = async (guild_id: strnum, set?: (channels: channel[]) => v
   const _channelsResponse = await fetch(`${config.backendUrl}/guilds/${guild_id}/channels`, _request)
   const _channels = await _channelsResponse.json();
 
-  console.log(_channels)
+  if (errorCatcher(_channels)) {
+    throw new Error(`Response contains error for /guilds/${guild_id}/channels in json ${_channels}`);
+  }  
+
+  if (set) {
+    set(_channels)
+  }
+
   return _channels;
 }
 
