@@ -2,11 +2,13 @@
 
 :root {
   --dark: #1a181b;
+  --darker: #100f10;
   --darksub: #242225;
   --main: #8c52ff;
   --accent: #fdeafe;
   --darkrgb: 26, 24, 27;
   --darksubrgb: rgb(36, 34, 37);
+  --darkerrgb: rgb(26, 24, 27);
   --mainrgb: 140, 82, 255;
   --accentrgb: 253, 234, 254;
 }
@@ -26,6 +28,10 @@ incase using css variables isn't viable, there are also classes.
 */
 .dark {
   background-color: var(--dark);
+}
+
+.darker {
+  background-color: var(--darker);
 }
 
 .darksub {

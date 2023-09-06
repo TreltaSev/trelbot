@@ -8,7 +8,7 @@ import FlexColumn from "./FlexColumn";
 import dropdown_change from "./dashboard/declerations/dropdown_change";
 import TextInput from "./TextInput";
 
-type props_Dropdown = {
+export type props_Dropdown = {
   name?: string;
 };
 
@@ -36,22 +36,8 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   toggle_menu() {
-    if (!this._menu.current || !this._button.current) {
-      return;
-    }
-
-    if (this._isopen) {
-      this.update_button_content(`Select a ${this._name}`);
-
-      new dropdown_change(this._menu.current, "dropdown").onclose();
-      new dropdown_change(this._button.current, "button").onclose();
-    } else {
-      this._input.current?.focus();
-      this.update_button_content(`Search for a ${this._name}`);
-
-      new dropdown_change(this._menu.current, "dropdown").onopen();
-      new dropdown_change(this._button.current, "button").onopen();
-    }
+    // Open or Close the Menu
+    this._isopen ? this.Close() : (this._input.current?.focus(), this.Open());
     this._isopen = !this._isopen;
   }
 
@@ -67,12 +53,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     // Refresh filter items
   }
 
-  populate_options() {}
-
-  test(event: React.FormEvent<HTMLInputElement>) {
-    console.log(event);
-  }
-
   private HandleText(event: React.FormEvent<HTMLInputElement>) {
     this.update_search_value(event.currentTarget.value);
   }
@@ -81,24 +61,37 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     switch (event?.type) {
       case "blur":
         // Focus off
+        this.update_button_content(`Select a ${this._name}`);
+        this.Close();
         break;
 
       case "focus":
         // Focus on
+        this.update_button_content(`Search for a ${this._name}`);
+        this.Open();
         break;
     }
   }
 
-  componentDidMount(): void {
+  private Close() {
     new dropdown_change(this._menu.current, "dropdown").onclose();
     new dropdown_change(this._button.current, "button").onclose();
   }
 
+  private Open() {
+    new dropdown_change(this._menu.current, "dropdown").onopen();
+    new dropdown_change(this._button.current, "button").onopen();
+  }
+
+  componentDidMount(): void {
+    this.Close();
+  }
+
   render() {
     return (
-      <FlexColumn style={{ width: 300, borderRadius: 5, gap: 0 }} className={`${styling.align_items_flex_start}`}>
+      <FlexColumn style={{ width: 300, height: 40, borderRadius: 5, gap: 0, position: "relative" }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
-        <FlexRow innerref={this._button} onClick={() => this.toggle_menu()} style={{ flexShrink: 0, padding: "10px", borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.dark} ${styling.justify_content_space_between}`}>
+        <FlexRow innerref={this._button} style={{ flex: "0 0 auto", height: 40, padding: 10, borderRadius: 5 }} className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.darker} ${styling.justify_content_space_between}`}>
           <FlexColumn className={`${styling.align_items_stretch}`}>
             <TextInput
               innerref={this._input}
@@ -114,7 +107,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch}`} style={{ height: 300, background: "red" }}></FlexColumn>
+        <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.darker}`} style={{ width: 300, minHeight: 100, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", zIndex: 100 }}></FlexColumn>
       </FlexColumn>
     );
   }
