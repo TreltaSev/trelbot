@@ -12,7 +12,7 @@ const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
   const channelsDropdownRef = React.useRef<Dropdown>(null);
   const { value_channels } = React.useContext(channels);
-  let shard_each: any = [];
+  let shard_each: any = undefined;
 
   if (value_channels) {
     shard_each = value_channels.map((_v) => {

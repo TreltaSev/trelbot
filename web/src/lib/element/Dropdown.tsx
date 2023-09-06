@@ -7,13 +7,13 @@ import defaultValue from "@lib/method/defaultValue";
 import FlexColumn from "@lib/element/FlexColumn";
 import dropdown_change from "./dashboard/declerations/dropdown_change";
 import TextInput from "@lib/element/TextInput";
-import DropdownItem from "@lib/element/DropdownItem";
 import dropdown_item_shard from "@lib/types/dropdown_item_shard";
 import { uuidv4 } from "uuidv7";
+import Text from "@lib/element/Text";
 
 export type props_Dropdown = {
   name?: string;
-  _items?: dropdown_item_shard[];
+  _items?: dropdown_item_shard[] | undefined;
 };
 
 type state_Dropdown = {
@@ -32,8 +32,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     super(props);
     this.state = {
       button_content: `Select a ${this._name}`,
-      search_value: "",
-      _items: [],
+      search_value: ""
     } as state_Dropdown;
     this._menu = React.createRef();
     this._button = React.createRef();
@@ -97,6 +96,28 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   render() {
+    let dropdown_status: "failed_search" | "allgud" = "failed_search";
+    const analyzed_items = this.props._items?.map((value) => {
+      if (!this.state.search_value) {
+        dropdown_status = "allgud";
+        return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
+      }
+      if (value.name?.toLowerCase().includes(this.state.search_value.toLowerCase())) {
+        dropdown_status = "allgud";
+        return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
+      }
+      return <React.Fragment key={uuidv4()} />;
+    });
+
+    switch (dropdown_status) {
+      case "failed_search":
+        analyzed_items?.splice(0);
+        analyzed_items?.push(<Text preset="1em-normal" style={{opacity: "0.5"}} key={uuidv4()}>Failed Search</Text>)
+        break;
+      default:
+        break;
+    }
+
     return (
       <FlexColumn style={{ width: 300, height: 40, borderRadius: 5, gap: 0, position: "relative" }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
@@ -118,9 +139,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         {/* Menu */}
         <FlexColumn innerref={this._menu} className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`} style={{ width: 300, minHeight: 30, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: 5 }}>
           <FlexRow style={{ background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1 }} className={`${styling.align_self_stretch}`} />
-          {this.props._items?.map((value) => (
-            <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>
-          ))}
+          {<React.Fragment>{analyzed_items}</React.Fragment>}
         </FlexColumn>
       </FlexColumn>
     );
