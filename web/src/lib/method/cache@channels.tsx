@@ -15,3 +15,5 @@ const cache_channels = async (set?: (channels: channel[]) => void): Promise<chan
   console.log(_channels)
   return _channels;
 }
+
+export default cache_channels;
