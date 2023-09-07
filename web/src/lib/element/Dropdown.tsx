@@ -62,10 +62,10 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   private HandleFocus(event: React.FocusEvent<HTMLInputElement> | undefined) {}
 
-  private Close() {
+  private Close(abrupt?: boolean) {
     this.setState({ _isopen: false });
-    new dropdown_change(this._menu.current, "dropdown").onclose();
-    new dropdown_change(this._button.current, "button").onclose();
+    new dropdown_change(this._menu.current, "dropdown").onclose(abrupt);
+    new dropdown_change(this._button.current, "button").onclose(abrupt);
   }
 
   private Open() {
@@ -134,7 +134,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   componentDidMount(): void {
     document.addEventListener("click", this.handleGlobalClick);
-    this.Close();
+    this.Close(true);
   }
 
   render() {
@@ -185,9 +185,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         {/* Select Button */}
         <FlexRow
           innerref={this._button}
-          style={{ flex: "1 0 auto", height: 50, borderRadius: 5, padding: "0px 10px 0px 10px", cursor: "pointer" }}
+          style={{ flex: "1 0 auto", height: 50, borderRadius: 5, padding: "0px 10px 0px 10px", cursor: "pointer", zIndex: 4 }}
           className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.darker} ${styling.justify_content_space_between}`}>
-          <FlexRow style={{ gap: 2, width: "100%" }} className={`${styling.align_items_stretch}`}>
+          <FlexRow style={{ gap: 2 }} className={`${styling.align_items_stretch}`}>
             <React.Fragment>{this.state._custom_display}</React.Fragment>
             <TextInput
               innerref={this._input}
@@ -198,16 +198,18 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
               onChange={(event) => this.HandleText(event)}
             />
           </FlexRow>
-          <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20}} />
+          <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn
-          innerref={this._menu}
-          className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}
-          style={{ width: "100%", minHeight: 30, position: "absolute", borderRadius: "0px 0px 10px 10px", top: "100%", gap: 10, padding: "0 10px 10px 10px", maxHeight: 280, overflowY: "scroll" }}>
-          <FlexRow style={{ background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1 }} className={`${styling.align_self_stretch}`} />
-          {<React.Fragment>{analyzed_items}</React.Fragment>}
+        <FlexColumn style={{position: "absolute", width: "100%", height: 280, top: "90%", overflow: "hidden", zIndex: 2}}>
+          <FlexColumn
+            innerref={this._menu}
+            className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}
+            style={{ width: "100%", minHeight: 30, position: "absolute", borderRadius: "0px 0px 10px 10px", top: 0, gap: 10, padding: "0 10px 10px 10px", maxHeight: 280, overflowY: "scroll", zIndex: 3 }}>
+            <FlexRow style={{ background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1 }} className={`${styling.align_self_stretch}`} />
+            {<React.Fragment>{analyzed_items}</React.Fragment>}
+          </FlexColumn>
         </FlexColumn>
       </FlexColumn>
     );

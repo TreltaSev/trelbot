@@ -1,3 +1,4 @@
+import defaultValue from "@root/lib/method/defaultValue";
 import { abstracted_dropdown } from "./abstracted_dropdown";
 
 class dropdown_change extends abstracted_dropdown {
@@ -14,26 +15,42 @@ class dropdown_change extends abstracted_dropdown {
     if (!this.current) {
       return;
     }
+
     switch (this.type) {
       case "button":
-        this.current.style.borderRadius = "10px 10px 0px 0px";
+        setTimeout(() => {
+          if (this.current) {
+            this.current.style.borderRadius = "10px 10px 0 0"
+          }
+        }, 50)
         break;
       case "dropdown":
-        this.current.style.display = "flex";
+        this.current.animate({transform: "translateY(0)"}, this.base_options)
         break;
     }
   }
 
-  onclose(): void {
+  onclose(abrupt?: boolean): void {
     if (!this.current) {
       return;
     }
+
+    const _abrupt = defaultValue(abrupt, false, undefined);
+
     switch (this.type) {
       case "button":
-        this.current.style.borderRadius = "10px 10px 10px 10px";
+        setTimeout(() => {
+          if (this.current) {
+            this.current.style.borderRadius = "10px 10px 10px 10px"
+          }
+        }, 50)
         break;
       case "dropdown":
-        this.current.style.display = "none";
+        if (_abrupt) {
+          this.current.style.transform = "translateY(-100%)";
+          break;
+        }
+        this.current.animate({transform: "translateY(-100%)"}, this.base_options)
         break;
     }
   }
