@@ -1,16 +1,16 @@
 import React from "react";
-import styling from "@assets/styling.module.css";
-import custom from "@assets/custom.module.css";
-import FlexRow from "@lib/element/FlexRow";
-import Arrow from "@lib/svg/Arrow";
-import defaultValue from "@lib/method/defaultValue";
-import FlexColumn from "@lib/element/FlexColumn";
-import dropdown_change from "./dashboard/declerations/dropdown_change";
-import TextInput from "@lib/element/TextInput";
-import dropdown_item_shard from "@lib/types/dropdown_item_shard";
 import { uuidv4 } from "uuidv7";
+import Arrow from "@lib/svg/Arrow";
 import Text from "@lib/element/Text";
-import ChannelTag from "../svg/ChannelTag";
+import FlexRow from "@lib/element/FlexRow";
+import ChannelTag from "@lib/svg/ChannelTag";
+import custom from "@assets/custom.module.css";
+import TextInput from "@lib/element/TextInput";
+import FlexColumn from "@lib/element/FlexColumn";
+import styling from "@assets/styling.module.css";
+import defaultValue from "@lib/method/defaultValue";
+import dropdown_item_shard from "@lib/types/dropdown_item_shard";
+import dropdown_change from "@lib/element/dashboard/declerations/dropdown_change";
 
 export type props_Dropdown = {
   name?: string;
@@ -202,7 +202,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn style={{position: "absolute", width: "100%", height: 280, top: "90%", overflow: "hidden", zIndex: 2}}>
+        <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "90%", overflow: "hidden", zIndex: 2 }}>
           <FlexColumn
             innerref={this._menu}
             className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}
