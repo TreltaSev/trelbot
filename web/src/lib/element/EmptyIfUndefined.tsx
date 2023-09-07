@@ -8,8 +8,8 @@ type type_EmptyIfUndefined = {
 /**
  * Returns <></> if input value is undefined
  * returns the children if it isn't undefined
- * @param param0 
- * @returns 
+ * @param value
+ * @returns
  */
 const EmptyIfUndefined: React.FC<type_EmptyIfUndefined> = ({ value, children }) => {
   let isUndefined: boolean = false;
