@@ -1,11 +1,11 @@
 import React from "react";
 import Text from "@lib/element/Text";
 import FlexRow from "@lib/element/FlexRow";
+import component from "@lib/types/component";
 import styling from "@assets/styling.module.css";
+import defaultValue from "@lib/method/defaultValue";
+import animate_color from "@lib/method/animate@color";
 import animate_background from "@lib/method/animate@background";
-import animate_color from "../method/animate@color";
-import defaultValue from "../method/defaultValue";
-import component from "../types/component";
 
 type type_DropdownItem = component & {
   displayName: string;
