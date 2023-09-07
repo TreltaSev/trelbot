@@ -29,7 +29,7 @@ const OnJoin: React.FC = () => {
         }
 
         
-        return Dropdown.form(_v.name as string, <DropdownItem onClick={() => channelsDropdownRef.current?.choose(_v.name, _v.id)} forwarding={forwarding} displayName={_v.name as string} backing={<ChannelTag style={{ width: 16, height: 16, opacity: 0.8 }} />} />, 0);
+        return Dropdown.form(_v.name as string, <DropdownItem onClick={() => channelsDropdownRef.current?.choose(_v.name, _v.id)} forwarding={forwarding} displayName={_v.name as string} backing={<ChannelTag style={{ width: 16, height: 16, opacity: 0.8 }} />} />, _v.position);
       });
   }
 

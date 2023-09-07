@@ -80,8 +80,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
    * @param displayElement React node that will be displayed as the item
    * @param position Position, 0 at the top
    */
-  static form(name: string, displayElement: React.ReactNode, position: number): dropdown_item_shard {
-    return { name: name, displayElement: displayElement, position: position } as dropdown_item_shard;
+  static form(name: string, displayElement: React.ReactNode, position: number | undefined): dropdown_item_shard {
+    const _position = defaultValue(position, 0, undefined);
+    return { name: name, displayElement: displayElement, position: _position } as dropdown_item_shard;
   }
 
   public choose(display?: string, value?: any) {
@@ -138,36 +139,40 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   render() {
     let dropdown_status: "failed_search" | "allgud" = "failed_search";
-    const analyzed_items = this.props._items
-      ?.sort((a, b) => {
-        if (!a.position || !b.position) {
-          return 0;
-        }
-        if (a.position > b.position) {
-          return -1;
-        } else if (a.position < b.position) {
-          return 1;
-        }
+    this.props._items?.sort((a, b) => {
+      if (a.position === null || b.position === null) {
+        console.error("Failed in cross check, ", a, b, a.position, b.position);
         return 0;
-      })
-      .map((value) => {
-        if (!this.state.search_value) {
-          dropdown_status = "allgud";
-          return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
-        }
-        if (value.name?.toLowerCase().includes(this.state.search_value.toLowerCase())) {
-          dropdown_status = "allgud";
-          return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
-        }
-        return <React.Fragment key={uuidv4()} />;
-      });
+      }
+
+      const position_segmentA: number = a.position as number;
+      const position_segmentB: number = b.position as number;
+      if (position_segmentA > position_segmentB) {
+        return 1;
+      } else if (position_segmentA < position_segmentB) {
+        return -1;
+      }
+      return 0;
+    });
+
+    const analyzed_items = this.props._items?.map((value) => {
+      if (!this.state.search_value) {
+        dropdown_status = "allgud";
+        return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
+      }
+      if (value.name?.toLowerCase().includes(this.state.search_value.toLowerCase())) {
+        dropdown_status = "allgud";
+        return <React.Fragment key={uuidv4()}>{value.displayElement}</React.Fragment>;
+      }
+      return <React.Fragment key={uuidv4()} />;
+    });
 
     switch (dropdown_status) {
       case "failed_search":
         analyzed_items?.splice(0);
         analyzed_items?.push(
-          <Text preset='1em-normal' style={{ opacity: "0.5" }} key={uuidv4()}>
-            Failed Search
+          <Text preset='normal' style={{ opacity: "0.5", fontSize: "0.75em" }} key={uuidv4()}>
+            No items reach query
           </Text>
         );
         break;
@@ -182,18 +187,18 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
           innerref={this._button}
           style={{ flex: "1 0 auto", height: 50, borderRadius: 5, padding: "0px 10px 0px 10px", cursor: "pointer" }}
           className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.darker} ${styling.justify_content_space_between}`}>
-          <FlexRow style={{ gap: 2 }} className={`${styling.align_items_stretch}`}>
+          <FlexRow style={{ gap: 2, width: "100%" }} className={`${styling.align_items_stretch}`}>
             <React.Fragment>{this.state._custom_display}</React.Fragment>
             <TextInput
               innerref={this._input}
               className={`${custom.input_no_border} ${custom.input_no_focus}`}
-              style={{ background: "transparent", fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", color: "white" }}
+              style={{ background: "transparent", fontSize: "1em", fontWeight: "400", fontFamily: "Lato", opacity: "0.8", color: "white", width: "100%" }}
               placeholder={this.state.button_content}
               value={this.state.search_value}
               onChange={(event) => this.HandleText(event)}
             />
           </FlexRow>
-          <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20 }} />
+          <Arrow style={{ minWidth: 20, minHeight: 20, width: 20, height: 20}} />
         </FlexRow>
 
         {/* Menu */}

@@ -27,6 +27,7 @@ const cache_channels = async (guild_id: strnum, set?: (channels: channel[]) => v
     parsed.push(value)
   })
 
+  console.log(_channels)
   return parsed
 }
 
