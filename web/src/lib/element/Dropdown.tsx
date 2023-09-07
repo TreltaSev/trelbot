@@ -15,6 +15,7 @@ import dropdown_change from "@lib/element/dashboard/declerations/dropdown_change
 export type props_Dropdown = {
   name?: string;
   _items?: dropdown_item_shard[] | undefined;
+  _plural_concat?: boolean;
 };
 
 type state_Dropdown = {
@@ -30,6 +31,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _button: React.RefObject<HTMLDivElement>;
   private _input: React.RefObject<HTMLInputElement>;
   private _name = defaultValue(this.props.name, "Channel", undefined);
+  private _plural_concat: boolean = defaultValue(this.props._plural_concat, false, undefined);
   public _v = "";
 
   constructor(props: props_Dropdown) {
@@ -202,12 +204,15 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
         {/* Menu */}
         <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "87%", overflow: "hidden", zIndex: 2 }}>
-          <Text preset="basic" style={{fontSize: 14, color: "rgba(255,255,255,0.8)"}}>{this._name}</Text>
           <FlexColumn
             innerref={this._menu}
             className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}
             style={{ width: "100%", minHeight: 30, position: "absolute", borderRadius: "0px 0px 10px 10px", top: 0, gap: 10, padding: "0 10px 10px 10px", maxHeight: 280, overflowY: "scroll", zIndex: 3 }}>
             <FlexRow style={{ background: "rgba(255,255,255,0.1)", height: 2, borderRadius: 1 }} className={`${styling.align_self_stretch}`} />
+            <Text preset='bare' style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", fontWeight: "700" }}>
+              {this._name}
+              {this._plural_concat ? "s" : ""}
+            </Text>
             {<React.Fragment>{analyzed_items}</React.Fragment>}
           </FlexColumn>
         </FlexColumn>
