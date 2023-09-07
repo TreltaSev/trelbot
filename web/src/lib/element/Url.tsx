@@ -1,5 +1,5 @@
 import React from "react";
-import Text from "./Text";
+import Text from "@lib/element/Text";
 import { type_Text } from "@lib/element/Text";
 
 type type_Url = type_Text & {
