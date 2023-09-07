@@ -6,9 +6,9 @@
  */
 const boolValue = (_input?: boolean, _true?: any, _false?: any): any => {
   if (_input) {
-    return _true
+    return _true;
   } else {
-    return _false
+    return _false;
   }
 };
 
