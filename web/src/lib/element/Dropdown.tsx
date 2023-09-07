@@ -202,6 +202,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
         {/* Menu */}
         <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "87%", overflow: "hidden", zIndex: 2 }}>
+          <Text preset="basic" style={{fontSize: 14, color: "rgba(255,255,255,0.8)"}}>{this._name}</Text>
           <FlexColumn
             innerref={this._menu}
             className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}
