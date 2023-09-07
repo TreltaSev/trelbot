@@ -76,7 +76,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     this.setState({ _isopen: false });
     new dropdown_change(this._menu.current, "dropdown", () => {
       if (this._menu_parent.current) {
-        this._menu_parent.current.style.display = "none"
+        this._menu_parent.current.style.display = "none";
       }
     }).onclose(abrupt);
     new dropdown_change(this._button.current, "button").onclose(abrupt);
@@ -85,7 +85,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private Open() {
     this.setState({ _isopen: true });
     if (this._menu_parent.current) {
-      this._menu_parent.current.style.display = "flex"
+      this._menu_parent.current.style.display = "flex";
     }
     new dropdown_change(this._menu.current, "dropdown").onopen();
     new dropdown_change(this._button.current, "button").onopen();
@@ -105,9 +105,11 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   public choose(display?: string, value?: any) {
     this.setState({ search_value: "", chosen: value });
     this.change_custom(
-      <FlexRow style={{ gap: 5}} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
+      <FlexRow style={{ gap: 5 }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
         <ChannelTag style={{ width: 16, height: 16 }} />
-        <Text preset='1em-normal' style={{whiteSpace: "nowrap"}}>{display}</Text>
+        <Text preset='1em-normal' style={{ whiteSpace: "nowrap" }}>
+          {display}
+        </Text>
       </FlexRow>
     );
   }
@@ -199,7 +201,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     return (
       <FlexColumn style={{ width: 500, height: 50, borderRadius: 5, gap: 0, position: "relative" }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
-        <Text preset="bare" style={{fontWeight: "700", fontSize: "1em", color: "white", opacity: 0.8}}></Text>
+        <Text preset='bare' style={{ fontWeight: "700", fontSize: "1em", color: "white", opacity: 0.8 }}></Text>
         <FlexRow
           innerref={this._button}
           style={{ flex: "1 0 auto", height: 50, borderRadius: 5, padding: "0px 10px 0px 10px", cursor: "pointer", zIndex: 4 }}
