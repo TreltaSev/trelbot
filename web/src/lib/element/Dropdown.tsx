@@ -172,7 +172,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         analyzed_items?.splice(0);
         analyzed_items?.push(
           <Text preset='normal' style={{ opacity: "0.5", fontSize: "0.75em" }} key={uuidv4()}>
-            No items reach query
+            No items match query
           </Text>
         );
         break;
