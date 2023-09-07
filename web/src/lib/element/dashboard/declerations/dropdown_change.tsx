@@ -4,11 +4,13 @@ import { abstracted_dropdown } from "./abstracted_dropdown";
 class dropdown_change extends abstracted_dropdown {
   private current?: HTMLDivElement | null;
   private type?: "button" | "dropdown" | null;
+  private onfinish?: () => void | null;
 
-  constructor(current?: HTMLDivElement | null, type?: "button" | "dropdown" | null) {
+  constructor(current?: HTMLDivElement | null, type?: "button" | "dropdown" | null, onfinish?: () => void | null) {
     super();
     this.type = type;
     this.current = current;
+    this.onfinish = defaultValue(onfinish, null, undefined);
   }
 
   onopen(): void {
@@ -20,7 +22,8 @@ class dropdown_change extends abstracted_dropdown {
       case "button":
         break;
       case "dropdown":
-        this.current.animate({transform: "translateY(0)"}, this.base_options)
+        this.current.style.display = "flex";
+        this.current.animate({ transform: "translateY(0)" }, this.base_options);
         break;
     }
   }
@@ -36,16 +39,18 @@ class dropdown_change extends abstracted_dropdown {
       case "button":
         setTimeout(() => {
           if (this.current) {
-            this.current.style.borderRadius = "10px 10px 10px 10px"
+            this.current.style.borderRadius = "10px 10px 10px 10px";
           }
-        }, 50)
+        }, 50);
         break;
       case "dropdown":
         if (_abrupt) {
           this.current.style.transform = "translateY(-100%)";
+          this.current.style.display = "none";
           break;
         }
-        this.current.animate({transform: "translateY(-100%)"}, this.base_options)
+        const _tAnimation = this.current.animate({ transform: "translateY(-100%)" }, this.base_options);
+        _tAnimation.onfinish = this.onfinish || null;
         break;
     }
   }

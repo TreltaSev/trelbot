@@ -34,6 +34,7 @@ type state_Dropdown = {
  */
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _menu: React.RefObject<HTMLDivElement>;
+  private _menu_parent: React.RefObject<HTMLDivElement>;
   private _button: React.RefObject<HTMLDivElement>;
   private _input: React.RefObject<HTMLInputElement>;
   private _name = defaultValue(this.props.name, "Channel", undefined);
@@ -48,6 +49,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       _isopen: false,
     } as state_Dropdown;
     this._menu = React.createRef();
+    this._menu_parent = React.createRef();
     this._button = React.createRef();
     this._input = React.createRef();
   }
@@ -72,12 +74,19 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
 
   private Close(abrupt?: boolean) {
     this.setState({ _isopen: false });
-    new dropdown_change(this._menu.current, "dropdown").onclose(abrupt);
+    new dropdown_change(this._menu.current, "dropdown", () => {
+      if (this._menu_parent.current) {
+        this._menu_parent.current.style.display = "none"
+      }
+    }).onclose(abrupt);
     new dropdown_change(this._button.current, "button").onclose(abrupt);
   }
 
   private Open() {
     this.setState({ _isopen: true });
+    if (this._menu_parent.current) {
+      this._menu_parent.current.style.display = "flex"
+    }
     new dropdown_change(this._menu.current, "dropdown").onopen();
     new dropdown_change(this._button.current, "button").onopen();
   }
@@ -96,9 +105,9 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   public choose(display?: string, value?: any) {
     this.setState({ search_value: "", chosen: value });
     this.change_custom(
-      <FlexRow style={{ gap: 5 }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
+      <FlexRow style={{ gap: 5}} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
         <ChannelTag style={{ width: 16, height: 16 }} />
-        <Text preset='1em-normal'>{display}</Text>
+        <Text preset='1em-normal' style={{whiteSpace: "nowrap"}}>{display}</Text>
       </FlexRow>
     );
   }
@@ -190,11 +199,12 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     return (
       <FlexColumn style={{ width: 500, height: 50, borderRadius: 5, gap: 0, position: "relative" }} className={`${styling.align_items_flex_start}`}>
         {/* Select Button */}
+        <Text preset="bare" style={{fontWeight: "700", fontSize: "1em", color: "white", opacity: 0.8}}></Text>
         <FlexRow
           innerref={this._button}
           style={{ flex: "1 0 auto", height: 50, borderRadius: 5, padding: "0px 10px 0px 10px", cursor: "pointer", zIndex: 4 }}
           className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.darker} ${styling.justify_content_space_between}`}>
-          <FlexRow style={{ gap: 2 }} className={`${styling.align_items_stretch}`}>
+          <FlexRow style={{ gap: 2, width: "100%" }} className={`${styling.align_items_stretch}`}>
             <React.Fragment>{this.state._custom_display}</React.Fragment>
             <TextInput
               innerref={this._input}
@@ -209,7 +219,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "87%", overflow: "hidden", zIndex: 2 }}>
+        <FlexColumn innerref={this._menu_parent} style={{ position: "absolute", width: "100%", height: 280, top: "87%", overflow: "hidden", zIndex: 2 }}>
           <FlexColumn
             innerref={this._menu}
             className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}

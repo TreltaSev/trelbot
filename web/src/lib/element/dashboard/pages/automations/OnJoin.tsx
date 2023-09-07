@@ -44,8 +44,8 @@ const OnJoin: React.FC = () => {
             Sends some sort of message based on the configuration below
           </Text>
         </TextGroup>
-        <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
         <Dropdown ref={channelsDropdownRef} _items={shard_each} _plural_concat={true} />
+        <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />        
       </FlexColumn>
     </>
   );
