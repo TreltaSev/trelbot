@@ -1,8 +1,8 @@
 import React from "react";
-import Text from "@root/lib/element/Text";
+import Text from "@lib/element/Text";
+import custom from "@assets/custom.module.css";
 import Spacer from "@lib/element/Spacer";
 import styling from "@assets/styling.module.css";
-import custom from "@assets/custom.module.css";
 
 interface GuildChipProperties {
   name: string;
@@ -30,27 +30,22 @@ const GuildChip: React.FC<GuildChipProperties> = ({ name, image, display, presen
   };
 
   return (
-    <div
-      style={{ minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }}
-      className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub} ${custom.dashboard_select_guild_chip}`}>
+    <div style={{ minHeight: 80, padding: 20, gap: 10, borderRadius: 5 }} className={`${styling.flex_row} ${styling.align_items_center} ${styling.border_box} ${styling.darksub} ${custom.dashboard_select_guild_chip}`}>
       <img alt='' src={image} width={40} height={40} style={{ borderRadius: "50%" }} className={`${styling.no_shrink}`} />
 
       <div style={{ gap: 5 }} className={`${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_start}`}>
-        <Text preset="normal" style={{fontSize: 14}} className={`${styling.white_space_nowrap} ${styling.text_overflow_ellipsis} ${styling.overflow_hidden}`}>
+        <Text preset='normal' style={{ fontSize: 14 }} className={`${styling.white_space_nowrap} ${styling.text_overflow_ellipsis} ${styling.overflow_hidden}`}>
           {name}
         </Text>
-        <Text preset="normal" style={{opacity: "0.5"}}>
+        <Text preset='normal' style={{ opacity: "0.5" }}>
           {display}
         </Text>
       </div>
 
       <Spacer />
 
-      <div
-        onClick={() => click()}
-        style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, borderRadius: 5 }}
-        className={`${custom.button} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
-        <Text preset="1em-normal">{button_text}</Text>
+      <div onClick={() => click()} style={{ cursor: "pointer", padding: "0px 10px 0px 10px", height: 35, borderRadius: 5 }} className={`${custom.button} ${styling.flex_col} ${styling.justify_content_center} ${styling.align_items_center} ${present ? custom.selectbtn : custom.invitebtn}`}>
+        <Text preset='1em-normal'>{button_text}</Text>
       </div>
     </div>
   );
