@@ -1,11 +1,10 @@
 import React from "react";
-import FlexRow from "@lib/element/FlexRow";
-import styling from "@assets/styling.module.css";
-import defaultValue from "@lib/method/defaultValue";
-
 import { uuidv7 } from "uuidv7";
 import { strnum } from "@lib/types/sizes";
+import FlexRow from "@lib/element/FlexRow";
+import styling from "@assets/styling.module.css";
 import { cubicBezier, motion } from "framer-motion";
+import defaultValue from "@lib/method/defaultValue";
 
 type type_LoadingAnimated = {
   size?: strnum;
