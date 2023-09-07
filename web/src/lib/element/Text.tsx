@@ -10,15 +10,15 @@ type type_presets = {
 };
 
 const presets: type_presets = {
-  "basic": {fontWeight: "400", fontFamily: "Lato"},
-  "normal": {fontWeight: "400", fontFamily: "Lato", color: "white"},
-  "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato", color: "white"},
-  "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white"}
+  basic: { fontWeight: "400", fontFamily: "Lato" },
+  normal: { fontWeight: "400", fontFamily: "Lato", color: "white" },
+  "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato", color: "white" },
+  "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white" },
 };
 
 const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset, innerref }) => {
   if (preset) {
-    style = {...style, ...presets[preset]};
+    style = { ...style, ...presets[preset] };
   }
 
   return (
