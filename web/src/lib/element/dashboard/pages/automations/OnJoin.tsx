@@ -45,7 +45,7 @@ const OnJoin: React.FC = () => {
           </Text>
         </TextGroup>
         <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
-        <Dropdown ref={channelsDropdownRef} _items={shard_each} />
+        <Dropdown ref={channelsDropdownRef} _items={shard_each} _plural_concat={true} />
       </FlexColumn>
     </>
   );

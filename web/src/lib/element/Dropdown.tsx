@@ -26,6 +26,12 @@ type state_Dropdown = {
   chosen?: any;
 };
 
+/**
+ * An animated dropdown menu with customizable options
+ * @param name Optional, whats displated in `Select/Search a {name}`
+ * @param _items Optional, The items in a list, form it with Dropdown.form
+ * @param _plural_concat Optional, If true, adds an s to the end of this.name whenever its gramatically correct to use plurals.
+ */
 class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _menu: React.RefObject<HTMLDivElement>;
   private _button: React.RefObject<HTMLDivElement>;
