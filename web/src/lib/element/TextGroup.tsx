@@ -1,5 +1,5 @@
 import React from "react";
-import FlexColumn from "./FlexColumn";
+import FlexColumn from "@lib/element/FlexColumn";
 
 type type_TextGroup = {
   children?: React.ReactNode;
