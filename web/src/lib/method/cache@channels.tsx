@@ -1,9 +1,9 @@
 import Cookies from "js-cookie";
 import config from "@assets/config";
-import errorCatcher from "@lib/method/errorCatcher";
-import nli_transfer from "@lib/method/nli_transfer";
 import channel from "@lib/types/channel";
 import { strnum } from "@lib/types/sizes";
+import nli_transfer from "@lib/method/nli_transfer";
+import errorCatcher from "@lib/method/errorCatcher";
 
 const cache_channels = async (guild_id: strnum, set?: (channels: channel[]) => void): Promise<channel[]> => {
   const session = Cookies.get("session");
