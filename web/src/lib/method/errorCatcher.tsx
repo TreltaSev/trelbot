@@ -9,7 +9,7 @@ const errorCatcher = (data: any): boolean => {
       case 1020:
       case 1028:
         // Error 1020 || 1028
-        new loginAction().setError("error", _message, _code.toString(), "/login")
+        new loginAction().setError("error", _message, _code.toString(), "/login");
         break;
       default:
         console.error(`Error, Stack: ${data}`);
