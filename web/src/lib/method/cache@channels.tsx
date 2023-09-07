@@ -9,26 +9,25 @@ const cache_channels = async (guild_id: strnum, set?: (channels: channel[]) => v
   const session = Cookies.get("session");
   nli_transfer(session);
 
-  const _request: RequestInit = { method: "get", headers: { Session: session as string} };
-  const _channelsResponse = await fetch(`${config.backendUrl}/guilds/${guild_id}/channels`, _request)
+  const _request: RequestInit = { method: "get", headers: { Session: session as string } };
+  const _channelsResponse = await fetch(`${config.backendUrl}/guilds/${guild_id}/channels`, _request);
   const _channels = await _channelsResponse.json();
 
   if (errorCatcher(_channels)) {
     throw new Error(`Response contains error for /guilds/${guild_id}/channels in json ${_channels}`);
-  }  
-
-  if (set) {
-    set(_channels)
   }
 
-  const parsed: channel[] = []
+  if (set) {
+    set(_channels);
+  }
+
+  const parsed: channel[] = [];
 
   _channels.map((value: channel) => {
-    parsed.push(value)
-  })
+    parsed.push(value);
+  });
 
-  console.log(_channels)
-  return parsed
-}
+  return parsed;
+};
 
 export default cache_channels;
