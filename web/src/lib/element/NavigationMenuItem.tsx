@@ -42,7 +42,7 @@ const NavigationMenuItem: React.FC<NavigationMenuItemProperties> = ({ name, href
 
   return (
     <div onClick={() => Action()} onMouseEnter={() => HoverOn()} onMouseLeave={() => HoverOff()} style={{ opacity: 0.8, cursor: "pointer" }} ref={componentRef}>
-      <Text preset="1em-normal">{name}</Text>
+      <Text preset='1em-normal'>{name}</Text>
     </div>
   );
 };
