@@ -24,7 +24,7 @@ class loginAction {
    * removes action of login from localstorage
    */
   removeAction() {
-    localStorage.removeItem("login_action?")
+    localStorage.removeItem("login_action?");
   }
 
   /**
