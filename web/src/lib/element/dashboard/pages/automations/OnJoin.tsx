@@ -7,18 +7,30 @@ import FlexColumn from "@lib/element/FlexColumn";
 import ToggleButton from "@lib/element/ToggleButton";
 import DropdownItem from "@lib/element/DropdownItem";
 import { channels } from "@lib/element/dashboard/pages/automations";
+import channel from "@root/lib/types/channel";
 
 const OnJoin: React.FC = () => {
   const toggleRef = React.useRef(null);
   const channelsDropdownRef = React.useRef<Dropdown>(null);
   const { value_channels } = React.useContext(channels);
   let shard_each: any = undefined;
-  
+
+  const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
+    return array.find(child => child.id.toString() === parent_id)
+  };
 
   if (value_channels) {
-    shard_each = value_channels.map((_v) => {
-      return Dropdown.form(_v.name as string, <DropdownItem displayName={_v.name as string} backing={<ChannelTag style={{width: 16, height: 16, opacity: 0.8}}/>} />, 0);
-    });
+    shard_each = value_channels
+      .filter((_v) => _v.type === 0)
+      .map((_v) => {
+        let forwarding = null;
+        if (_v.parent_id) {
+          forwarding = <Text preset="normal" style={{fontSize: "0.5em", opacity: "0.5", marginLeft: "auto"}}>{get_parent(value_channels, _v.parent_id)?.name}</Text>;
+        }
+
+        
+        return Dropdown.form(_v.name as string, <DropdownItem onClick={() => channelsDropdownRef.current?.choose(_v.name, _v.id)} forwarding={forwarding} displayName={_v.name as string} backing={<ChannelTag style={{ width: 16, height: 16, opacity: 0.8 }} />} />, 0);
+      });
   }
 
   return (

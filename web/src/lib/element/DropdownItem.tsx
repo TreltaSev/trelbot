@@ -14,8 +14,9 @@ type type_DropdownItem = component & {
   activeBackground?: string;
   nonActiveBackground?: string;
   backing?: React.ReactNode;
+  forwarding?: React.ReactNode;
 };
-const DropdownItem: React.FC<type_DropdownItem> = ({ onClick, displayName, nonActiveColor, activeColor, activeBackground, nonActiveBackground, backing }) => {
+const DropdownItem: React.FC<type_DropdownItem> = ({ onClick, displayName, nonActiveColor, activeColor, activeBackground, nonActiveBackground, backing, forwarding }) => {
   const dropdownItemRef = React.useRef<HTMLDivElement | null>(null);
   const dropdownTextRef = React.useRef<HTMLSpanElement | null>(null);
 
@@ -24,12 +25,11 @@ const DropdownItem: React.FC<type_DropdownItem> = ({ onClick, displayName, nonAc
   const _activeColor = defaultValue(activeColor, "rgba(255,255,255,1.0)", undefined);
   const _activeBackground = defaultValue(activeBackground, "rgba(255,255,255,0.1)");
   const _nonActiveBackground = defaultValue(nonActiveBackground, "rgba(0,0,0,0)");
-
   return (
     <>
       <FlexRow
         innerref={dropdownItemRef}
-        style={{ borderRadius: 5, padding: 10, cursor: "pointer", gap: 10 }}
+        style={{ borderRadius: 5, padding: 10, cursor: "pointer", gap: 5, height: 40 }}
         onClick={onClick}
         onMouseEnter={() =>
           animate_background({
@@ -49,11 +49,12 @@ const DropdownItem: React.FC<type_DropdownItem> = ({ onClick, displayName, nonAc
             },
           })
         }
-        className={`${styling.align_self_stretch} ${styling.align_items_center} ${styling.border_box}`}>
+        className={`${styling.align_self_stretch} ${styling.align_items_flex_end} ${styling.border_box}`}>
         <React.Fragment>{backing}</React.Fragment>
         <Text innerref={dropdownTextRef} preset='basic' style={{ fontSize: "1em", color: _nonActiveColor }}>
           {_displayName}
         </Text>
+        <React.Fragment>{forwarding}</React.Fragment>
       </FlexRow>
     </>
   );

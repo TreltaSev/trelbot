@@ -138,6 +138,10 @@ Different align types such as align center, start, end, and stretch
   align-items: flex-start;
 }
 
+.align_items_flex_end {
+  align-items: flex-end;
+}
+
 /* |Justify Types|
 Different justify types such as justify content center
 */
