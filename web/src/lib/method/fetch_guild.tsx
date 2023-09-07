@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import config from "@assets/config";
-import nli_transfer from "@lib/method/nli_transfer";
 import guild from "@lib/types/guild";
+import nli_transfer from "@lib/method/nli_transfer";
 
 const fetch_guild = async (guild_id: string | number | undefined): Promise<guild> => {
   let session = Cookies.get("session");
