@@ -1,6 +1,6 @@
 import React from "react";
-import defaultValue from "../method/defaultValue";
-import boolValue from "../method/boolValue";
+import boolValue from "@lib/method/boolValue";
+import defaultValue from "@lib/method/defaultValue";
 
 type props_ToggleButton = {
   ontoggle?: (...args: any[]) => any;
@@ -42,9 +42,9 @@ class ToggleButton extends React.Component<props_ToggleButton, state_ToggleButto
     this.innerRef.current.animate({ transform: `translateX(${boolValue(_nv, 30, 4)}px)` }, { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" });
     this.toggleRef.current.animate({ background: boolValue(_nv, "#8C52FF", "rgba(255,255,255,0.2)") }, { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" });
     this.setState({ active: _nv });
-    
+
     if (this.props.callback) {
-      this.props.callback(_nv as boolean)
+      this.props.callback(_nv as boolean);
     }
   }
 
