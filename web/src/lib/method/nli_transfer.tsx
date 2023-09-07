@@ -8,11 +8,11 @@ import loginAction from "@lib/method/loginAction";
 /**
  * Sends a user back to login if input value is undefined
  * @param value pref cookies.session
- * @returns 
+ * @returns
  */
 const nli_transfer = (value: any): void => {
   if (value === undefined) {
-    new loginAction().setError("error", "You dont seem to be logged in, or maybe you cleared your cookies", "1020", "/login")
+    new loginAction().setError("error", "You dont seem to be logged in, or maybe you cleared your cookies", "1020", "/login");
   }
   return;
 };
