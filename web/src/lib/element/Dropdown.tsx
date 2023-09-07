@@ -86,7 +86,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   public choose(display?: string, value?: any) {
-    console.log(`Choosing ${display} whos value is ${value}`);
     this.setState({ search_value: "", chosen: value });
     this.change_custom(
       <FlexRow style={{ gap: 5 }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
@@ -202,7 +201,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
         </FlexRow>
 
         {/* Menu */}
-        <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "90%", overflow: "hidden", zIndex: 2 }}>
+        <FlexColumn style={{ position: "absolute", width: "100%", height: 280, top: "87%", overflow: "hidden", zIndex: 2 }}>
           <FlexColumn
             innerref={this._menu}
             className={`${styling.align_self_stretch} ${styling.border_box} ${styling.darker}`}

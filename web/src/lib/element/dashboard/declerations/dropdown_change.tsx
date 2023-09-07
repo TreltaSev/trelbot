@@ -18,11 +18,6 @@ class dropdown_change extends abstracted_dropdown {
 
     switch (this.type) {
       case "button":
-        setTimeout(() => {
-          if (this.current) {
-            this.current.style.borderRadius = "10px 10px 0 0"
-          }
-        }, 50)
         break;
       case "dropdown":
         this.current.animate({transform: "translateY(0)"}, this.base_options)
