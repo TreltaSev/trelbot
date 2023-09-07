@@ -1,9 +1,8 @@
 import Cookies from "js-cookie";
+import guild from "@lib/types/guild";
 import config from "@assets/config";
 import errorCatcher from "@lib/method/errorCatcher";
 import nli_transfer from "@lib/method/nli_transfer";
-import guild from "@lib/types/guild";
-
 
 const cache_guilds = async (set?: (guilds: guild[]) => void): Promise<guild[]> => {
   const session = Cookies.get("session");
@@ -15,10 +14,10 @@ const cache_guilds = async (set?: (guilds: guild[]) => void): Promise<guild[]> =
 
   if (errorCatcher(_guilds)) {
     throw new Error(`Response contains error for @me/guilds in json ${_guilds}`);
-  }  
+  }
 
   if (set) {
-    set(_guilds)
+    set(_guilds);
   }
 
   return _guilds;
