@@ -59,10 +59,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   private update_search_value(input?: string) {
-    // Update search value in state
     this.setState({ search_value: input });
-
-    // Refresh filter items
   }
 
   private HandleText(event: React.FormEvent<HTMLInputElement>) {
@@ -186,7 +183,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       case "failed_search":
         analyzed_items?.splice(0);
         analyzed_items?.push(
-          <Text preset="0.75em-regular-dimmed" key={uuidv4()}>
+          <Text preset='0.75em-regular-dimmed' key={uuidv4()}>
             No items match query
           </Text>
         );
