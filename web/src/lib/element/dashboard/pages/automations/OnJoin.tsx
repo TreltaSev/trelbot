@@ -16,7 +16,7 @@ const OnJoin: React.FC = () => {
   let shard_each: any = undefined;
 
   const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
-    return array.find(child => child.id.toString() === parent_id)
+    return array.find((child) => child.id.toString() === parent_id);
   };
 
   if (value_channels) {
@@ -25,10 +25,13 @@ const OnJoin: React.FC = () => {
       .map((_v) => {
         let forwarding = null;
         if (_v.parent_id) {
-          forwarding = <Text preset="normal" style={{fontSize: "0.5em", opacity: "0.5", marginLeft: "auto"}}>{get_parent(value_channels, _v.parent_id)?.name}</Text>;
+          forwarding = (
+            <Text preset='normal' style={{ fontSize: "0.5em", opacity: "0.5", marginLeft: "auto" }}>
+              {get_parent(value_channels, _v.parent_id)?.name}
+            </Text>
+          );
         }
 
-        
         return Dropdown.form(_v.name as string, <DropdownItem onClick={() => channelsDropdownRef.current?.choose(_v.name, _v.id)} forwarding={forwarding} displayName={_v.name as string} backing={<ChannelTag style={{ width: 16, height: 16, opacity: 0.8 }} />} />, _v.position);
       });
   }
@@ -45,7 +48,7 @@ const OnJoin: React.FC = () => {
           </Text>
         </TextGroup>
         <Dropdown ref={channelsDropdownRef} _items={shard_each} _plural_concat={true} />
-        <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />        
+        <ToggleButton ref={toggleRef} ontoggle={() => console.log("heheheha")} />
       </FlexColumn>
     </>
   );
