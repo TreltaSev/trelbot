@@ -47,8 +47,12 @@ class dropdown_change extends abstracted_dropdown {
         if (_abrupt) {
           this.current.style.transform = "translateY(-100%)";
           this.current.style.display = "none";
-          break;
+          if (this.onfinish) {
+            this.onfinish();
+          }
+          return;
         }
+
         const _tAnimation = this.current.animate({ transform: "translateY(-100%)" }, this.base_options);
         _tAnimation.onfinish = this.onfinish || null;
         break;

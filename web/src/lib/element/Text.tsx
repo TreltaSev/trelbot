@@ -16,11 +16,11 @@ const presets: type_presets = {
   "0.75em-regular-dimmed": { fontFamily: "Lato", fontSize: "0.75em", fontWeight: "400", opacity: "0.5", color: "white" },
   "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato", color: "white" },
   "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white" },
+  "1.5em-bold": { fontSize: "1.5em", fontWeight: "700", fontFamily: "Lato", color: "white" },
 };
 
 const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset, innerref }) => {
   if (preset) {
-    console.log(preset, presets[preset])
     style = { ...style, ...presets[preset] };
   }
 
