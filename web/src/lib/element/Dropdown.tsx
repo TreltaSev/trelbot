@@ -156,7 +156,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
     let dropdown_status: "failed_search" | "allgud" = "failed_search";
     this.props._items?.sort((a, b) => {
       if (a.position === null || b.position === null) {
-        console.error(`Failed while cross checking, item a and item be are null. ${a}, ${b}, ${a.position}, ${b.position}`)
+        console.error(`Failed while cross checking, item a and item be are null. ${a}, ${b}, ${a.position}, ${b.position}`);
         return 0;
       }
 
@@ -186,7 +186,7 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
       case "failed_search":
         analyzed_items?.splice(0);
         analyzed_items?.push(
-          <Text preset='0.75em-regular-dimmed' key={uuidv4()}>
+          <Text preset="0.75em-regular-dimmed" key={uuidv4()}>
             No items match query
           </Text>
         );
