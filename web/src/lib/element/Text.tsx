@@ -13,6 +13,7 @@ const presets: type_presets = {
   bare: {fontFamily: "Lato"},
   basic: { fontWeight: "400", fontFamily: "Lato" },
   normal: { fontWeight: "400", fontFamily: "Lato", color: "white" },
+  "0.75em-regular-dimmed": {fontFamily: "Lato", fontSize: "0.75em", fontWeight: "400", opacity: "0.5"},
   "1em-normal": { fontSize: "1em", fontWeight: "400", fontFamily: "Lato", color: "white" },
   "1.5em-normal": { fontSize: "1.5em", fontWeight: "400", fontFamily: "Lato", color: "white" },
 };
