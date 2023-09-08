@@ -39,7 +39,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private _input: React.RefObject<HTMLInputElement>;
   private _name = defaultValue(this.props.name, "Channel", undefined);
   private _plural_concat: boolean = defaultValue(this.props._plural_concat, false, undefined);
-  public _v = "";
 
   constructor(props: props_Dropdown) {
     super(props);
@@ -69,8 +68,6 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   private HandleText(event: React.FormEvent<HTMLInputElement>) {
     this.update_search_value(event.currentTarget.value);
   }
-
-  private HandleFocus(event: React.FocusEvent<HTMLInputElement> | undefined) {}
 
   private Close(abrupt?: boolean) {
     this.setState({ _isopen: false });
