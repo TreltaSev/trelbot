@@ -1,14 +1,15 @@
 import React from "react";
 import Text from "@lib/element/Text";
+import TextArea from "@lib/element/TextArea";
 import ChannelTag from "@lib/svg/ChannelTag";
 import Dropdown from "@lib/element/Dropdown";
 import channel from "@root/lib/types/channel";
-import TextGroup from "@lib/element/TextGroup";
 import FlexColumn from "@lib/element/FlexColumn";
 import ToggleButton from "@lib/element/ToggleButton";
 import DropdownItem from "@lib/element/DropdownItem";
 import Section from "@lib/element/dashboard/specific/Section";
 import { channels } from "@lib/element/dashboard/pages/automations";
+
 
 const OnJoin: React.FC = () => {
   const ref_channel_toggle = React.useRef(null);
@@ -50,10 +51,12 @@ const OnJoin: React.FC = () => {
         </Section>        
 
         <Section context_name="Text" context_description="Sends a text message to the selected channel">
+          <TextArea name="Text"/>
           <ToggleButton ref={ref_text_toggle} ontoggle={() => console.log("heheheha")} />
         </Section>
 
         <Section context_name="Image" context_description="Creates an image using css-like text">
+          <TextArea name="Image"/>
           <ToggleButton ref={ref_image_toggle} ontoggle={() => console.log("heheheha")} />
         </Section>
         
