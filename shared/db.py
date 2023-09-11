@@ -19,19 +19,22 @@ class Settings:
     takes in a guild_id
     """
 
+    __base: str = "background:#181818;pfp:true;pfp_location:[center,50];pfp_border_color:#fff;pfp_border_width:20;main_text_size:64;sub_text_size:20;display_name:true;display_member_count:true;"
+
+    interpreter.ConfigInterperter(__base)
     _template: dict = {
-        "banner": """background:#181818;pfp:true;pfp_location:[center,50];pfp_border_color:#fff;pfp_border_width:20;join_main_text:Welcome to the sever;leave_main_text:GoodBye..?;main_text_size:64;join_sub_text:Leave and all cry;leave_sub_text:You left now me cry;sub_text_size:20;display_name:true;display_member_count:true;"""
-    }
+        "banners": {
+          "on_join": interpreter.ConfigInterperter(f"{__base}main_text:Welcome to the server;sub_text:Ahoy!;").values,
+          "on_leave": interpreter.ConfigInterperter(f"{__base}main_text:Goodbye;sub_text:Good luck on your travels;").values,
+          "on_ban": interpreter.ConfigInterperter(f"{__base}main_text:Get Banished;sub_text:You have violated the law!;").values,            
+        }
+    }    
 
     connection = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
     
     def __init__(self, guild_id: typing.Union[str, int]):        
         self.guild_id = str(guild_id)
         self.cursor: sqlite3.Cursor = Settings.connection.cursor()
-
-        if not isinstance(self.guild_id, types.GuildID):
-            logging.error("Not a valid guild id")
-            return
 
         self._create_if_not_exists()
 
@@ -62,29 +65,40 @@ class Settings:
         
         self.cursor.execute(f"CREATE TABLE IF NOT EXISTS '{self.guild_id}' (data TEXT)")
         self.cursor.execute(f"INSERT INTO '{self.guild_id}' (data) VALUES (?)", (json.dumps(Settings._template), ))
-        print(json.dumps(Settings._template))
         Settings.connection.commit()
 
         logging.debug(f"Created new table: {self.guild_id}")
 
-    def update(self, _new_settings: str) -> None:
-        """Updates a specific guilds settings for banners"""
+    def _update_banner(self, type: typing.Literal["on_join", "on_leave", "on_ban"], _in: str) -> None:
+        """
+        ~Added
 
-        if not self._table_exists():
-            logging.error(f"During Update: {self.guild_id} table doesn't exist... File corruption?")
-            return 
+        Updates banner settings, takes in a type which can take in
+        `on_join` &or
+        `on_leave` &or
+        `on_ban`
+        as a string
 
-        # Get the current settings
-        _current_settings = self.get()
+        the _in is a css like format of banner settings which will be validated before updation.
+        """
+        if type not in ["on_join", "on_leave", "on_ban"]:
+            print("Failed xx1")
+            return
+        
+        # Get Current settings from db
+        _current = self.get()
 
-        # Convert the new settings to a viable format, replacing inputted values as needed and Overwrite current data        
-        _current_settings["banner"] = interpreter.ConfigInterperter(_current_settings["banner"]).convert(_new_settings).cache_results()
+        # modify seleted type
+        _current["banners"][type] = interpreter.ConfigInterperter(_current["banners"][type]).update_self_with(_in).values
 
-        # Update the settings in the current database
-        self.cursor.execute(f"UPDATE '{self.guild_id}' SET data = ?", (json.dumps(_current_settings),))
+        # save values
+        self.cursor.execute(f"UPDATE '{self.guild_id}' SET data = ?", (json.dumps(_current),))
 
-        # Commit changes
         Settings.connection.commit()
+
+
+
+    
 
 
         

@@ -11,33 +11,32 @@ from shared.core_tools import errors
 class ConfigInterperter:
     """Converts a css like string base into a class object in python"""
 
-    def __init__(self, config: str):
+    def __init__(self, config: str | dict):
         self.actions = {
             "background": self._parse_background,
             "pfp": self._parse_pfp,
             "pfp_location": self._parse_pfp,
             "pfp_border_color": self._parse_pfp,
             "pfp_border_width": self._parse_pfp,
-            "join_main_text": self._parse_text,
-            "leave_main_text": self._parse_text,
+            "main_text": self._parse_text,
             "main_text_size": self._parse_text_size,
-            "join_sub_text": self._parse_text,
-            "leave_sub_text": self._parse_text,
+            "sub_text": self._parse_text,
             "sub_text_size": self._parse_text_size,
             "display_name": self._parse_display_name,
             "display_member_count": self._parse_display_member_count
         }
         self.config = config
 
+        if isinstance(self.config, dict):
+            self.config = self.convert_to_inline(self.config)
+
         self.background: str = "#fff"
         self.pfp: bool = True
         self.pfp_location: list = ["center", "50"]
         self.pfp_border_color: str = "#fff"
         self.pfp_border_width: int = 20
-        self.join_main_text: str = "Welcome Main Text"
-        self.leave_main_text: str = "Leave Main Text"
-        self.join_sub_text: str = "Welcome Sub Text"
-        self.leave_sub_text: str = "Leave Sub Text"
+        self.main_text: str = "Main Text"
+        self.sub_text: str = "Sub Text"
         self.main_text_size: int = 64
         self.sub_text_size: int = 12
         self.display_name: bool = True
@@ -45,14 +44,17 @@ class ConfigInterperter:
 
         self.parse_errors: list = []
 
-        self.convert(config)
+        self.update_self_with(config)
 
-    def convert(self, config: typing.Union[None, str] = None):
+    def update_self_with(self, config: typing.Union[None, str, dict] = None):
         """Convert banner settings format into a dictionary for easy use"""
 
         if isinstance(config, type(None)):
             config = self.config
-        
+
+        if isinstance(config, dict):
+            config = self.convert_to_inline(config)
+
         for _section in config.split(";"):
             if len(_section.split(":")) == 1:
                 continue
@@ -65,9 +67,14 @@ class ConfigInterperter:
         
         return self
 
-    def cache_results(self):
-        """Convert the parsed settings into a base css format"""
-        _copy = dict(vars(self))
+    @staticmethod
+    def convert_to_inline(input: typing.Optional[dict] = None):
+        """Convert a dict to css like format"""
+
+        if input == None:
+            raise(TypeError("Cant be null"))
+        
+        _copy = dict(input)
 
         for _to_remove in ["config", "actions"]:
             if _to_remove in _copy:
@@ -88,6 +95,13 @@ class ConfigInterperter:
     
         return _cache_out
     
+    @property
+    def values(self) -> dict:
+        """Grabs the current values of this object while removing some keys returns dict"""
+        _exclude: typing.List[str] = ["actions", "config", "parse_errors"]
+        return {key: value for key, value in vars(self).items() if key not in _exclude}
+        
+
 
     def _parse_background(self, _, value: str):
         """Parse background as color or image"""
@@ -177,7 +191,6 @@ class ConfigInterperter:
     def _match_color(self, _to_match: str):
         """Checks and gets hex value in a string"""
         match = re.search(r'^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', _to_match)
-        print(match, _to_match)
         if match:
             return [True, _to_match]
         return [False, None]

@@ -34,7 +34,6 @@ class Banner:
     
     def _construct_text(self, text: str, font: FreeTypeFont, position: List[int], color = "#fff"):
         """Constructs a basic text compoennt and draws to self.image"""
-
         ImageDraw.Draw(self.image).text(position, text, color, font)
 
     
@@ -49,7 +48,6 @@ class Banner:
     
     def _parse_location(self, values: list, size: list) -> list:
         """Parses any location string format"""
-        print(values, size)
         # Make sure values make sense
         if len(values) != 2:
             return [0, 0]
@@ -101,10 +99,12 @@ class UserBanner(Banner):
     Specialized methods for applying customized assets to the banner
     """
 
-    def __init__(self, event: Literal["join", "leave"],  member: Member = None):
+    def __init__(self, event: Literal["on_join", "on_leave", "on_ban"],  member: Member = None):
         super().__init__(member=member)
         self.event = event
-        self.config: interpreter.ConfigInterperter = interpreter.ConfigInterperter(db.Settings(str(member.guild.id)).get()["banner"])
+        __dict = db.Settings(str(member.guild.id)).get()["banners"][event]
+        __values = interpreter.ConfigInterperter.convert_to_inline(__dict)
+        self.config: interpreter.ConfigInterperter = interpreter.ConfigInterperter(__values)
         try:
             self._apply_background()
             self._apply_pfp()
@@ -130,7 +130,6 @@ class UserBanner(Banner):
         
         # Get Center
         position = self._parse_location(self.config.pfp_location, [200, 200])
-        print(position)
 
         # Crop
         cropped_mask = Image.new("L", rendered_profile_picture.size, 0)
@@ -160,29 +159,17 @@ class UserBanner(Banner):
     
     def _apply_message(self):
         """Applies a basic welcome/goodbye text centered in the image"""
-
-        if self.event == "join":
-            Message = self.config.join_main_text
-        else:
-            Message = self.config.leave_main_text
-
         LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.main_text_size)
-        position = self._parse_location(["center", "center"], LatoFont.getbbox(Message))
+        position = self._parse_location(["center", "center"], LatoFont.getbbox(self.config.main_text))
         position[1] += self.config.main_text_size
-        self._construct_text(Message, LatoFont, position)        
+        self._construct_text(self.config.main_text, LatoFont, position)        
 
     def _apply_secondary_message(self):
         """Applies a secondary message"""
-
-        if self.event == "join":
-            Message = self.config.join_sub_text
-        else:
-            Message = self.config.leave_sub_text
-
         LatoFont = ImageFont.truetype("./resources/lato.ttf", self.config.sub_text_size)
-        position = self._parse_location(["center", "center + 50"], LatoFont.getbbox(Message))
+        position = self._parse_location(["center", "center + 50"], LatoFont.getbbox(self.config.sub_text))
         position[1] += self.config.main_text_size + self.config.sub_text_size
-        self._construct_text(Message, LatoFont, position, (255, 255, 255, 128))  
+        self._construct_text(self.config.sub_text, LatoFont, position, (255, 255, 255, 128))  
     
     def _apply_username(self):
 
