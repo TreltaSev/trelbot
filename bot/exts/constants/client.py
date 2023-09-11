@@ -58,7 +58,6 @@ class Client(commands.Bot):
             await self.tree.sync()
         else:
             for guild in Client.DevelopmentGuilds()():
-                print("Syncing with", guild.id)
                 await self.tree.sync(guild=discord.Object(id=guild.id))
 
     
