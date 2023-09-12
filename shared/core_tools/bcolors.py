@@ -1,4 +1,5 @@
 import re
+from . import time
 
 class colors:
     cvRed = "<38;2;214;71;60}"
@@ -27,8 +28,8 @@ class console:
         ```
     """
 
-    def __init__(self, input_str: str):
-        self.message : str
+    @staticmethod
+    def _parse(input_str) -> str:
         input_str += "<0;38;48}"
         regex = r"\<([^}]*)\}"
         pattern = re.compile(regex)
@@ -37,6 +38,11 @@ class console:
             groups = match.groups()
             match_str = groups[0]
             input_str = input_str.replace("<"+match_str+"}", "\u001B["+match_str+"m")
-            match = pattern.search(input_str)
-        self.message = input_str
-        print(self.message)
+            match = pattern.search(input_str)            
+        return input_str
+
+    def info(input_str: str):      
+        print(console._parse(f"<48;2;130;75;240}} INFO <0;38;48}} <38;2;10;10;10}}{time.absolute()}<0;38;48}} {input_str}"))
+
+    def fail(input_str: str):
+        print(console._parse(f"<48;2;255;113;113}} FAIL <0;38;48}} <38;2;10;10;10}}{time.absolute()}<0;38;48}} {input_str}"))
