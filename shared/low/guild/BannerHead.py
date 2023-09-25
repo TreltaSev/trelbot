@@ -1,5 +1,6 @@
-from typing import Any
+from typing import Any, List
 
+from shared.low import BaseComponent, TextComponent
 from shared.types import snowflake, undefined, va_pair
 
 
@@ -15,3 +16,4 @@ class BannerHead:
     self.channel: snowflake = kwargs.get("channel", undefined())
     self.channel_text: va_pair = kwargs.get("channel_text", undefined())
     self.image_css: va_pair = kwargs.get("image_css", undefined())
+    self.components: List[TextComponent, BaseComponent] = kwargs.get("components", undefined())
