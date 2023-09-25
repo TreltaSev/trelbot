@@ -9,4 +9,4 @@ sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 from shared.low import guild  # nopep8
 
 conf = guild.Configuration("777")
-print(type(conf.banners.on_join.active))
+print(conf.json)
