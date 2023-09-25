@@ -1,5 +1,8 @@
 from typing import Optional, Union
 
+from shared.types import hex_color, snowflake
+
+
 class Configuration:
   """
   A guild configuration class
@@ -16,3 +19,7 @@ class Configuration:
   def __init__(self, configuration: Optional[Union[str, dict, None]] = None):
     self._base_level_configuration = configuration
 
+    # Guild ID Of the server
+    self.guild: snowflake
+
+    self.background_color: hex_color = hex_color("#fff")

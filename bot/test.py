@@ -6,6 +6,7 @@ import sys
 sys.dont_write_bytecode = True
 sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 
-from shared.low import Match  # nopep8
+from shared.low import guild  # nopep8
 
-print(Match.hex_color("#fff", dump_value=True))
+conf = guild.Configuration()
+print(conf.background_color, type(conf.background_color))
