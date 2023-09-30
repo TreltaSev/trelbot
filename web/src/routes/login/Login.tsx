@@ -6,7 +6,7 @@ import custom from "@assets/custom.module.css";
 import FlexColumn from "@lib/component/FlexColumn";
 import PartialLogo from "@lib/svg/PartialLogo";
 import Text from "@lib/component/Text";
-
+import LoginButton from "@root/routes/login/LoginButton";
 /**
  * @path : www.domain.tld/login
  * @description : Login page that allows entry to the backend api with a discord oauth integration.
@@ -40,23 +40,13 @@ const Login: React.FC = () => {
 
   return (
     <FlexColumn className={`${styling.dark} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_height}`}>
-      {/**
-       * This is the middle menu, this contains the Login
-       * with discord button as well as some text.
-       * As of right now, this doesn't have props.
-       * The login button inside this menu opens up another menu
-       * linking you to an automatic fetch request and action handler.
-       * This new window sends a request to the backend api, determines if its valid
-       * and tells the main browser the detes.
-       * @addedin v0.1
-       * @updatedin v0.1
-       */}
       <FlexColumn style={{ gap: 15 }} className={`${styling.justify_content_center} ${styling.align_items_center}`}>
         <PartialLogo />
         <Text preset='1em-normal'>Welcome to Trelbot</Text>
         <Text preset='1em-normal' style={{ opacity: "0.5", textAlign: "center" }} className={custom.login_text}>
           A discord bot with a (soon to be) small variety of games, automation messages, multiple commands for moderation and some funnies ;)
         </Text>
+        <LoginButton />
       </FlexColumn>
     </FlexColumn>
   );

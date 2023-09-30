@@ -13,8 +13,13 @@ import Text from "@lib/component/Text";
  * @usedin : @path : www.domain.tld/login
  */
 const LoginButton: React.FC = () => {
+  const click = () => {
+    const url = "https://discord.com/api/oauth2/authorize?client_id=932999965498834954&redirect_uri=https%3A%2F%2Ftrelbot.xyz%2Fdiscord-callback&response_type=code&scope=identify%20guilds";
+    window.open(url, "_blank", "width=500, height=700");
+  };
+
   return (
-    <FlexRow style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }} className={`${custom.button} ${custom.discordlogin} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
+    <FlexRow onClick={() => click()} style={{ borderRadius: 10, gap: 10, padding: "10px 20px" }} className={`${custom.button} ${custom.discordlogin} ${styling.justify_content_center} ${styling.align_items_center} ${styling.border_box}`}>
       <DiscordLogo />
       <Text preset='1em-normal'>Login with Discord</Text>
     </FlexRow>
