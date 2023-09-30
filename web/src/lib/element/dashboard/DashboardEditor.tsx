@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import guild from "@lib/types/guild";
 import fetch_guild from "@lib/method/fetch_guild";
+import patch_request from "@lib/method/test@patchrequest";
 import styling from "@assets/styling.module.css";
 import LeftNavigationBar from "@lib/element/dashboard/specific/LeftNavigationBar";
 import PageContent from "@lib/element/dashboard/specific/PageContent";
@@ -22,6 +23,11 @@ const DashboardEditor: React.FC<type_DashboardEditor> = ({ guild_id }) => {
   };
 
   useEffect(() => {
+    /* Test Patch Requests */
+    patch_request(guild_id).then((_patch_request: any) => {
+      console.log(_patch_request);
+    });
+
     fetch_guild(guild_id).then((guild_data: guild) => {
       setGuild(guild_data);
     });
