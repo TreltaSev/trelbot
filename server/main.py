@@ -1,17 +1,18 @@
+import asyncio
 import os
 import sys
-import uvicorn
-import asyncio
 
-# Prevent program from creating __pycache__ dirs
+import uvicorn
+
+# autopep8: off
+
 sys.dont_write_bytecode = True
 sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 from exts.constants.App import App, BlueprintsManager
 
-
 _Application = App(__name__)
 
-
+# autopep8: on
 
 # Blueprints
 
@@ -25,25 +26,25 @@ _SSLKey = "../.cert/server.key"
 _SSLCert = "../.cert/server.cert"
 _UvicornConfig = {
     "host": _LocalIp,
-    "port": _LocalPort,    
-    "log_level": "info"
+    "port": _LocalPort,
+    "log_level": "critical"
 }
 
 _Application.config["SERVER_NAME"] = f"{_LocalIp}:{_LocalPort}"
 if _Production:
-    _Application.config["SERVER_NAME"] = f"{_Domain}:{_LocalPort}"
+  _Application.config["SERVER_NAME"] = f"{_Domain}:{_LocalPort}"
 
 if _Secure:
-    _UvicornConfig["ssl_keyfile"] = _SSLKey
-    _UvicornConfig["ssl_certfile"] = _SSLCert
+  _UvicornConfig["ssl_keyfile"] = _SSLKey
+  _UvicornConfig["ssl_certfile"] = _SSLCert
 
-def run():    
-    BlueprintsManager.apply_app(_Application)
-    for blueprint in BlueprintsManager.find_all(f"{os.getcwd()}/blueprints", ".py"):
-        BlueprintsManager.load(blueprint)    
-    uvicorn.run(_Application, **_UvicornConfig)
+
+def run():
+  BlueprintsManager.apply_app(_Application)
+  for blueprint in BlueprintsManager.find_all(f"{os.getcwd()}/blueprints", ".py"):
+    BlueprintsManager.load(blueprint)
+  uvicorn.run(_Application, **_UvicornConfig)
 
 
 if __name__ == "__main__":
-    run()
-    
+  run()
