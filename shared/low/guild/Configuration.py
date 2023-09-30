@@ -1,7 +1,8 @@
+import json
 from typing import Optional, Union
 
 from shared.low import guild
-from shared.types import hex_color, snowflake
+from shared.types import hex_color, snowflake, undefined
 
 possible = {
     "other_option": 1,
@@ -37,15 +38,58 @@ class Configuration:
 
   def __init__(self, configuration: Optional[Union[str, dict, None, int]] = None):
     self._base_level_configuration = configuration
-    self.banners: Banners = Banners()
+    self.automations: Automations = Automations()
 
-    # # Guild ID Of the server
-    # self.guild: snowflake
+  @classmethod
+  def __unpack(cls, obj):
+    """
+    Im ngl i forgot what this method did, I think its something to do
+    with holding values or smth idk I forgot to document.
+    OH OK I remeber, so it takes this class, "unpacks" all the values inside of it so it can be used in `cls.obj` or `cls.json`
 
-    # self.background_color: hex_color = hex_color("#fff")
+    :param obj: Its just some form of `self`
+    :return: A dictionary containing all the values of this class that's human readable, make sure to sanitize this data because it may or may not hold very sensitive information :)
+    :rtype: dict
+    """
+    vals = {}
+    for key, value in vars(obj).items():
+      key: str
+      if key.startswith("_"):
+        continue
+      if isinstance(value, type(undefined())):
+        vals[key] = undefined().__str__()
+        continue
+      if isinstance(value, (str, int, list)):
+        vals[key] = value
+        continue
+      if hasattr(value, "__dict__"):
+        vals[key] = cls.__unpack(value)
+      else:
+        vals[key] = value
+    return vals
+
+  @property
+  def obj(self) -> dict:
+    """
+    Unpacks and returns a dictionary, basically just `self.__unpack(self)`
+
+    :return: A Unpacked Self Object
+    :rtype: dict
+    """
+    return self.__unpack(self)
+
+  @property
+  def json(self) -> str:
+    """
+    Unpacks self to a dictionary and turns it into a json serializable string.
+
+    :return: A json serializable string representing self
+    :rtype: str
+    """
+    return json.dumps(self.__unpack(self))
 
 
-class Banners:
+class Automations:
   """
   Class which contains banner information such as `on_join`, `on_leave`, and `on_ban`.
   """
