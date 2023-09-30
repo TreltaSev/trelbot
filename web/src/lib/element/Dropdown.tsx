@@ -16,6 +16,7 @@ export type props_Dropdown = {
   name?: string;
   _items?: dropdown_item_shard[] | undefined;
   _plural_concat?: boolean;
+  on_change?: (...args: any[]) => any;
 };
 
 type state_Dropdown = {
@@ -97,7 +98,15 @@ class Dropdown extends React.Component<props_Dropdown, state_Dropdown> {
   }
 
   public choose(display?: string, value?: any) {
+    // Fire onchange event.
+    if (this.props.on_change) {
+      this.props.on_change(value);
+    }
+
+    // Clear search value and change chosen
     this.setState({ search_value: "", chosen: value });
+
+    // Inefficient but fuck you, changes the component.
     this.change_custom(
       <FlexRow style={{ gap: 5 }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
         <ChannelTag style={{ width: 16, height: 16 }} />

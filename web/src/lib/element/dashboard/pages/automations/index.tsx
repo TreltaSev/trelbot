@@ -18,7 +18,6 @@ export type type_channels_context = {
 };
 
 export const channels = React.createContext<type_channels_context>({});
-export const roles = React.createContext<null>(null);
 
 const Automations: React.FC = () => {
   let { guildId } = useParams();
@@ -39,7 +38,7 @@ const Automations: React.FC = () => {
   return (
     <>
       <channels.Provider value={{ value_channels: v_channels, get: get_channels }}>
-        <AlternativeIf input_value={loaded} to_check={undefined} alternative={<LoadingAnimated size={30} gap={15} heightoffset={22.5}/>}>
+        <AlternativeIf input_value={loaded} to_check={undefined} alternative={<LoadingAnimated size={30} gap={15} heightoffset={22.5} />}>
           <FlexColumn style={{ width: 800, padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
             <OnJoin />
             <OnLeave />

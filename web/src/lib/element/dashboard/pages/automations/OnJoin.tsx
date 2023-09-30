@@ -9,9 +9,10 @@ import ToggleButton from "@lib/element/ToggleButton";
 import DropdownItem from "@lib/element/DropdownItem";
 import Section from "@lib/element/dashboard/specific/Section";
 import { channels } from "@lib/element/dashboard/pages/automations";
-
+import { conf } from "@lib/element/dashboard/specific/Conf";
 
 const OnJoin: React.FC = () => {
+  const gp = "automations";
   const ref_channel_toggle = React.useRef(null);
   const ref_text_toggle = React.useRef(null);
   const ref_image_toggle = React.useRef(null);
@@ -40,26 +41,45 @@ const OnJoin: React.FC = () => {
       });
   }
 
+  const up = (parent: string, key: string, value?: any) => {
+    if (conf.obj[gp] === undefined) {
+      conf.obj[gp] = {};
+    }
+
+    if (conf.obj[gp][parent] === undefined) {
+      conf.obj[gp][parent] = {};
+    }
+
+    conf.obj[gp][parent][key] = value;
+    console.log(conf.self());
+  };
+
   return (
     <>
       <FlexColumn style={{ gap: 25 }}>
         <Section context_name='On Join Event' context_description='Sends some sort of message when a user joins based on the configuration below' />
-        
-        <Section context_name='Channel' context_description='The channel which the event is assigned'>
-          <Dropdown ref={channelsDropdownRef} _items={shard_each} _plural_concat={true} />
-          <ToggleButton ref={ref_channel_toggle} ontoggle={() => console.log("heheheha")} />
-        </Section>        
 
-        <Section context_name="Text" context_description="Sends a text message to the selected channel">
-          <TextArea name="Text"/>
+        <Section context_name='Channel' context_description='The channel which the event is assigned'>
+          <Dropdown
+            on_change={(value) => {
+              up("on_join", "channel", value);
+            }}
+            ref={channelsDropdownRef}
+            _items={shard_each}
+            _plural_concat={true}
+          />
+          <ToggleButton ref={ref_channel_toggle} ontoggle={() => console.log("heheheha")} />
+        </Section>
+
+        <Section context_name='Text' context_description='Sends a text message to the selected channel'>
+          <TextArea name='Text' />
           <ToggleButton ref={ref_text_toggle} ontoggle={() => console.log("heheheha")} />
         </Section>
 
-        <Section context_name="Image" context_description="Creates an image using css-like text">
-          <TextArea name="Image"/>
+        <Section context_name='Image' context_description='Creates an image using css-like text'>
+          <TextArea name='Image' />
           <ToggleButton ref={ref_image_toggle} ontoggle={() => console.log("heheheha")} />
         </Section>
-        
       </FlexColumn>
     </>
   );

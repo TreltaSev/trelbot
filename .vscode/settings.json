@@ -1,6 +1,10 @@
 {
   "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8"
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
   },
-  "autopep8.args": ["--max-line-length", "160", "--aggressive", "--aggressive", "--in-place"]
+  "autopep8.args": ["--indent-size=2", "--max-line-length=300"]
 }
