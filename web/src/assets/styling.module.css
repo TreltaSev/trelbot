@@ -161,6 +161,7 @@ Different justify types such as justify content center
   justify-content: end;
 }
 
+/* Fills width */
 .justify_self_stretch {
   justify-self: stretch;
 }
