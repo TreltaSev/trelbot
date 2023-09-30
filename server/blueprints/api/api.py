@@ -1,9 +1,9 @@
-import traceback
-
 import quart
 from exts.constants import oauth2
+from pyucc import console
 from quart_cors import cors
 
+import shared
 from shared.core_tools import errors
 
 from . import ApiConnection, JsonConnection
@@ -13,7 +13,7 @@ config = {
 }
 
 blueprint = quart.Blueprint("api:cache", __name__)
-cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True)
+cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True, allow_methods=["GET", "PATCH", "PUT", "OPTIONS", "POST"])
 
 
 @blueprint.route("/api/discord-callback", methods=["POST"])
@@ -96,7 +96,7 @@ async def guild_channels(guild_id: str):
   return quart.json.jsonify(_channels)
 
 
-@blueprint.route("/api/guilds/<string:guild_id>/banner")
+@blueprint.route("/api/guilds/<string:guild_id>/banner", methods=["GET", "PATCH", "PUT", "OPTIONS"])
 async def guild_banner(guild_id: str):
   """
   A path that responds with the guild's banner data
@@ -104,9 +104,18 @@ async def guild_banner(guild_id: str):
   :return: A json object containing all relevant data
   :rtype: 
   """
-  print(quart.request)
+
+  match quart.request.method:
+    case "PATCH":
+      pass
+
+    case "GET":
+      pass
+
+  return "Test"
   try:
-    _conn = ApiConnection(quart.request)
+    pass
+    # _conn = ApiConnection(quart.request)
     # _at = oauth2.Session.get(_conn.session)
 
   except Exception as error:

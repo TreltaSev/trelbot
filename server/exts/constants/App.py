@@ -12,14 +12,9 @@ import typing
 from typing import Optional
 
 import quart
-from pyucc import colors, console, symbols
+from pyucc import console
 
 from shared.core_tools import errors
-
-
-@console.register("quart")
-def _(*values, **optional):
-  console.cprint(f"{colors.chex('#f1aa00', 'background')} QUART {symbols.reset} {colors.chex('#aaaaaa')}{optional.get('time')}{symbols.reset}", *values)
 
 
 class App(quart.Quart):

@@ -3,19 +3,22 @@ import os
 import sys
 
 import uvicorn
+from pyucc import colors, console, symbols
 
 # autopep8: off
+
 
 sys.dont_write_bytecode = True
 sys.path.append(os.path.abspath(f"{os.getcwd()}/../"))
 from exts.constants.App import App, BlueprintsManager
 
+import shared
+
 _Application = App(__name__)
 
+
 # autopep8: on
-
 # Blueprints
-
 # Variables
 _Domain = "trelbot.xyz"
 _Production = True
