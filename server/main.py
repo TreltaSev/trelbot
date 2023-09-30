@@ -27,7 +27,7 @@ _SSLCert = "../.cert/server.cert"
 _UvicornConfig = {
     "host": _LocalIp,
     "port": _LocalPort,
-    "log_level": "critical"
+    "log_level": "info"
 }
 
 _Application.config["SERVER_NAME"] = f"{_LocalIp}:{_LocalPort}"
