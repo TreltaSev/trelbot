@@ -12,6 +12,7 @@ import UsernameGroup from "@lib/layouts/Navigation/UsernameGroup";
 import Arrow from "@root/lib/svg/Arrow";
 import NavigationMenuItem from "@lib/layouts/Navigation/NavigationMenuItem";
 import Cookies from "js-cookie";
+import mutgl from "@root/lib/vars/mutgl";
 
 /**
  * A Navigation layout to be used whenever layouts are needed.
@@ -40,6 +41,11 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
    * Just hide the dropdown on load
    */
   useEffect(() => {
+    // Cache Data from @me
+    mutgl.rc_user(false).then((v) => {
+      console.log(v);
+    });
+
     if (MenuDropdownRef.current) {
       MenuDropdownRef.current.style.display = "none";
     }
