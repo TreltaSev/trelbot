@@ -74,7 +74,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
         {/**
          * Links
          */}
-        <FlexRow style={{ gap: 10 }} className={`${styling.align_items_center} ${styling.justify_content_center} ${styling.border_box}`}>
+        <FlexRow style={{ gap: 10, position: "relative" }} className={`${styling.align_items_center} ${styling.justify_content_center} ${styling.border_box}`}>
           {/**
            * Username Group
            */}
