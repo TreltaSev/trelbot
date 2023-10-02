@@ -20,11 +20,9 @@ class _mutgl {
    * @param _cache `Literal[True, False]` If set to true, caches the data to this.user, Defaults to false
    */
   public rc_user = async (_cache: boolean = false): Promise<any> => {
-    const _session = Cookies.get("session");
+    const _session = this.chSession();
 
-    // No session means, not logged in
-    if (!_session) {
-      console.error(`Not logged in, session: ${_session}`);
+    if (_session === undefined) {
       return;
     }
 
@@ -49,6 +47,41 @@ class _mutgl {
   };
 
   /**
+   * This method sends a get request to backend.com/@me/guilds to get the guilds of the current user,
+   * the response of this request should be an object containing a list which contains all the guilds.
+   * Type annotations have been added
+   *
+   * @param _cache `Literal[True, False]` If set to true, caches the data to this.guilds, Defaults to false
+   */
+  public rc_guild = async (_cache: boolean = false): Promise<any> => {
+    const _session = this.chSession();
+
+    if (_session === undefined) {
+      return;
+    }
+
+    let _guilds: any = undefined;
+    try {
+      const _fetchguilds = await fetch(`${config.backendUrl}/@me/guilds`, { method: "get", headers: { Session: _session as string } });
+      _guilds = await _fetchguilds.json();
+    } catch (e) {
+      console.error(`Failed in fetching ${e}`);
+    }
+
+    if (this.error_c(this.guilds)) {
+      return;
+    }
+
+    if (_cache) {
+      this.guilds = _guilds;
+    }
+
+    console.log(_guilds);
+
+    return this.guilds;
+  };
+
+  /**
    * Private method that checks an object for error codes
    * that would be given from backend api
    * @param input the value you want to check
@@ -67,6 +100,20 @@ class _mutgl {
       }
     }
     return false;
+  };
+
+  /**
+   *
+   * @returns The session or undefined.
+   */
+  private chSession = (): undefined | string => {
+    const _session = Cookies.get("session");
+    // No session means, not logged in
+    if (!_session) {
+      console.error(`Empty Session, session: ${_session}`);
+      return undefined;
+    }
+    return _session;
   };
 }
 
