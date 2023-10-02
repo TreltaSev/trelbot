@@ -13,6 +13,7 @@ import Arrow from "@root/lib/svg/Arrow";
 import NavigationMenuItem from "@lib/layouts/Navigation/NavigationMenuItem";
 import Cookies from "js-cookie";
 import mutgl from "@root/lib/vars/mutgl";
+import user from "@root/lib/types/user";
 
 /**
  * A Navigation layout to be used whenever layouts are needed.
@@ -24,7 +25,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
   const UsergroupDropdownRef = useRef<HTMLDivElement>(null);
   const MenuDropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownToggled, setDropdownToggled] = useState(false);
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState<user | undefined>(undefined);
 
   const DropdownToggle = () => {
     setDropdownToggled(!dropdownToggled);
@@ -41,11 +42,15 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
    * Just hide the dropdown on load
    */
   useEffect(() => {
-    // Cache Data from @me
-    mutgl.rc_user(false).then((v) => {
-      console.log(v);
-    });
+    // Cache Data from @me with fetch user response
 
+    if (!user) {
+      mutgl.rc_user(false).then((fuResponse) => {
+        setUser(fuResponse);
+      });
+    }
+
+    // Hide the menu on load
     if (MenuDropdownRef.current) {
       MenuDropdownRef.current.style.display = "none";
     }
