@@ -24,7 +24,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
   const UsergroupDropdownRef = useRef<HTMLDivElement>(null);
   const MenuDropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownToggled, setDropdownToggled] = useState(false);
-  const user = undefined;
+  const [user, setUser] = useState(undefined);
 
   const DropdownToggle = () => {
     setDropdownToggled(!dropdownToggled);
