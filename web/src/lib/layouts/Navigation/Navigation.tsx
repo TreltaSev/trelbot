@@ -43,18 +43,16 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
    */
   useEffect(() => {
     // Cache Data from @me with fetch user response
+    mutgl.rc_user(false).then((fuResponse) => {
+      setUser(fuResponse);
+    });
 
-    if (!user) {
-      mutgl.rc_user(false).then((fuResponse) => {
-        setUser(fuResponse);
-      });
-    }
-
-    // Hide the menu on load
+    // Hide the menu on
     if (MenuDropdownRef.current) {
       MenuDropdownRef.current.style.display = "none";
     }
-  });
+  }, []);
+
   return (
     <FlexColumn style={{ overflowY: "scroll", height: "100%" }} className={`${styling.fill_height} ${styling.dark}`}>
       {/**
