@@ -76,8 +76,6 @@ class _mutgl {
       this.guilds = _guilds;
     }
 
-    console.log(_guilds);
-
     return this.guilds;
   };
 

@@ -43,7 +43,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
    */
   useEffect(() => {
     // Cache Data from @me with fetch user response
-    mutgl.rc_user(false).then((fuResponse) => {
+    mutgl.rc_user(true).then((fuResponse) => {
       setUser(fuResponse);
     });
 
