@@ -1,15 +1,15 @@
-import FlexColumn from "@root/lib/component/FlexColumn";
+import React, { useEffect, useState } from "react";
 import styling from "@assets/styling.module.css";
 import custom from "@assets/custom.module.css";
-
+import FlexColumn from "@root/lib/component/FlexColumn";
 import guild_selector from "@root/lib/types/guild@selector";
 import mutgl from "@root/lib/vars/mutgl";
-import React, { useEffect, useState } from "react";
 import Text from "@root/lib/component/Text";
 import AlternativeIf from "@root/lib/component/AlternativeIf";
-import GuildChip from "./GuildChip";
 import action from "@root/lib/method/action";
+import LoadingAnimated from "@root/lib/component/LoadingAnimated";
 import SortGuildsAsMutable from "./SortGuildsAsMutable";
+import GuildChip from "./GuildChip";
 
 const Selector: React.FC = () => {
   const [guilds, setGuilds] = useState<guild_selector[] | undefined>(undefined);
@@ -35,7 +35,14 @@ const Selector: React.FC = () => {
   }, []);
 
   if (guilds) {
+    // Sort the guilds, prioritizing invitable and owned guilds.
     SortGuildsAsMutable(guilds);
+  } else {
+    return (
+      <FlexColumn style={{ padding: 20 }} className={`${styling.fill_all} ${styling.align_items_center} ${styling.border_box}`}>
+        <LoadingAnimated size={30} gap={15} heightoffset={20} />
+      </FlexColumn>
+    );
   }
 
   return (
@@ -52,6 +59,9 @@ const Selector: React.FC = () => {
         </Text>
       </FlexColumn>
 
+      {/**
+       * Guilds list.
+       */}
       <FlexColumn style={{ gap: 10 }}>
         <AlternativeIf input_value={guilds} alternative={<></>} to_check={undefined}>
           {guilds?.map((guild) => (
