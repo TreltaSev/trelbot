@@ -13,6 +13,14 @@ class action {
     return localStorage.getItem(`${scope}!action?`);
   }
 
+  bulk_get(scopes: string[]): any[] {
+    const _vals: any[] = [];
+    scopes.forEach((scope) => {
+      _vals.push(this.get(scope));
+    });
+    return _vals;
+  }
+
   /**
    * Sets an action with a scope,
    * Saves the action in `${scope}!action?` scope being the inputed
@@ -32,6 +40,16 @@ class action {
    */
   remove(scope: string): void {
     localStorage.removeItem(`${scope}!action?`);
+  }
+
+  /**
+   * Removes the inputed scopes from localstorage
+   * @param scopes The array of scopes
+   */
+  bulk_remove(scopes: string[]): void {
+    scopes.forEach((scope) => {
+      this.remove(scope);
+    });
   }
 }
 

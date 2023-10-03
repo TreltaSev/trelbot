@@ -8,6 +8,8 @@ import React, { useEffect, useState } from "react";
 import Text from "@root/lib/component/Text";
 import AlternativeIf from "@root/lib/component/AlternativeIf";
 import GuildChip from "./GuildChip";
+import action from "@root/lib/method/action";
+import SortGuildsAsMutable from "./SortGuildsAsMutable";
 
 const Selector: React.FC = () => {
   const [guilds, setGuilds] = useState<guild_selector[] | undefined>(undefined);
@@ -21,7 +23,21 @@ const Selector: React.FC = () => {
     mutgl.rc_guild(true).then((fgResponse) => {
       setGuilds(fgResponse);
     });
+    const iGuild = setInterval(() => {
+      const [_action, _redirect] = new action().bulk_get(["gSelectorAction", "gSelectorRedirect"]);
+      switch (_action) {
+        case "redirect":
+          new action().bulk_remove(["gSelectorAction", "gSelectorRedirect"]);
+          window.location.href = _redirect;
+          clearInterval(iGuild);
+      }
+    }, 500);
   }, []);
+
+  if (guilds) {
+    SortGuildsAsMutable(guilds);
+  }
+
   return (
     <FlexColumn style={{ gap: 40 }} className={`${styling.justify_content_center} ${styling.align_items_center}`}>
       {/**
