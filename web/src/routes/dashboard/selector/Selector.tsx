@@ -1,3 +1,4 @@
+import mutgl from "@root/lib/vars/mutgl";
 import React, { useEffect } from "react";
 
 const Selector: React.FC = () => {
@@ -7,7 +8,9 @@ const Selector: React.FC = () => {
      * not been loaded.
      */
   }
-  useEffect(() => {}, []);
+  useEffect(() => {
+    mutgl.rc_guild(true);
+  }, []);
   return (
     <>
       <></>

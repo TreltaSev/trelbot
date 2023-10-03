@@ -1,6 +1,7 @@
 import NavigationLayout from "@root/lib/layouts/Navigation";
 import React from "react";
 import { useParams } from "react-router-dom";
+import Selector from "./selector";
 
 /**
  *
@@ -22,7 +23,7 @@ const Dashboard: React.FC = () => {
     case "selector":
       return (
         <NavigationLayout className={``}>
-          <span>Pogg?</span>
+          <Selector />
         </NavigationLayout>
       );
 
