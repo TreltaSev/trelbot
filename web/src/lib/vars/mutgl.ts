@@ -51,9 +51,9 @@ class _mutgl {
    * the response of this request should be an object containing a list which contains all the guilds.
    * Type annotations have been added
    *
-   * @param _cache `Literal[True, False]` If set to true, caches the data to this.guilds, Defaults to false
+   * @param bCache `Literal[True, False]` If set to true, caches the data to this.guilds, Defaults to false
    */
-  public rc_guild = async (_cache: boolean = false): Promise<any> => {
+  public rc_guilds = async (bCache: boolean = false): Promise<any> => {
     const _session = this.chSession();
 
     if (_session === undefined) {
@@ -68,15 +68,44 @@ class _mutgl {
       console.error(`Failed in fetching ${e}`);
     }
 
-    if (this.error_c(this.guilds)) {
+    if (this.error_c(_guilds)) {
       return;
     }
 
-    if (_cache) {
+    if (bCache) {
       this.guilds = _guilds;
     }
 
-    return this.guilds;
+    return _guilds;
+  };
+
+  /**
+   * This method sends a get request to backend.com/guilds/{guild.id} to get the basic guild information
+   * like id, name, permissions that the current user has, icon url, etc.
+   * Response type should be of type guild, if looking for `guild.settings` access the mGuild which is
+   * a super set of guild which has accessible settings types.
+   * @param idGuild `Union[str, int]`The id of the guild
+   */
+  public rc_guild = async (idGuild: string | number): Promise<any> => {
+    const _session = this.chSession();
+
+    if (_session === undefined) {
+      return;
+    }
+
+    let _guild: any = undefined;
+    try {
+      const _fetchguild = await fetch(`${config.backendUrl}/guild/${idGuild}`, { method: "get", headers: { Session: _session as string } });
+      _guild = await _fetchguild.json();
+    } catch (e) {
+      console.error(`Failed in fetching ${e}`);
+    }
+
+    if (this.error_c(_guild)) {
+      return;
+    }
+
+    return _guild;
   };
 
   /**
