@@ -115,6 +115,10 @@ class _mutgl {
    * @returns A boolean, if its true theres an error, if not there isn't
    */
   private error_c = (input: any): boolean => {
+    if (!input) {
+      console.error(`Error, Stack: Value is Undefined. ${input}`);
+      return true;
+    }
     if (input.hasOwnProperty("code")) {
       switch (input.code) {
         case 1020:
