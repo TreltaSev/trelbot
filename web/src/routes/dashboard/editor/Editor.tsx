@@ -14,6 +14,7 @@ const Editor: React.FC = () => {
     /* Fetch and Save Guild Data like channels and settings */
     mutgl.rc_guild(guildId as string).then((response) => {
       console.log(response);
+      mutgl.cGuild.meta = response
     });
   }, []);
 

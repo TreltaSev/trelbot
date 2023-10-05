@@ -9,4 +9,11 @@ type guild = {
   premissions_new?: number;
 };
 
+type mGuild = {
+  /**
+   * ! Stoped Here
+   * TODO: This...
+   */
+};
+
 export default guild;
