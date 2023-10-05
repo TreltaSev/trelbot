@@ -45,8 +45,6 @@ const Selector: React.FC = () => {
     );
   }
 
-  console.log(mutgl.guilds);
-
   return (
     <FlexColumn style={{ gap: 40 }} className={`${styling.justify_content_center} ${styling.align_items_center}`}>
       {/**
