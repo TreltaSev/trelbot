@@ -94,8 +94,9 @@ class _mutgl {
    * Response type should be of type guild, if looking for `guild.settings` access the mGuild which is
    * a super set of guild which has accessible settings types.
    * @param idGuild `Union[str, int]`The id of the guild
+   * @param bCache `Literal[true, false]` Wether or not this value should be automatically cached into this.cGuild, defaults to false.
    */
-  public rc_guild = async (idGuild: string | number): Promise<any> => {
+  public rc_guild = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
     const _session = this.chSession();
 
     if (_session === undefined) {
@@ -112,6 +113,10 @@ class _mutgl {
 
     if (this.error_c(_guild)) {
       return;
+    }
+
+    if (bCache) {
+      this.cGuild = _guild;
     }
 
     return _guild;
