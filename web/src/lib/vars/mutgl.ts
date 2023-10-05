@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import user from "@lib/types/user";
+import guild from "@lib/types/guild";
 import config from "@root/config";
 
 /**
@@ -8,9 +9,17 @@ import config from "@root/config";
  */
 
 class _mutgl {
+  // Placeholder value
   public db = {};
-  public guilds = {};
+
+  // Used to hold mutiple guilds, really useful in `/dashboard`
+  public guilds: guild[] = [];
+
+  // User information such as id, name, and avatar url.
   public user: user = {};
+
+  // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
+  public cGuild: guild = {};
 
   /**
    * This method sends a request to the backend api, asking for the users information like
