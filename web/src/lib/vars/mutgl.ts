@@ -95,7 +95,7 @@ class _mutgl {
 
     let _guild: any = undefined;
     try {
-      const _fetchguild = await fetch(`${config.backendUrl}/guild/${idGuild}`, { method: "get", headers: { Session: _session as string } });
+      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string } });
       _guild = await _fetchguild.json();
     } catch (e) {
       console.error(`Failed in fetching ${e}`);
