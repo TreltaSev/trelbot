@@ -8,10 +8,15 @@ class intervalHelper {
    * @param ms the time between each loop
    */
   constructor(condition: any, method: (...args: any[]) => any, ms: number = 500) {
+    console.info("Running Interval Helper");
     const interval = setInterval(() => {
+      console.info(`Looping Cond:${condition} method:${method} ms:${ms}`);
       if (condition) {
+        console.info(`Condition Met`);
         method();
         clearInterval(interval);
+      } else {
+        console.warn(`Condition not met, ${condition}`);
       }
     }, ms);
   }
