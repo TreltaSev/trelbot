@@ -7,6 +7,7 @@ import styling from "@assets/styling.module.css";
 import InlineFlex from "@lib/component/InlineFlex";
 import FlexColumn from "@lib/component/FlexColumn";
 import LoadingAnimated from "@lib/component/LoadingAnimated";
+import intervalHelper from "@root/lib/method/intervalHelper";
 
 const GuildContainer: React.FC = () => {
   // Force update used when refreshing metaguild
@@ -22,12 +23,13 @@ const GuildContainer: React.FC = () => {
    * sets the state of a value to save the current guild. this is used instead of context api
    */
   useEffect(() => {
-    const __ = setInterval(() => {
-      if (Object.keys(mutgl.cGuild.meta).length >= 1) {
-        clearInterval(__);
+    new intervalHelper(
+      Object.keys(mutgl.cGuild.meta).length > 0,
+      () => {
         forceUpdate();
-      }
-    }, 500);
+      },
+      500
+    );
   }, []);
 
   if (Object.keys(mutgl.cGuild.meta).length == 0) {
