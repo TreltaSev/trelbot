@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styling from "@assets/styling.module.css";
-import custom from "@assets/custom.module.css";
-import FlexRow from "@root/lib/component/FlexRow";
-import mutgl from "@root/lib/vars/mutgl";
+import mutgl from "@lib/vars/mutgl";
+import FlexRow from "@lib/component/FlexRow";
+import NavigationLayout from "@lib/layouts/Navigation";
 
 const Editor: React.FC = () => {
   let { guildId } = useParams();
@@ -22,6 +22,7 @@ const Editor: React.FC = () => {
 
   return (
     <FlexRow className={`${styling.fill_all} ${styling.justify_content_start} ${styling.align_items_center}`}>
+      <NavigationLayout />
       <>Mid Content</>
     </FlexRow>
   );
