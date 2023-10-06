@@ -1,12 +1,11 @@
 import React from "react";
 import loader from "@root/routes/dashboard/editor/loader";
-const AutomationsChild: React.FC = () => {
+const Automations: React.FC = () => {
   return (
     <>
-      <>A?</>
+      <>Page: Automations</>
     </>
   );
 };
 
-new loader().register_parent("Automations", undefined);
-new loader().register("automationschild", <AutomationsChild />, "Automations", 1);
+new loader().register("Automations", <Automations />, 1);
