@@ -1,8 +1,7 @@
 import Cookies from "js-cookie";
 import user from "@lib/types/user";
-import guild from "@lib/types/guild";
+import guild, { currentGuild } from "@lib/types/guild";
 import config from "@root/config";
-
 /**
  * Mutable Global Variables, holds user information
  * as well as guild data, settings data, etc.
@@ -19,7 +18,7 @@ class _mutgl {
   public user: user = {};
 
   // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
-  public cGuild: guild = {};
+  public cGuild: currentGuild = new currentGuild();
 
   /**
    * This method sends a request to the backend api, asking for the users information like
