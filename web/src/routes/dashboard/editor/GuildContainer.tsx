@@ -23,13 +23,9 @@ const GuildContainer: React.FC = () => {
    * sets the state of a value to save the current guild. this is used instead of context api
    */
   useEffect(() => {
-    new intervalHelper(
-      Object.keys(mutgl.cGuild.meta).length > 0,
-      () => {
-        forceUpdate();
-      },
-      500
-    );
+    const interval = setInterval(() => {
+      new intervalHelper(Object.keys(mutgl.cGuild.meta).length > 1, forceUpdate, interval);
+    }, 500);
   }, []);
 
   if (Object.keys(mutgl.cGuild.meta).length == 0) {

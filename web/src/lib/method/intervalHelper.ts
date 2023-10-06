@@ -5,20 +5,15 @@ class intervalHelper {
    * condition is met, the method you inputed will be run.
    * @param condition if condition is true
    * @param method This method will be run
-   * @param ms the time between each loop
+   * @param interval the interval that will be cleared whenever the condition is true
    */
-  constructor(condition: any, method: (...args: any[]) => any, ms: number = 500) {
-    console.info("Running Interval Helper");
-    const interval = setInterval(() => {
-      console.info(`Looping Cond:${condition} method:${method} ms:${ms}`);
-      if (condition) {
-        console.info(`Condition Met`);
-        method();
+  constructor(condition: any, method: (...args: any[]) => any, interval?: NodeJS.Timeout) {
+    if (condition) {
+      method();
+      if (interval) {
         clearInterval(interval);
-      } else {
-        console.warn(`Condition not met, ${condition}`);
       }
-    }, ms);
+    }
   }
 }
 
