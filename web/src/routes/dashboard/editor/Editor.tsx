@@ -4,7 +4,8 @@ import styling from "@assets/styling.module.css";
 import mutgl from "@lib/vars/mutgl";
 import FlexRow from "@lib/component/FlexRow";
 import NavigationLayout from "./NavigationTab";
-
+import "@root/routes/dashboard/editor/pages/automations";
+import loader from "./loader";
 const Editor: React.FC = () => {
   let { guildId } = useParams();
 
@@ -14,6 +15,7 @@ const Editor: React.FC = () => {
    * guild object inside const guild.
    */
   useEffect(() => {
+    console.log(new loader().get());
     /* Fetch and Save Guild Data like channels and settings */
     mutgl.rc_guild(guildId as string).then((response) => {
       mutgl.cGuild.cache("meta", response);

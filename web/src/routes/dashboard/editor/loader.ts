@@ -6,6 +6,7 @@ export type cModal = {
 
 export type pModal = Omit<cModal, "element"> & {
   contents: cModal[];
+  icon?: React.ReactNode;
 };
 
 let modals: (cModal | pModal)[] = [];
@@ -22,7 +23,7 @@ class loader {
    * @param priority the priority of the tab.
    */
   public register(name: string, element?: React.ReactNode, parent?: string, priority?: number) {
-    let rP: cModal = { name: name, priority: priority };
+    let rP: cModal = { name: name, element: element, priority: priority };
     if (parent) {
       const muMatch: pModal | cModal | undefined = modals.find((_m) => _m.name === parent);
 
@@ -37,13 +38,34 @@ class loader {
       if (element === undefined) {
         throw Error(`Element can't be undefined in ${rP}`);
       }
-      rP.element = element;
       modals.push(rP);
     }
   }
 
-  private isparent(modal: cModal | pModal) {
+  /**
+   * Registers not only a cModal but a pModal, saved into modals.
+   * @param name The name of the parent
+   * @param priority The priority meaning how close to the top the tab its the opposite of z-index
+   * @param icon The icon showing to the left of the tab
+   */
+  public register_parent(name: string, priority?: number, icon?: React.ReactNode) {
+    modals.push({ name: name, priority: priority, icon: icon, contents: [] } as pModal);
+  }
+
+  /**
+   * @param modal The input modal
+   * @returns True if its a parent false if not.
+   */
+  public isparent(modal: cModal | pModal) {
     return (modal as pModal).contents !== undefined;
+  }
+
+  /**
+   * @param modal The input modal
+   * @returns True if its a child false if not
+   */
+  public ischild(modal: cModal | pModal) {
+    return (modal as cModal).element !== undefined;
   }
 
   /**
