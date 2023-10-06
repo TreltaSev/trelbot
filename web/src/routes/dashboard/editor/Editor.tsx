@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styling from "@assets/styling.module.css";
 import mutgl from "@lib/vars/mutgl";
 import FlexRow from "@lib/component/FlexRow";
-import NavigationLayout from "@lib/layouts/Navigation";
+import NavigationLayout from "./NavigationTab";
 
 const Editor: React.FC = () => {
   let { guildId } = useParams();
