@@ -1,13 +1,14 @@
 import React from "react";
 import Section from "@root/routes/dashboard/editor/Section";
 import FlexColumn from "@lib/component/FlexColumn";
-import ToggleButton from "../../ToggleButton";
+import ToggleButton from "@root/routes/dashboard/editor/ToggleButton";
+import Dropdown from "@root/routes/dashboard/editor/Dropdown";
 
 const OnJoin: React.FC = () => {
   return (
     <FlexColumn style={{ gap: 25 }}>
       <Section name='Channel' description='The channel which the event is assigned'>
-        Dropdown...
+        <Dropdown identifier='Channel' items={[]} />
         <ToggleButton initial={false} />
       </Section>
 
