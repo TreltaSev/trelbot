@@ -1,4 +1,3 @@
-import defaultValue from "@root/lib/method/defaultValue";
 import React from "react";
 
 type props = {
