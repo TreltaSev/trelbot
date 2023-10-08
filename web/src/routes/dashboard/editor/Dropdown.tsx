@@ -11,6 +11,8 @@ import defaultValue from "@root/lib/method/defaultValue";
 import dropdown_change from "@root/routes/dashboard/editor/declerations/dropdown_change";
 
 import styling from "@assets/styling.module.css";
+import Grab from "./Grab";
+import ChannelTag from "@root/lib/svg/ChannelTag";
 
 type props = callback & {
   identifier?: string;
@@ -33,7 +35,7 @@ type state = {
  * @param identifier The name of the dropdown, like channel or role, make it singular since plural checks are in place.
  * @param items The items that will be displayed, should be of the `shard[]` type.
  */
-class Dropdown extends React.Component<props, state> {
+class Dropdown extends React.Component<props, state> implements Grab {
   private clickable: React.RefObject<HTMLDivElement>;
   private input_field: React.RefObject<HTMLInputElement>;
   private menu_outer: React.RefObject<HTMLDivElement>;
@@ -41,6 +43,7 @@ class Dropdown extends React.Component<props, state> {
   private identifier: string;
   private opened: boolean = false;
   private chosen: any = undefined;
+  private custom: React.ReactNode = (<></>);
   private items: shard[] = [];
 
   constructor(props: props) {
@@ -58,7 +61,22 @@ class Dropdown extends React.Component<props, state> {
     };
   }
 
-  public choose(name?: string, value?: any) {}
+  grab() {
+    return this.chosen;
+  }
+
+  public choose(name?: string, value?: any) {
+    this.chosen = value;
+    this.custom = (
+      <FlexRow style={{ gap: 5 }} className={`${styling.align_items_center} ${styling.justify_content_center}`}>
+        <ChannelTag style={{ width: 16, height: 16 }} />
+        <Text preset='1em-normal' style={{ whiteSpace: "nowrap" }}>
+          {name}
+        </Text>
+      </FlexRow>
+    );
+    this.setState({ input_value: "" });
+  }
 
   private handleGlobalClick(event: MouseEvent) {
     // If not left click return
@@ -146,6 +164,7 @@ class Dropdown extends React.Component<props, state> {
            * Custom display component & Input Field
            */}
           <FlexRow style={{ gap: 2 }} className={`${styling.fill_width} ${styling.align_items_stretch}`}>
+            <React.Fragment>{this.custom}</React.Fragment>
             <TextInput
               placeholder={this.state.helper_string}
               value={this.state.input_value}
@@ -174,6 +193,9 @@ class Dropdown extends React.Component<props, state> {
             <Text preset='bare' style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", fontWeight: "700" }}>
               {this.identifier}s
             </Text>
+            {this.props.items?.map((item) => (
+              <React.Fragment key={uuidv4()}>{item.element}</React.Fragment>
+            ))}
           </FlexColumn>
         </FlexColumn>
       </FlexColumn>

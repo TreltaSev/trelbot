@@ -38,11 +38,12 @@ const OnJoin: React.FC = () => {
   }, []);
 
   // Convert list to shard
-  if (mutgl.cChannels.meta != undefined) {
+  if (mutgl.cChannels.meta !== undefined) {
     sharded_channels = [...mutgl.cChannels.meta];
-    sharded_channels
+    sharded_channels = sharded_channels
       .filter((channel) => channel.type === 0)
       .map((channel) => {
+        console.info(`Map: ${channel.name}`);
         let forwarding = null;
         if (channel.parent_id) {
           forwarding = (
@@ -55,6 +56,7 @@ const OnJoin: React.FC = () => {
         return Dropdown.form(channel.name as string, <DropdownItem onClick={() => channels_dropdown.current?.choose(channel.name, channel.id)} forwarding={forwarding} name={channel.name} backing={<ChannelTag style={{ width: 16, height: 16, opacity: 0.8 }} />} />, channel.position);
       });
   }
+
   return (
     <FlexColumn style={{ gap: 25 }}>
       <Section name='Channel' description='The channel which the event is assigned'>
