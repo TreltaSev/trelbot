@@ -36,6 +36,7 @@ type state = {
  * @param items The items that will be displayed, should be of the `shard[]` type.
  */
 class Dropdown extends React.Component<props, state> implements Grab {
+  private callback?: (...args: any[]) => any;
   private clickable: React.RefObject<HTMLDivElement>;
   private input_field: React.RefObject<HTMLInputElement>;
   private menu_outer: React.RefObject<HTMLDivElement>;
@@ -49,6 +50,7 @@ class Dropdown extends React.Component<props, state> implements Grab {
   constructor(props: props) {
     super(props);
     this.handleGlobalClick = this.handleGlobalClick.bind(this);
+    this.callback = props.callback;
     this.clickable = React.createRef();
     this.input_field = React.createRef();
     this.menu_outer = React.createRef();
@@ -76,6 +78,9 @@ class Dropdown extends React.Component<props, state> implements Grab {
       </FlexRow>
     );
     this.setState({ input_value: "" });
+    if (this.callback) {
+      this.callback(name, value);
+    }
   }
 
   private handleGlobalClick(event: MouseEvent) {
@@ -87,12 +92,13 @@ class Dropdown extends React.Component<props, state> implements Grab {
     // Check if click can open menu
     if (this.opened == false) {
       if (this.clickable.current?.contains(event.target as Node)) {
+        this.setState({ helper_string: `Search for a ${this.identifier}` });
         this.input_field.current?.focus();
         this.toggleMenu(true);
       }
     }
 
-    // Basic Checks
+    // Basic Checks stops if refs are undefined or mouse is over this dropdown
     if (!this.menu_inner.current || !this.clickable.current || this.menu_inner.current.contains(event.target as Node) || this.clickable.current.contains(event.target as Node)) {
       return;
     }
@@ -136,11 +142,7 @@ class Dropdown extends React.Component<props, state> implements Grab {
 
     // Close Menu
     if (newState == false) {
-      new dropdown_change(this.menu_inner.current, "dropdown", () => {
-        if (this.menu_outer.current) {
-          this.menu_outer.current.style.display = "none";
-        }
-      }).onclose(abrupt);
+      new dropdown_change(this.menu_inner.current, "dropdown").onclose(abrupt);
       new dropdown_change(this.clickable.current, "button").onclose(abrupt);
     }
   }
@@ -151,11 +153,51 @@ class Dropdown extends React.Component<props, state> implements Grab {
   }
 
   render(): React.ReactNode {
+    let status: "failed" | "ok" = "failed";
+    this.props.items?.sort((a, b) => {
+      if (!a.position || !b.position) {
+        return 0;
+      }
+
+      if (a.position > b.position) {
+        return 1;
+      } else if (a.position < b.position) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const search_filter = this.props.items?.map((child) => {
+      if (!this.state.input_value) {
+        status = "ok";
+        return <React.Fragment key={uuidv4()}>{child.element}</React.Fragment>;
+      }
+      if ((child.name as string).toLowerCase().includes(this.state.input_value as string)) {
+        status = "ok";
+        return <React.Fragment key={uuidv4()}>{child.element}</React.Fragment>;
+      }
+      return <React.Fragment key={uuidv4()} />;
+    });
+
+    switch (status) {
+      case "failed":
+        search_filter?.splice(0);
+        search_filter?.push(
+          <Text preset='0.75em-regular-dimmed' key={uuidv4()}>
+            No items match query
+          </Text>
+        );
+        break;
+    }
+
     return (
       <FlexColumn className={styling.align_items_flex_Start} style={{ width: 500, height: 50, borderRadius: 5, gap: 0, position: "relative" }}>
         {/**
          * Clickable box that opens the dropdown menu when clicked.
          */}
+        <Text preset='bare' style={{ fontWeight: "700", fontSize: "1em", color: "white", opacity: 0.8 }}></Text>
+
         <FlexRow
           innerref={this.clickable}
           className={`${styling.border_box} ${styling.align_items_center} ${styling.align_self_stretch} ${styling.darker} ${styling.justify_content_space_between}`}
@@ -181,7 +223,7 @@ class Dropdown extends React.Component<props, state> implements Grab {
         {/**
          * Menu Wrapper
          */}
-        <FlexColumn innerref={this.menu_outer} style={{ position: "absolute", height: 200, top: "87%", overflow: "hidden", zIndex: 2, pointerEvents: "none", width: "100%" }}>
+        <FlexColumn innerref={this.menu_outer} style={{ position: "absolute", height: 280, top: "87%", overflow: "hidden", zIndex: 2, pointerEvents: "none", width: "100%" }}>
           {/**
            * Actual Menu
            */}
@@ -193,9 +235,7 @@ class Dropdown extends React.Component<props, state> implements Grab {
             <Text preset='bare' style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", fontWeight: "700" }}>
               {this.identifier}s
             </Text>
-            {this.props.items?.map((item) => (
-              <React.Fragment key={uuidv4()}>{item.element}</React.Fragment>
-            ))}
+            <React.Fragment>{search_filter}</React.Fragment>
           </FlexColumn>
         </FlexColumn>
       </FlexColumn>

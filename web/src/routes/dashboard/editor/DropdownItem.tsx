@@ -51,7 +51,7 @@ const DropdownItem: React.FC<props> = ({ onClick, name, nonActiveColor, activeCo
       }
       className={`${styling.align_self_stretch} ${styling.align_items_flex_end} ${styling.border_box}`}>
       <React.Fragment>{backing}</React.Fragment>
-      <Text innerref={text} preset='basic' style={{ fontSize: "1em", color: activeColor }}>
+      <Text innerref={text} preset='basic' style={{ fontSize: "1em", color: nonActiveColor }}>
         {name}
       </Text>
       <React.Fragment>{forwarding}</React.Fragment>
