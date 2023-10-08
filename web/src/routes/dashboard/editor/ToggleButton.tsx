@@ -1,8 +1,8 @@
 import React from "react";
 import Grab from "./Grab";
+import callback from "@root/lib/types/callback";
 
-type props = {
-  callback?: (value: boolean) => any;
+type props = callback & {
   initial?: boolean;
 };
 
