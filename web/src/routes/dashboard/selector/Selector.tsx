@@ -20,7 +20,7 @@ const Selector: React.FC = () => {
      */
   }
   useEffect(() => {
-    mutgl.rc_guild(true).then((fgResponse) => {
+    mutgl.rc_guilds(true).then((fgResponse) => {
       setGuilds(fgResponse);
     });
     const iGuild = setInterval(() => {

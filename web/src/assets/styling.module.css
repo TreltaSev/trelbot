@@ -203,3 +203,14 @@ Text aligns
 .text_align_center {
   text-align: center;
 }
+
+/* |Decals|
+Extras
+*/
+.no_border {
+  border: none;
+}
+
+.no_outline {
+  outline: none;
+}

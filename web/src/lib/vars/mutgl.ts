@@ -1,16 +1,28 @@
 import Cookies from "js-cookie";
 import user from "@lib/types/user";
+import guild, { currentGuild } from "@lib/types/guild";
 import config from "@root/config";
-
+import { currentChannels } from "../types/channel";
 /**
  * Mutable Global Variables, holds user information
  * as well as guild data, settings data, etc.
  */
 
 class _mutgl {
+  // Placeholder value
   public db = {};
-  public guilds = {};
+
+  // Used to hold mutiple guilds, really useful in `/dashboard`
+  public guilds: guild[] = [];
+
+  // User information such as id, name, and avatar url.
   public user: user = {};
+
+  // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
+  public cGuild: currentGuild = new currentGuild();
+
+  // Current channels, just stores channels.
+  public cChannels: currentChannels = new currentChannels();
 
   /**
    * This method sends a request to the backend api, asking for the users information like
@@ -51,9 +63,9 @@ class _mutgl {
    * the response of this request should be an object containing a list which contains all the guilds.
    * Type annotations have been added
    *
-   * @param _cache `Literal[True, False]` If set to true, caches the data to this.guilds, Defaults to false
+   * @param bCache `Literal[True, False]` If set to true, caches the data to this.guilds, Defaults to false
    */
-  public rc_guild = async (_cache: boolean = false): Promise<any> => {
+  public rc_guilds = async (bCache: boolean = false): Promise<any> => {
     const _session = this.chSession();
 
     if (_session === undefined) {
@@ -68,15 +80,82 @@ class _mutgl {
       console.error(`Failed in fetching ${e}`);
     }
 
-    if (this.error_c(this.guilds)) {
+    if (this.error_c(_guilds)) {
       return;
     }
 
-    if (_cache) {
+    if (bCache) {
       this.guilds = _guilds;
     }
 
-    return this.guilds;
+    return _guilds;
+  };
+
+  /**
+   * This method sends a get request to backend.com/guilds/{guild.id} to get the basic guild information
+   * like id, name, permissions that the current user has, icon url, etc.
+   * Response type should be of type guild, if looking for `guild.settings` access the mGuild which is
+   * a super set of guild which has accessible settings types.
+   * @param idGuild `Union[str, int]`The id of the guild
+   * @param bCache `Literal[true, false]` Wether or not this value should be automatically cached into this.cGuild, defaults to false.
+   */
+  public rc_guild = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
+    const _session = this.chSession();
+
+    if (_session === undefined) {
+      return;
+    }
+
+    let _guild: any = undefined;
+    try {
+      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string } });
+      _guild = await _fetchguild.json();
+    } catch (e) {
+      console.error(`Failed in fetching ${e}`);
+    }
+
+    if (this.error_c(_guild)) {
+      return;
+    }
+
+    if (bCache) {
+      this.cGuild = _guild;
+    }
+
+    return _guild;
+  };
+
+  /**
+   * This method sends a get request to backend.com/guilds/guild_id/channels to get the channels of the guild id
+   * the response of this request should be an object containing a list which contains all the channels
+   * @param idGuild The id of the guild
+   * @param bCache if true, immediatly caches the data to this.channels
+   * @returns a list of channel objects
+   */
+  public rc_channels = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
+    const _session = this.chSession();
+
+    if (_session === undefined) {
+      return;
+    }
+
+    let _channels: any = undefined;
+    try {
+      const _fetchchannels = await fetch(`${config.backendUrl}/guilds/${idGuild}/channels`, { method: "get", headers: { Session: _session as string } });
+      _channels = await _fetchchannels.json();
+    } catch (e) {
+      console.error(`Failed in fetching ${e}`);
+    }
+
+    if (this.error_c(_channels)) {
+      return;
+    }
+
+    if (bCache) {
+      this.cChannels = _channels;
+    }
+
+    return _channels;
   };
 
   /**
@@ -86,6 +165,10 @@ class _mutgl {
    * @returns A boolean, if its true theres an error, if not there isn't
    */
   private error_c = (input: any): boolean => {
+    if (!input) {
+      console.error(`Error, Stack: Value is Undefined. ${input}`);
+      return true;
+    }
     if (input.hasOwnProperty("code")) {
       switch (input.code) {
         case 1020:
