@@ -22,7 +22,7 @@ type channel = {
  */
 class currentChannels extends cacheHelper {
   // Meta data inherited from guild type
-  public meta: channel[] = [];
+  public meta: channel[] | undefined = undefined;
 }
 
 export default channel;

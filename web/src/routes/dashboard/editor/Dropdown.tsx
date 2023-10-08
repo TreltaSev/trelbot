@@ -58,6 +58,8 @@ class Dropdown extends React.Component<props, state> {
     };
   }
 
+  public choose(name?: string, value?: any) {}
+
   private handleGlobalClick(event: MouseEvent) {
     // If not left click return
     if (!(event.button == 0)) {
@@ -179,4 +181,4 @@ class Dropdown extends React.Component<props, state> {
   }
 }
 
-export default React.forwardRef((props: props, ref: React.Ref<Dropdown>) => <Dropdown {...props} ref={ref} />);
+export default Dropdown;
