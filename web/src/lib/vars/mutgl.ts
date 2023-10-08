@@ -20,6 +20,8 @@ class _mutgl {
   // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
+  public cChannel: any = [];
+
   /**
    * This method sends a request to the backend api, asking for the users information like
    * avatar urls, usernames and the like and has an optional parameter for automating "caching" which
@@ -119,6 +121,39 @@ class _mutgl {
     }
 
     return _guild;
+  };
+
+  /**
+   * This method sends a get request to backend.com/guilds/guild_id/channels to get the channels of the guild id
+   * the response of this request should be an object containing a list which contains all the channels
+   * @param idGuild The id of the guild
+   * @param bCache if true, immediatly caches the data to this.channels
+   * @returns a list of channel objects
+   */
+  public rc_channels = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
+    const _session = this.chSession();
+
+    if (_session === undefined) {
+      return;
+    }
+
+    let _channels: any = undefined;
+    try {
+      const _fetchchannels = await fetch(`${config.backendUrl}/guilds/${idGuild}/channels`, { method: "get", headers: { Session: _session as string } });
+      _channels = await _fetchchannels.json();
+    } catch (e) {
+      console.error(`Failed in fetching ${e}`);
+    }
+
+    if (this.error_c(_channels)) {
+      return;
+    }
+
+    if (bCache) {
+      this.cChannel = _channels;
+    }
+
+    return _channels;
   };
 
   /**
