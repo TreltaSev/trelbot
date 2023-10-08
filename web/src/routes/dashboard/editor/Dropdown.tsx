@@ -89,6 +89,16 @@ class Dropdown extends React.Component<props, state> {
   }
 
   /**
+   * Returns a dropdown item shard type which can be used to show items
+   * @param name Name to search for
+   * @param displayElement React node that will be displayed as the item
+   * @param position Position, 0 at the top
+   */
+  static form(name: string, element: React.ReactNode, position?: number): shard {
+    return { name: name, element: element, position: defaultValue(position, 0, undefined) } as shard;
+  }
+
+  /**
    * Opens or closes the menu, you can choose either option.
    * @param newState The new value for opened, can be true or false, if false, this will run the close animation, if true, this will open the open animation, defaults to the opposite of this.opened
    * @param abrupt When closing, should the component even be animated? if abrupt is set to true, the components style is forcefully changed.
