@@ -1,4 +1,5 @@
 import React from "react";
+import Grab from "./Grab";
 
 type props = {
   onToggle?: (...args: any[]) => any;
@@ -11,7 +12,7 @@ type state = {};
 /**
  * A "Toggleable" button whos value can be accessed through ref using a method.
  */
-class ToggleButton extends React.Component<props, state> {
+class ToggleButton extends React.Component<props, state> implements Grab {
   private inner: React.RefObject<HTMLDivElement>;
   private outer: React.RefObject<HTMLDivElement>;
   private onToggle?: (...args: any[]) => any;
@@ -31,6 +32,11 @@ class ToggleButton extends React.Component<props, state> {
     this.state = {
       toggled: this.initial,
     };
+  }
+
+  // Return data
+  grab() {
+    return this.toggled;
   }
 
   toggle() {
