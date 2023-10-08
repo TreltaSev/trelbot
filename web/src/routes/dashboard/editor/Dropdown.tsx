@@ -14,6 +14,4 @@ type state = {};
  * + select items
  * + search filters
  */
-class Dropdown extends React.Component<props, state> {
-
-}
+class Dropdown extends React.Component<props, state> {}
