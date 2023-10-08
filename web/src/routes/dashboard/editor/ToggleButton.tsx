@@ -44,13 +44,22 @@ class ToggleButton extends React.Component<props, state> {
       return;
     }
 
+    // Change toggle
     this.toggled = !this.toggled;
 
+    // Constants for better readability
     const bg = this.toggled ? "#8C52FF" : "rgba(255,255,255,0.2)";
     const offset = `translateX(${this.toggled ? 30 : 4}px)`;
     const options: KeyframeAnimationOptions = { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" };
+
+    // Animate components
     this.outer.current.animate({ background: bg }, options);
     this.inner.current.animate({ transform: offset }, options);
+
+    // Run callback method if present
+    if (this.callback) {
+      this.callback(this.toggled);
+    }
   }
 
   // Set the inital color of the switch
