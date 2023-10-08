@@ -18,7 +18,7 @@ const Editor: React.FC = () => {
    * guild object inside const guild.
    */
   useEffect(() => {
-    /* Fetch and Save Guild Data like channels and settings */
+    /* Fetch and Save Guild Data like settings */
     mutgl.rc_guild(guildId as string).then((response) => {
       mutgl.cGuild.cache("meta", response);
     });

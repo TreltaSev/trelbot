@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import user from "@lib/types/user";
 import guild, { currentGuild } from "@lib/types/guild";
 import config from "@root/config";
+import { currentChannels } from "../types/channel";
 /**
  * Mutable Global Variables, holds user information
  * as well as guild data, settings data, etc.
@@ -20,7 +21,7 @@ class _mutgl {
   // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
-  public cChannel: any = [];
+  public cChannels: currentChannels = new currentChannels();
 
   /**
    * This method sends a request to the backend api, asking for the users information like
@@ -150,7 +151,7 @@ class _mutgl {
     }
 
     if (bCache) {
-      this.cChannel = _channels;
+      this.cChannels = _channels;
     }
 
     return _channels;
