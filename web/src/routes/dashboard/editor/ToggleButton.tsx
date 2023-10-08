@@ -7,12 +7,10 @@ type props = {
   initial?: boolean;
 };
 
-type state = {};
-
 /**
  * A "Toggleable" button whos value can be accessed through ref using a method.
  */
-class ToggleButton extends React.Component<props, state> implements Grab {
+class ToggleButton extends React.Component<props> implements Grab {
   private inner: React.RefObject<HTMLDivElement>;
   private outer: React.RefObject<HTMLDivElement>;
   private onToggle?: (...args: any[]) => any;
