@@ -2,7 +2,6 @@ import React from "react";
 import Grab from "./Grab";
 
 type props = {
-  onToggle?: (...args: any[]) => any;
   callback?: (value: boolean) => any;
   initial?: boolean;
 };
@@ -13,7 +12,6 @@ type props = {
 class ToggleButton extends React.Component<props> implements Grab {
   private inner: React.RefObject<HTMLDivElement>;
   private outer: React.RefObject<HTMLDivElement>;
-  private onToggle?: (...args: any[]) => any;
   private callback?: (...args: any[]) => any;
   private initial: boolean;
   private toggled: boolean;
@@ -23,13 +21,9 @@ class ToggleButton extends React.Component<props> implements Grab {
     super(props);
     this.inner = React.createRef();
     this.outer = React.createRef();
-    this.onToggle = props.onToggle;
     this.callback = props.callback;
     this.initial = props.initial === true;
     this.toggled = this.initial;
-    this.state = {
-      toggled: this.initial,
-    };
   }
 
   // Return data
@@ -38,11 +32,6 @@ class ToggleButton extends React.Component<props> implements Grab {
   }
 
   toggle() {
-    // Run defined ontoggle method
-    if (this.onToggle) {
-      this.onToggle();
-    }
-
     // Return if both aren't present
     if (!this.outer.current || !this.inner.current) {
       return;
