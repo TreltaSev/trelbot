@@ -3,13 +3,14 @@ import Section from "@root/routes/dashboard/editor/Section";
 import FlexColumn from "@lib/component/FlexColumn";
 import ToggleButton from "@root/routes/dashboard/editor/ToggleButton";
 import Dropdown from "@root/routes/dashboard/editor/Dropdown";
-import mutgl from "@root/lib/vars/mutgl";
-import intervalHelper from "@root/lib/method/intervalHelper";
-import Text from "@root/lib/component/Text";
-import channel from "@root/lib/types/channel";
+import mutgl from "@lib/vars/mutgl";
+import intervalHelper from "@lib/method/intervalHelper";
+import Text from "@lib/component/Text";
+import channel from "@lib/types/channel";
 import DropdownItem from "@root/routes/dashboard/editor/DropdownItem";
-import ChannelTag from "@root/lib/svg/ChannelTag";
-import shard from "@root/lib/types/shard";
+import ChannelTag from "@lib/svg/ChannelTag";
+import shard from "@lib/types/shard";
+import TextArea from "@root/routes/dashboard/editor/TextArea";
 
 const OnJoin: React.FC = () => {
   // Force update used when refreshing metaguild
@@ -65,12 +66,12 @@ const OnJoin: React.FC = () => {
       </Section>
 
       <Section name='Text' description='Sends a text message to the selected channel'>
-        Text Area...
+        <TextArea />
         <ToggleButton initial={false} />
       </Section>
 
       <Section name='Image' description='Creates an image using css-like format'>
-        Text Area...
+        <TextArea />
         <ToggleButton initial={false} />
       </Section>
     </FlexColumn>
