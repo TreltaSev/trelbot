@@ -11,6 +11,8 @@ import DropdownItem from "@root/routes/dashboard/editor/DropdownItem";
 import ChannelTag from "@lib/svg/ChannelTag";
 import shard from "@lib/types/shard";
 import TextArea from "@root/routes/dashboard/editor/TextArea";
+import WavingHand from "@root/lib/svg/WavingHand";
+import FlexRow from "@root/lib/component/FlexRow";
 
 const OnJoin: React.FC = () => {
   // Force update used when refreshing metaguild
@@ -60,6 +62,8 @@ const OnJoin: React.FC = () => {
 
   return (
     <FlexColumn style={{ gap: 25 }}>
+      <Section icon={<WavingHand style={{ width: 24, height: 24, flex: "0 0 auto" }} />} name='On Join Event' description='Sends some sort of message when a user joins based on the configuration below' />
+      <FlexRow style={{ width: "100%", height: 2, borderRadius: 1, background: "rgb(255,255,255,0.1)" }} />
       <Section name='Channel' description='The channel which the event is assigned'>
         <Dropdown identifier='Channel' items={sharded_channels as shard[] | undefined} ref={channels_dropdown} />
         <ToggleButton initial={false} />
