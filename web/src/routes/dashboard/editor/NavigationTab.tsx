@@ -20,7 +20,7 @@ const NavigationTab: React.FC<props> = ({ onUpdate }) => {
     }
   };
   return (
-    <FlexColumn style={{ width: 250, gap: 10, padding: "0 10px", flexShrink: 0 }} className={`${styling.fill_height} ${styling.align_items_center} ${styling.border_box} ${styling.dark}`}>
+    <FlexColumn style={{ width: 250, gap: 10, flexShrink: 0 }} className={`${styling.fill_height} ${styling.align_items_center} ${styling.border_box} ${styling.dark}`}>
       <GuildContainer />
       {new loader().get().map((child) => (
         <TabContainer
