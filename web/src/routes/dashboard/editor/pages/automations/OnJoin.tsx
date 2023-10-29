@@ -125,7 +125,7 @@ const OnJoin: React.FC = () => {
 
       <FlexRow style={{ width: "100%", height: 2, borderRadius: 1, background: "rgb(255,255,255,0.1)" }} />
 
-      <FlexColumn>
+      <FlexColumn style={{ gap: 25 }}>
         <FlexRow style={{ borderRadius: 5, cursor: "pointer", height: 50 }} className={`${styling.align_self_stretch} ${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`}>
           <Text preset='normal' style={{ fontSize: 24 }}>
             Save
