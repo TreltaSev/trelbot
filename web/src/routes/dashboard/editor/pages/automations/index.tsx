@@ -21,8 +21,10 @@ const Automations: React.FC = () => {
     });
   }, []);
   return (
-    <FlexColumn style={{ width: 800, padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
-      <OnJoin />
+    <FlexColumn style={{ padding: "0 30px" }} className={`${styling.fill_all} ${styling.border_box}`}>
+      <FlexColumn style={{ width: "100%", padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
+        <OnJoin />
+      </FlexColumn>
     </FlexColumn>
   );
 };
