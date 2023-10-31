@@ -21,8 +21,8 @@ const Automations: React.FC = () => {
     });
   }, []);
   return (
-    <FlexColumn style={{ padding: "30px", background: "#1C1A1D", overflowY: "scroll" }} className={`${styling.fill_all} ${styling.border_box}`}>
-      <FlexColumn style={{ width: "100%", padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
+    <FlexColumn style={{ padding: 30, background: "#1C1A1D", overflowY: "scroll" }} className={`${styling.fill_all} ${styling.border_box}`}>
+      <FlexColumn style={{ padding: 30, gap: 25, borderRadius: 5 }} className={`${styling.fill_all} ${styling.align_items_flex_start} ${styling.darksub} ${styling.border_box}`}>
         <OnJoin />
       </FlexColumn>
     </FlexColumn>
