@@ -63,7 +63,7 @@ const OnJoin: React.FC = () => {
   }
 
   return (
-    <FlexColumn style={{ gap: 25 }}>
+    <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
       <Section icon={<WavingHand style={{ width: 24, height: 24, flex: "0 0 auto" }} />} name='On Join Event' description='Sends a customized message based on the configuration below.' />
 
       <FlexRow style={{ width: "100%", height: 2, borderRadius: 1, background: "rgb(255,255,255,0.1)" }} />
