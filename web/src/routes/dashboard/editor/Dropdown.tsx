@@ -26,7 +26,7 @@ type state = {
 
 /**
  * A animated dropdown that can display and hold information, animated in every
- * way that countes
+ * way that counts
  * @usedin `Editor.tsx/**`
  * + display items
  * + search interface
