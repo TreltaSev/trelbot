@@ -8,7 +8,7 @@ import FlexRow from "@root/lib/component/FlexRow";
 import TextInput from "@root/lib/component/TextInput";
 import FlexColumn from "@root/lib/component/FlexColumn";
 import defaultValue from "@root/lib/method/defaultValue";
-import dropdown_change from "@root/routes/dashboard/editor/declerations/dropdown_change";
+import dropdown_change from "@routes/dashboard/editor/declarations/dropdown_change";
 
 import styling from "@assets/styling.module.css";
 import Grab from "./Grab";
