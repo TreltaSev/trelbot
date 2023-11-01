@@ -85,11 +85,11 @@ const OnJoin: React.FC = () => {
         description={
           <Text style={{ color: "rgba(255,255,255,0.5)" }}>
             The message that will be sent, will only show if Enable Text is toggled ON. This message also supports formatting which can be accessed with{" "}
-            <Url href={"https://en.wikipedia.org/wiki/Bracket"} new_window={true} style={{ color: "#8c52ff", cursor: "pointer" }}>
+            <Url href={"https://en.wikipedia.org/wiki/Bracket"} style={{ color: "#8c52ff", cursor: "pointer" }}>
               brackets
             </Url>
             /
-            <Url href={"https://peps.python.org/pep-0498/"} new_window={true} style={{ color: "#8c52ff", cursor: "pointer" }}>
+            <Url href={"https://peps.python.org/pep-0498/"} style={{ color: "#8c52ff", cursor: "pointer" }}>
               fstrings
             </Url>
           </Text>
@@ -110,11 +110,11 @@ const OnJoin: React.FC = () => {
         description={
           <Text style={{ color: "rgba(255,255,255,0.5)" }}>
             The data that will be used to generate the custom image, this data is in a css-like string format who's documentation you can find{" "}
-            <Url href='/docs/cssid' new_window={true} style={{ color: "#8c52ff", cursor: "pointer" }}>
+            <Url href='/docs/cssid' style={{ color: "#8c52ff", cursor: "pointer" }}>
               here
             </Url>
             , if you don't know about css, you should probably read up on it{" "}
-            <Url href={"https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics"} new_window={true} style={{ color: "#8c52ff", cursor: "pointer" }}>
+            <Url href={"https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics"} style={{ color: "#8c52ff", cursor: "pointer" }}>
               here
             </Url>
             , its pretty simple, trust me. If the image data is invalid you will be warned with a notification, if you choose to ignore this warning, custom Image will be disabled.
@@ -133,7 +133,7 @@ const OnJoin: React.FC = () => {
         </FlexRow>
         <Text preset='normal' style={{ fontSize: 16 }}>
           This concept design was influenced by{" "}
-          <Url href='https://www.welcomer.gg/' new_window={true} style={{ color: "#8c52ff", cursor: "pointer" }}>
+          <Url href='https://www.welcomer.gg/' style={{ color: "#8c52ff", cursor: "pointer" }}>
             welcomer.gg
           </Url>
           's dashboard and will be changed to something more original and unique after I stop procrastinating.
