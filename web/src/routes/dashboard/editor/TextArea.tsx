@@ -1,7 +1,8 @@
 import React from "react";
 import Grab from "./Grab";
 import callback from "@root/lib/types/callback";
-
+import styling from "@assets/styling.module.css";
+import custom from "@assets/custom.module.css";
 /**
  * Props of the text area, the user input.
  * @param name The name of the text area
@@ -63,6 +64,8 @@ class TextArea extends React.Component<props, state> implements Grab {
           }
         }}
         value={this.state.content}
+        style={{ minWidth: 500, maxWidth: 500, maxHeight: 200, minHeight: 50, color: "rgba(255,255,255,0.5)", fontFamily: "Lato", fontWeight: "400", fontSize: "0.75em", borderRadius: 5, padding: "20px 10px" }}
+        className={`${styling.darker} ${custom.input_no_border} ${styling.border_box}`}
       />
     );
   }
