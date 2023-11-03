@@ -243,4 +243,5 @@ class Dropdown extends React.Component<props, state> implements Grab {
   }
 }
 
+export { props };
 export default Dropdown;
