@@ -7,7 +7,7 @@ type props = callback & {
 };
 
 /**
- * A "Toggleable" button whos value can be accessed through ref using a method.
+ * A "Toggle-able" button who's value can be accessed through ref using a method.
  */
 class ToggleButton extends React.Component<props> implements Grab {
   private inner: React.RefObject<HTMLDivElement>;
@@ -16,7 +16,7 @@ class ToggleButton extends React.Component<props> implements Grab {
   private initial: boolean;
   private toggled: boolean;
 
-  // Defined values in the contrructor
+  // Defined values in the constructor
   constructor(props: props) {
     super(props);
     this.inner = React.createRef();
@@ -55,7 +55,7 @@ class ToggleButton extends React.Component<props> implements Grab {
     }
   }
 
-  // Set the inital color of the switch
+  // Set the initial color of the switch
   componentDidMount(): void {
     if (this.outer.current && this.inner.current) {
       this.outer.current.style.background = this.initial ? "#8C52FF" : "rgba(255,255,255,0.2)";
@@ -72,4 +72,5 @@ class ToggleButton extends React.Component<props> implements Grab {
   }
 }
 
+export { props };
 export default React.forwardRef((props: props, ref: React.Ref<ToggleButton>) => <ToggleButton {...props} ref={ref} />);

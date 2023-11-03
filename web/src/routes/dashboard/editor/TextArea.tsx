@@ -71,4 +71,5 @@ class TextArea extends React.Component<props, state> implements Grab {
   }
 }
 
+export { props };
 export default TextArea;

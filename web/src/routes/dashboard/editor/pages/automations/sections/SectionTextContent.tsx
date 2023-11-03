@@ -4,8 +4,9 @@ import TextArea from "@root/routes/dashboard/editor/TextArea";
 import Text from "@lib/component/Text";
 import Url from "@root/lib/component/Url";
 import { alternate } from ".";
+import { props as textarea_props } from "@root/routes/dashboard/editor/TextArea";
 
-const SectionTextContent: React.FC<alternate> = ({ readable }) => {
+const SectionTextContent: React.FC<alternate & textarea_props> = ({ readable, callback }) => {
   return (
     <Section
       name='Text Content'
@@ -21,7 +22,7 @@ const SectionTextContent: React.FC<alternate> = ({ readable }) => {
           </Url>
         </Text>
       }>
-      <TextArea />
+      <TextArea callback={callback} />
     </Section>
   );
 };

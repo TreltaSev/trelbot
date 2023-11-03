@@ -9,10 +9,10 @@ type props = dropdown_type &
     innerref?: React.RefObject<any>;
   };
 
-const SectionChannel: React.FC<props> = ({ items, innerref, readable }) => {
+const SectionChannel: React.FC<props> = ({ items, innerref, readable, callback }) => {
   return (
     <Section name='Channel' description='The channel which the event is assigned'>
-      <Dropdown identifier='Channel' items={items as shard[] | undefined} ref={innerref} />
+      <Dropdown identifier='Channel' items={items as shard[] | undefined} ref={innerref} callback={callback} />
     </Section>
   );
 };

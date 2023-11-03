@@ -4,8 +4,9 @@ import TextArea from "@root/routes/dashboard/editor/TextArea";
 import Text from "@lib/component/Text";
 import Url from "@root/lib/component/Url";
 import { alternate } from ".";
+import { props as textarea_props } from "@root/routes/dashboard/editor/TextArea";
 
-const SectionCustomImageData: React.FC<alternate> = ({ readable }) => {
+const SectionCustomImageData: React.FC<alternate & textarea_props> = ({ readable, callback }) => {
   return (
     <Section
       name='Custom Image Data'
@@ -22,7 +23,7 @@ const SectionCustomImageData: React.FC<alternate> = ({ readable }) => {
           , its pretty simple, trust me. If the image data is invalid you will be warned with a notification, if you choose to ignore this warning, custom Image will be disabled.
         </Text>
       }>
-      <TextArea />
+      <TextArea callback={callback} />
     </Section>
   );
 };
