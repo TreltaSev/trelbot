@@ -8,6 +8,8 @@ import logging
 import os
 import sqlite3
 import typing
+from pathlib import Path
+from typing import Optional
 
 from pyucc import colors, console, symbols
 
@@ -22,25 +24,39 @@ class Entry:
   with sqlite3.  
   """
 
-  def __init__(self) -> None:
-    self.cursor: sqlite3.Cursor = sqlite3.connect(f"{os.getcwd()}/../shared/discord.guild.settings.db")
+  def __init__(self, guild_id: str, database_location: Optional[str] = None, database_name: Optional[str] = "database.db") -> None:
+    self.guild_id = guild_id
+    print(__file__)
+    if not database_location:
+      database_location = f"{str(Path(__file__).parent)}\\{database_name}"
 
-  def table_exists(self, name: str) -> bool:
+    print(database_location)
+
+    self.cursor: sqlite3.Cursor = sqlite3.connect(database_location).cursor()
+
+  def table_exists(self, name: Optional[str] = None) -> bool:
     """
     Checks if a name exists within the database.
-    :param name: The name of the table to check within the databse
+    :param name: The name of the table to check within the database
     :return: A boolean representing if the table exists
     :rtype: bool
     """
+
+    if not name:
+      name = self.guild_id
+
     self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{name}'")
     return self.cursor.fetchone() is not None
 
-  def create_if_not_exists(self, name: str, data: any) -> None:
+  def create_if_not_exists(self, data: any, name: Optional[str] = None) -> None:
     """
-    Creates a table within the databse if it doesn't exist,
+    Creates a table within the database if it doesn't exist,
     :param name: Name of the table
     :param data: Data of the table to be inserted
     """
+
+    if not name:
+      name = self.guild_id
 
     if not self.table_exists():
       console.db(f"{colors.vibrant_orange}Table not exist: {colors.vibrant_yellow}{name}")
@@ -60,7 +76,7 @@ class Access(Entry):
   """
 
   def __init__(self, guild_id: typing.Optional[typing.Union[str, int]] = None) -> None:
-    super().__init__()
+    super().__init__(guild_id=guild_id)
     if not guild_id:
       pass
 
@@ -78,7 +94,7 @@ class Access(Entry):
 #   interpreter.ConfigInterperter(__base)
 #   _template: dict = {
 #       "banners": {
-#           "on_join": interpreter.ConfigInterperter(f"{__base}main_text:Welcome to the server;sub_text:Ahoy!;").values,
+#          "on_join": interpreter.ConfigInterperter(f"{__base}main_text:Welcome to the server;sub_text:Ahoy!;").values,
 #           "on_leave": interpreter.ConfigInterperter(f"{__base}main_text:Goodbye;sub_text:Good luck on your travels;").values,
 #           "on_ban": interpreter.ConfigInterperter(f"{__base}main_text:Get Banished;sub_text:You have violated the law!;").values,
 #       }
