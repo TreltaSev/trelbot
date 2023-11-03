@@ -8,4 +8,8 @@ import SectionSeparator from "./SectionSeparator";
 import SectionEntrance from "./SectionEntrance";
 import { props as dropdown_type } from "@routes/dashboard/editor/Dropdown";
 
-export { SectionChannel, SectionCustomImageData, SectionEnableText, SectionTextContent, SectionUseCustomImage, SectionConceptSave, SectionSeparator, SectionEntrance, dropdown_type };
+type alternate = {
+  readable?: string;
+};
+
+export { SectionChannel, SectionCustomImageData, SectionEnableText, SectionTextContent, SectionUseCustomImage, SectionConceptSave, SectionSeparator, SectionEntrance, dropdown_type, alternate };

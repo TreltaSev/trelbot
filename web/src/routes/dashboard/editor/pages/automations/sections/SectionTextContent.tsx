@@ -3,8 +3,9 @@ import Section from "@root/routes/dashboard/editor/Section";
 import TextArea from "@root/routes/dashboard/editor/TextArea";
 import Text from "@lib/component/Text";
 import Url from "@root/lib/component/Url";
+import { alternate } from ".";
 
-const SectionTextContent: React.FC = () => {
+const SectionTextContent: React.FC<alternate> = ({ readable }) => {
   return (
     <Section
       name='Text Content'

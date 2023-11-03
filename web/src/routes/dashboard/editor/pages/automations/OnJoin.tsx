@@ -1,16 +1,14 @@
 import React, { useEffect, useReducer } from "react";
-import Section from "@root/routes/dashboard/editor/Section";
 import FlexColumn from "@lib/component/FlexColumn";
-import Dropdown from "@root/routes/dashboard/editor/Dropdown";
+import Text from "@lib/component/Text";
 import mutgl from "@lib/vars/mutgl";
 import intervalHelper from "@lib/method/intervalHelper";
-import Text from "@lib/component/Text";
-import channel from "@lib/types/channel";
-import DropdownItem from "@root/routes/dashboard/editor/DropdownItem";
 import ChannelTag from "@lib/svg/ChannelTag";
+import channel from "@lib/types/channel";
 import shard from "@lib/types/shard";
-import WavingHand from "@root/lib/svg/WavingHand";
-import FlexRow from "@root/lib/component/FlexRow";
+import Dropdown from "@root/routes/dashboard/editor/Dropdown";
+import DropdownItem from "@root/routes/dashboard/editor/DropdownItem";
+
 import styling from "@assets/styling.module.css";
 import { SectionChannel, SectionConceptSave, SectionCustomImageData, SectionEnableText, SectionEntrance, SectionSeparator, SectionTextContent, SectionUseCustomImage } from "./sections";
 
@@ -62,31 +60,31 @@ const OnJoin: React.FC = () => {
 
   return (
     <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
-      <SectionEntrance />
+      <SectionEntrance readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionChannel items={sharded_channels} innerref={channels_dropdown} />
+      <SectionChannel items={sharded_channels} innerref={channels_dropdown} readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionEnableText />
+      <SectionEnableText readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionTextContent />
+      <SectionTextContent readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionUseCustomImage />
+      <SectionUseCustomImage readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionCustomImageData />
+      <SectionCustomImageData readable='On Join' />
 
       <SectionSeparator />
 
-      <SectionConceptSave />
+      <SectionConceptSave readable='On Join' />
     </FlexColumn>
   );
 };

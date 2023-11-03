@@ -4,8 +4,9 @@ import FlexColumn from "@root/lib/component/FlexColumn";
 import Text from "@lib/component/Text";
 import Url from "@root/lib/component/Url";
 import styling from "@assets/styling.module.css";
+import { alternate } from ".";
 
-const SectionConceptSave: React.FC = () => {
+const SectionConceptSave: React.FC<alternate> = ({ readable }) => {
   return (
     <FlexColumn style={{ gap: 25 }}>
       <FlexRow style={{ borderRadius: 5, cursor: "pointer", height: 50 }} className={`${styling.align_self_stretch} ${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`}>
