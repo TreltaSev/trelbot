@@ -3,6 +3,7 @@ import user from "@lib/types/user";
 import guild, { currentGuild } from "@lib/types/guild";
 import config from "@root/config";
 import { currentChannels } from "../types/channel";
+import { dashboardModify } from "../types/dashboardmodify";
 /**
  * Mutable Global Variables, holds user information
  * as well as guild data, settings data, etc.
@@ -12,17 +13,20 @@ class _mutgl {
   // Placeholder value
   public db = {};
 
-  // Used to hold mutiple guilds, really useful in `/dashboard`
+  // Used to hold multiple guilds, really useful in `/dashboard`
   public guilds: guild[] = [];
 
   // User information such as id, name, and avatar url.
   public user: user = {};
 
-  // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
+  // Current Guild, Holds relevant information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
   // Current channels, just stores channels.
   public cChannels: currentChannels = new currentChannels();
+
+  // User dashboard settings changes and previous data.
+  public DashboardChangeable: dashboardModify = new dashboardModify();
 
   /**
    * This method sends a request to the backend api, asking for the users information like
@@ -129,7 +133,7 @@ class _mutgl {
    * This method sends a get request to backend.com/guilds/guild_id/channels to get the channels of the guild id
    * the response of this request should be an object containing a list which contains all the channels
    * @param idGuild The id of the guild
-   * @param bCache if true, immediatly caches the data to this.channels
+   * @param bCache if true, immediately caches the data to this.channels
    * @returns a list of channel objects
    */
   public rc_channels = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {

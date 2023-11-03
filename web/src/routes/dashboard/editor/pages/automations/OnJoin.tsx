@@ -18,6 +18,7 @@ const OnJoin: React.FC = () => {
   const channels_dropdown = React.useRef<Dropdown>(null);
   let sharded_channels: shard[] | channel[] | undefined = undefined;
   const readable: string = "On Join";
+  const script_use: string = "onjoin";
 
   const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
     return array.find((child) => {
@@ -45,7 +46,6 @@ const OnJoin: React.FC = () => {
     sharded_channels = sharded_channels
       .filter((channel) => channel.type === 0)
       .map((channel) => {
-        console.info(`Map: ${channel.name}`);
         let forwarding = null;
         if (channel.parent_id) {
           forwarding = (
@@ -59,29 +59,51 @@ const OnJoin: React.FC = () => {
       });
   }
 
+  // OYE since the set possible initial is first fired after the first event,
+  // this means that the initial value isn't actual activated until after the user already makes a change, swapping the values. fix this.
+  const handleChannel = (serverName: string, serverID: string) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:channel`, { name: serverName, id: serverID }, false, true);
+  };
+
+  const handleEnableText = (currentToggle: boolean) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:enableText`, currentToggle, false, true);
+  };
+
+  const handleTextContent = (currentValue: string) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:textContent`, currentValue, false, true);
+  };
+
+  const handleUseCustomImage = (currentToggle: boolean) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:useCustomImage`, currentToggle, false, true);
+  };
+
+  const handleCustomImageData = (currentValue: string) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:customImageData`, currentValue, false, true);
+  };
+
   return (
     <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
       <SectionEntrance readable={readable} />
 
       <SectionSeparator />
 
-      <SectionChannel items={sharded_channels} innerref={channels_dropdown} readable={readable} />
+      <SectionChannel callback={(serverName: string, serverID: string) => handleChannel(serverName, serverID)} items={sharded_channels} innerref={channels_dropdown} readable={readable} />
 
       <SectionSeparator />
 
-      <SectionEnableText readable={readable} />
+      <SectionEnableText callback={(currentToggle: boolean) => handleEnableText(currentToggle)} readable={readable} />
 
       <SectionSeparator />
 
-      <SectionTextContent readable={readable} />
+      <SectionTextContent callback={(currentValue: string) => handleTextContent(currentValue)} readable={readable} />
 
       <SectionSeparator />
 
-      <SectionUseCustomImage readable={readable} />
+      <SectionUseCustomImage callback={(currentToggle: boolean) => handleUseCustomImage(currentToggle)} readable={readable} />
 
       <SectionSeparator />
 
-      <SectionCustomImageData readable={readable} />
+      <SectionCustomImageData callback={(currentValue: string) => handleCustomImageData(currentValue)} readable={readable} />
 
       <SectionSeparator />
 

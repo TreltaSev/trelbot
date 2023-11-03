@@ -11,6 +11,15 @@ class cacheHelper {
    */
 
   [key: string]: any;
+  private delete_methods: string[];
+
+  constructor(methods?: string[]) {
+    if (methods) {
+      this.delete_methods = methods;
+    } else {
+      this.delete_methods = [];
+    }
+  }
 
   public cache = (key?: string, value?: any) => {
     if (key === undefined || value === undefined) {
@@ -18,6 +27,21 @@ class cacheHelper {
       return;
     }
     this[key] = value;
+  };
+
+  /**
+   * @returns All the relevant cached data without the methods
+   */
+  public obtain = (): any => {
+    const imitation: any = { ...this };
+    delete imitation["cache"];
+    delete imitation["obtain"];
+
+    this.delete_methods.forEach((method) => {
+      delete imitation[method];
+    });
+
+    return imitation;
   };
 }
 
