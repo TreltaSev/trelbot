@@ -17,6 +17,7 @@ const OnJoin: React.FC = () => {
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
   const channels_dropdown = React.useRef<Dropdown>(null);
   let sharded_channels: shard[] | channel[] | undefined = undefined;
+  const readable: string = "On Join";
 
   const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
     return array.find((child) => {
@@ -60,31 +61,31 @@ const OnJoin: React.FC = () => {
 
   return (
     <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
-      <SectionEntrance readable='On Join' />
+      <SectionEntrance readable={readable} />
 
       <SectionSeparator />
 
-      <SectionChannel items={sharded_channels} innerref={channels_dropdown} readable='On Join' />
+      <SectionChannel items={sharded_channels} innerref={channels_dropdown} readable={readable} />
 
       <SectionSeparator />
 
-      <SectionEnableText readable='On Join' />
+      <SectionEnableText readable={readable} />
 
       <SectionSeparator />
 
-      <SectionTextContent readable='On Join' />
+      <SectionTextContent readable={readable} />
 
       <SectionSeparator />
 
-      <SectionUseCustomImage readable='On Join' />
+      <SectionUseCustomImage readable={readable} />
 
       <SectionSeparator />
 
-      <SectionCustomImageData readable='On Join' />
+      <SectionCustomImageData readable={readable} />
 
       <SectionSeparator />
 
-      <SectionConceptSave readable='On Join' />
+      <SectionConceptSave readable={readable} />
     </FlexColumn>
   );
 };
