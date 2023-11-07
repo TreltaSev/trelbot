@@ -67,6 +67,16 @@ class Entry:
 
     console.db(f"{colors.vibrant_violet}CIFE {colors.vibrant_green}Ran Through: {colors.vibrant_violet}{name}")
 
+  @property
+  def database_template(self):
+    """
+    Using an up-to-date template, this property when "got" returns a dictionary containing key value pairs pertaining to default
+    values and keys of the database.
+    """
+    return {
+        "automations:onjoin:channel": None
+    }
+
 
 class Access(Entry):
   """
@@ -81,6 +91,41 @@ class Access(Entry):
       pass
 
     self.guild_id: str = str(guild_id)
+
+    # Check if guild is valid and that it exists
+
+    # Check if the user has the required permissions to update this information
+
+    # Change class status code to reflect the current state wether its all passed or if there is some issue.
+
+  def verify_guild(self):
+    """
+    Checks if the attempted accessed guild actually exists and that it's valid.
+    A guild should only contain numbers so this method checks if a guild is only numbers
+    in its id.
+    """
+    pass
+
+  def get_settings(self):
+    """
+    Gets a guilds settings in the database in a json format.
+    """
+    console.db(f"Getting Guild: {self.guild_id}")
+
+    if not self.table_exists(self.guild_id):
+      console.error(f"Guild Doesn't exist within Database: {self.guild_id}")
+      raise ValueError(f"Guild Doesn't exist within Database: {self.guild_id}")
+
+    self.cursor.execute(f"SELECT data FROM '{self.guild_id}'")
+
+    response: any = self.cursor.fetchone()[0]
+
+    try:
+      response = json.loads(response)
+    except:
+      console.error(f"Response isn't json serializable, ignoring.")
+
+    return response
 
 
 # class Settings:

@@ -96,7 +96,7 @@ async def guild_channels(guild_id: str):
   return quart.json.jsonify(_channels)
 
 
-@blueprint.route("/api/guilds/<string:guild_id>/banner", methods=["GET", "PATCH", "PUT", "OPTIONS"])
+@blueprint.route("/api/guilds/<string:guild_id>/settings", methods=["GET", "PATCH", "PUT", "OPTIONS"])
 async def guild_banner(guild_id: str):
   """
   A path that responds with the guild's banner data

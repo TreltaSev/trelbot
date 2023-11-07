@@ -7,5 +7,5 @@
     }
   },
   "autopep8.args": ["--indent-size=2", "--max-line-length=300"],
-  "cSpell.words": ["fetchme", "togglebutton"]
+  "cSpell.words": ["attemped", "fetchme", "togglebutton"]
 }
