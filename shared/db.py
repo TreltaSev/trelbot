@@ -14,6 +14,7 @@ from typing import Optional
 from pyucc import colors, console, symbols
 
 from . import interpreter, types
+from .low.guild import Configuration
 
 logging.basicConfig(level=logging.CRITICAL)
 
@@ -48,24 +49,24 @@ class Entry:
     self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{name}'")
     return self.cursor.fetchone() is not None
 
-  def create_if_not_exists(self, data: any, name: Optional[str] = None) -> None:
+  def create_if_not_exists(self, data: Optional[any] = None) -> None:
     """
     Creates a table within the database if it doesn't exist,
     :param name: Name of the table
     :param data: Data of the table to be inserted
     """
 
-    if not name:
-      name = self.guild_id
+    if not data:
+      data = Configuration().json
 
     if not self.table_exists():
-      console.db(f"{colors.vibrant_orange}Table not exist: {colors.vibrant_yellow}{name}")
+      console.db(f"{colors.vibrant_orange}Table not exist: {colors.vibrant_yellow}{self.guild_id}")
 
-    self.cursor.execute(f"CREATE TABLE IF NOT EXISTS '{name}' (data TEXT)")
-    self.cursor.execute(f"INSERT INTO '{name}' (data) VALUES (?)", (data, ))
+    self.cursor.execute(f"CREATE TABLE IF NOT EXISTS '{self.guild_id}' (data TEXT)")
+    self.cursor.execute(f"INSERT INTO '{self.guild_id}' (data) VALUES (?)", (data, ))
     self.cursor.connection.commit()
 
-    console.db(f"{colors.vibrant_violet}CIFE {colors.vibrant_green}Ran Through: {colors.vibrant_violet}{name}")
+    console.db(f"{colors.vibrant_violet}CIFE {colors.vibrant_green}Ran Through: {colors.vibrant_violet}{self.guild_id}")
 
   @property
   def database_template(self):

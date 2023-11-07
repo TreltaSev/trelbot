@@ -18,7 +18,8 @@ const OnJoin: React.FC = () => {
   const channels_dropdown = React.useRef<Dropdown>(null);
   let sharded_channels: shard[] | channel[] | undefined = undefined;
   const readable: string = "On Join";
-  const script_use: string = "onjoin";
+  const parent: string = "automations";
+  const script_use: string = `${parent}:onjoin`;
 
   const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
     return array.find((child) => {
@@ -61,29 +62,33 @@ const OnJoin: React.FC = () => {
 
   // OYE since the set possible initial is first fired after the first event,
   // this means that the initial value isn't actual activated until after the user already makes a change, swapping the values. fix this.
+  const handleActive = (currentToggle: boolean) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:active`, currentToggle, false, true);
+  };
+
   const handleChannel = (serverName: string, serverID: string) => {
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:channel`, { name: serverName, id: serverID }, false, true);
   };
 
   const handleEnableText = (currentToggle: boolean) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:enableText`, currentToggle, false, true);
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:enable_text`, currentToggle, false, true);
   };
 
   const handleTextContent = (currentValue: string) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:textContent`, currentValue, false, true);
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:text_content`, currentValue, false, true);
   };
 
   const handleUseCustomImage = (currentToggle: boolean) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:useCustomImage`, currentToggle, false, true);
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:use_custom_image`, currentToggle, false, true);
   };
 
   const handleCustomImageData = (currentValue: string) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:customImageData`, currentValue, false, true);
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:custom_image_data`, currentValue, false, true);
   };
 
   return (
     <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
-      <SectionEntrance readable={readable} />
+      <SectionEntrance callback={(currentToggle: boolean) => handleActive(currentToggle)} readable={readable} />
 
       <SectionSeparator />
 
