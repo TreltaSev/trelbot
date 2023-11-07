@@ -3,6 +3,7 @@ from exts.constants import oauth2
 from pyucc import console
 from quart_cors import cors
 
+from shared import types
 from shared.core_tools import errors
 
 from . import ApiConnection, JsonConnection
@@ -64,7 +65,10 @@ async def API_GUILD_SETTINGS(guild_id, **kwargs):
     case "GET":
       pass
 
-  json = await quart.request.get_json()
+  access_token: str = kwargs.get("token")
+  user: types.user = oauth2.Oauth2.GetCurrentUser(access_token)
+
+  console.quart(f"Connection {access_token}, user: {user.__dict__}")
 
   # get user data
 

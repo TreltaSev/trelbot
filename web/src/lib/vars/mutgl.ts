@@ -22,6 +22,9 @@ class _mutgl {
   // Current Guild, Holds relevant information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
+  // Current Guild Settings
+  public cGuildSettings: any = {};
+
   // Current channels, just stores channels.
   public cChannels: currentChannels = new currentChannels();
 
