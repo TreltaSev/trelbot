@@ -8,7 +8,8 @@ type guild = {
   name?: string;
   owner?: boolean;
   permissions?: number;
-  premissions_new?: number;
+  permissions_new?: number;
+  settings?: any;
 };
 
 /**

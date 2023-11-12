@@ -77,17 +77,17 @@ class ApiConnection:
   def __init__(self, request: quart.Request):
     self.request = request
 
-    self.__checkSession()
+    self.check_session()
 
-  def __checkSession(self) -> None:
+  def check_session(self) -> None:
     """
-    Checks if a session value is present in the headers if `quart.request.headers`,
-    and if it is present, if its even valid. Raises errors for when the session header is "none" meaning
+    Checks if a session value is present in the headers: `quart.request.headers`,
+    if not present Raises errors for when the session header is "none" meaning
     the user isn't signed in, and also raises errors if the session id given is not inside the cached sessions,
     also meaning that either the user isn't logged in or the session is invalid.
     """
 
-    sessionHeader = self.request.headers.get("Session")
+    sessionHeader = self.request.headers.get("Session", "none")
 
     if sessionHeader == "none":
       raise errors.BaseServerRouteException("No session found, login.", code=1020)

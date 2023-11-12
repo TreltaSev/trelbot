@@ -35,9 +35,15 @@ async def API_GUILD(guild_id, **kwargs):
   """
   access_token: str = kwargs.get("token")
 
+  operations = quart.request.headers.get("Operations", "none")
+
   match quart.request.method:
     case "GET":
       guild: types.guild = oauth2.Oauth2.GetGuild(access_token, guild_id)
+
+      if "settings" in operations:
+        guild.get_settings()
+
       return quart.json.jsonify(guild.__dict__)
 
   return ":)"

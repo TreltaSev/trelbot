@@ -22,9 +22,6 @@ class _mutgl {
   // Current Guild, Holds relevant information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
-  // Current Guild Settings
-  public cGuildSettings: any = {};
-
   // Current channels, just stores channels.
   public cChannels: currentChannels = new currentChannels();
 
@@ -106,7 +103,7 @@ class _mutgl {
    * @param idGuild `Union[str, int]`The id of the guild
    * @param bCache `Literal[true, false]` Wether or not this value should be automatically cached into this.cGuild, defaults to false.
    */
-  public rc_guild = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
+  public rc_guild = async (idGuild: string | number, bCache: boolean = false, extras: string[] = []): Promise<any> => {
     const _session = this.chSession();
 
     if (_session === undefined) {
@@ -115,7 +112,7 @@ class _mutgl {
 
     let _guild: any = undefined;
     try {
-      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string } });
+      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string, operations: `meta,${extras.join(",")}` } });
       _guild = await _fetchguild.json();
     } catch (e) {
       console.error(`Failed in fetching ${e}`);
