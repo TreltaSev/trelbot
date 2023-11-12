@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import FlexColumn from "@lib/component/FlexColumn";
 import Text from "@lib/component/Text";
 import mutgl from "@lib/vars/mutgl";
@@ -20,6 +20,7 @@ const OnJoin: React.FC = () => {
   const readable: string = "On Join";
   const parent: string = "automations";
   const script_use: string = `${parent}:onjoin`;
+  const [initial_values, set_initial_values] = useState<undefined | any>(undefined);
 
   const get_parent = (array: channel[], parent_id: null | string): channel | undefined => {
     return array.find((child) => {
@@ -39,6 +40,16 @@ const OnJoin: React.FC = () => {
     const interval = setInterval(() => {
       new intervalHelper(mutgl.cChannels.meta !== undefined, forceUpdate, interval);
     }, 500);
+
+    if (mutgl.cGuild.meta.settings) {
+      handleActive(mutgl.cGuild.meta.settings.automations.on_join.active);
+      handleChannel("initial", mutgl.cGuild.meta.settings.automations.on_join.channel);
+      handleEnableText(mutgl.cGuild.meta.settings.automations.on_join.enable_text);
+      handleTextContent(mutgl.cGuild.meta.settings.automations.on_join.text_content);
+      handleUseCustomImage(mutgl.cGuild.meta.settings.automations.on_join.use_custom_image);
+      handleCustomImageData(mutgl.cGuild.meta.settings.automations.on_join.custom_image_data);
+      set_initial_values(mutgl.cGuild.meta.settings.automations.on_join);
+    }
   }, []);
 
   // Convert list to shard
@@ -66,8 +77,8 @@ const OnJoin: React.FC = () => {
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:active`, currentToggle, false, true);
   };
 
-  const handleChannel = (serverName: string, serverID: string) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:channel`, { name: serverName, id: serverID }, false, true);
+  const handleChannel = (serverName: string | null, serverID: string | null) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:channel`, serverID === null ? null : { name: serverName, id: serverID }, false, true);
   };
 
   const handleEnableText = (currentToggle: boolean) => {
@@ -75,20 +86,24 @@ const OnJoin: React.FC = () => {
   };
 
   const handleTextContent = (currentValue: string) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:text_content`, currentValue, false, true);
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:text_content`, currentValue === null ? null : currentValue, false, true);
   };
 
   const handleUseCustomImage = (currentToggle: boolean) => {
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:use_custom_image`, currentToggle, false, true);
   };
 
-  const handleCustomImageData = (currentValue: string) => {
-    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:custom_image_data`, currentValue, false, true);
+  const handleCustomImageData = (currentValue: string | null) => {
+    mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:custom_image_data`, currentValue === null ? null : currentValue, false, true);
   };
+
+  if (initial_values === undefined) {
+    return <span>Nothing...</span>;
+  }
 
   return (
     <FlexColumn style={{ gap: 25 }} className={`${styling.fill_all}`}>
-      <SectionEntrance callback={(currentToggle: boolean) => handleActive(currentToggle)} readable={readable} />
+      <SectionEntrance callback={(currentToggle: boolean) => handleActive(currentToggle)} readable={readable} initial={initial_values.active} />
 
       <SectionSeparator />
 
@@ -96,19 +111,19 @@ const OnJoin: React.FC = () => {
 
       <SectionSeparator />
 
-      <SectionEnableText callback={(currentToggle: boolean) => handleEnableText(currentToggle)} readable={readable} />
+      <SectionEnableText callback={(currentToggle: boolean) => handleEnableText(currentToggle)} readable={readable} initial={initial_values.enable_text} />
 
       <SectionSeparator />
 
-      <SectionTextContent callback={(currentValue: string) => handleTextContent(currentValue)} readable={readable} />
+      <SectionTextContent callback={(currentValue: string) => handleTextContent(currentValue)} readable={readable} initial={initial_values.text_content} />
 
       <SectionSeparator />
 
-      <SectionUseCustomImage callback={(currentToggle: boolean) => handleUseCustomImage(currentToggle)} readable={readable} />
+      <SectionUseCustomImage callback={(currentToggle: boolean) => handleUseCustomImage(currentToggle)} readable={readable} initial={initial_values.use_custom_image} />
 
       <SectionSeparator />
 
-      <SectionCustomImageData callback={(currentValue: string) => handleCustomImageData(currentValue)} readable={readable} />
+      <SectionCustomImageData callback={(currentValue: string) => handleCustomImageData(currentValue)} readable={readable} initial={initial_values.custom_image_data} />
 
       <SectionSeparator />
 

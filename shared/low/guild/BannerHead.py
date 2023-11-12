@@ -12,9 +12,9 @@ class BannerHead:
   """
 
   def __init__(self, *_, **kwargs):
-    self.active: bool = kwargs.get("active", False)
+    self.active: bool = kwargs.get("active", True)
     self.channel: snowflake = kwargs.get("channel", None)
     self.enable_text: bool = kwargs.get("enable_text", False)
-    self.text_content: str = kwargs.get("text_content", None)
+    self.text_content: str = kwargs.get("text_content", "kul")
     self.use_custom_image: bool = kwargs.get("use_custom_image", False)
     self.custom_image_data: str = kwargs.get("custom_image_data", None)

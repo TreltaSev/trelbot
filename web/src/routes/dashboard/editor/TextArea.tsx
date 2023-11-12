@@ -3,15 +3,17 @@ import Grab from "./Grab";
 import callback from "@root/lib/types/callback";
 import styling from "@assets/styling.module.css";
 import custom from "@assets/custom.module.css";
+import { alternate } from "./pages/automations/sections";
 /**
  * Props of the text area, the user input.
  * @param name The name of the text area
  * @param backing The component/image at the start of the text area
  */
-type props = callback & {
-  name?: string;
-  backing?: React.ReactNode;
-};
+type props = callback &
+  alternate & {
+    name?: string;
+    backing?: React.ReactNode;
+  };
 
 /**
  * The state of Text Area,
@@ -29,12 +31,20 @@ type state = {
  */
 class TextArea extends React.Component<props, state> implements Grab {
   private callback?: (...args: any[]) => any;
+  private initial?: string | null;
 
   constructor(props: props) {
     super(props);
     this.callback = props.callback;
+
+    if (props.initial === null) {
+      this.initial = "";
+    } else {
+      this.initial = props.initial;
+    }
+
     this.state = {
-      content: ``,
+      content: this.initial as string,
     };
   }
 

@@ -10,6 +10,7 @@ import { props as dropdown_type } from "@routes/dashboard/editor/Dropdown";
 
 type alternate = {
   readable?: string;
+  initial?: any;
 };
 
 export { SectionChannel, SectionCustomImageData, SectionEnableText, SectionTextContent, SectionUseCustomImage, SectionConceptSave, SectionSeparator, SectionEntrance, dropdown_type, alternate };
