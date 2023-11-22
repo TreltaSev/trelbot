@@ -8,3 +8,5 @@ class SwitchBoard extends React.Component {
     return true;
   }
 }
+
+export { SwitchBoard };
