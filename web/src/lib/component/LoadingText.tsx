@@ -46,27 +46,48 @@ class LoadingText extends React.Component<props, state> {
     };
   }
 
+  /**
+   * Sends out a signal through this class that can do certain things
+   * depending on `this.type`
+   */
   call() {
-    if (this.type == "run_on_call") {
-      this.show();
-    } else if (this.type == "loop_until_called") {
-      this.stop_signal = true;
-    } else if (this.type == "loop_when_called") {
-      if (this.initial_call) {
+    switch (this.type) {
+      case "run_on_call":
+        this.show();
+        break;
+
+      case "loop_until_called":
+        this.stop_signal = true;
+        break;
+
+      case "loop_when_called":
+        if (!this.initial_call) {
+          return;
+        }
         this.initial_call = false;
         this.start_loop();
-      }
+        break;
     }
   }
 
+  /**
+   * Start loops or run animation when needed
+   */
   componentDidMount(): void {
-    if (this.type == "run_on_render") {
-      this.show();
-    } else if (this.type == "loop_until_called") {
-      this.start_loop();
+    switch (this.type) {
+      case "run_on_render":
+        this.show();
+        break;
+
+      case "loop_until_called":
+        this.start_loop();
+        break;
     }
   }
 
+  /**
+   * Starts the animation loop sequence, shouldn't be called outside of this class.
+   */
   start_loop() {
     let iter = 0;
     const interval = setInterval(() => {
@@ -80,6 +101,9 @@ class LoadingText extends React.Component<props, state> {
     this.loop_cycle();
   }
 
+  /**
+   * Modularized code which is placed within `start_loop()`
+   */
   loop_cycle() {
     this.show();
     setTimeout(() => {
