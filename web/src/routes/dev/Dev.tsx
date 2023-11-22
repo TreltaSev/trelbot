@@ -25,7 +25,6 @@ const Dev: React.FC = () => {
           <LoadingText duration={500.0} ref={loading_tsx_ref} achieve_text='Loading TSX Components' type='run_on_call' show_callback={() => dots_ref.current?.call()} />
           <LoadingText duration={500.0} ref={dots_ref} achieve_text='...' type='loop_when_called' />
         </FlexRow>
-        <l-dot-pulse size={50} speed={1.3} color='white' />
       </FlexColumn>
     </NavigationLayout>
   );
