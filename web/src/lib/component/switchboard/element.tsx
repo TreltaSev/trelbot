@@ -9,4 +9,4 @@ class SwitchBoard extends React.Component {
   }
 }
 
-export { SwitchBoard };
+export default SwitchBoard;
