@@ -9,19 +9,21 @@ import LoadingText from "@root/lib/component/LoadingText";
 dotPulse.register();
 
 const Dev: React.FC = () => {
-  let gatheringRef = React.createRef<LoadingText>();
-  let otherref = React.createRef<LoadingText>();
+  let gathering_ref = React.createRef<LoadingText>();
+  let loading_tsx_ref = React.createRef<LoadingText>();
+  let dots_ref = React.createRef<LoadingText>();
 
   setTimeout(() => {
-    gatheringRef.current?.hide();
+    gathering_ref.current?.hide();
   }, 3000);
 
   return (
     <NavigationLayout>
       <FlexColumn style={{ gap: 20 }} className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`}>
         <FlexRow>
-          <LoadingText duration={500.0} ref={gatheringRef} achieve_text='Gathering Permissions' type='run_on_render' hide_callback={() => otherref.current?.call()} />
-          <LoadingText duration={500.0} ref={otherref} achieve_text='Loading TSX Components' type='run_on_call' />
+          <LoadingText duration={500.0} ref={gathering_ref} achieve_text='Gathering Permissions' type='run_on_render' hide_callback={() => loading_tsx_ref.current?.call()} />
+          <LoadingText duration={500.0} ref={loading_tsx_ref} achieve_text='Loading TSX Components' type='run_on_call' show_callback={() => dots_ref.current?.call()} />
+          <LoadingText duration={500.0} ref={dots_ref} achieve_text='...' type='loop_when_called' />
         </FlexRow>
         <l-dot-pulse size={50} speed={1.3} color='white' />
       </FlexColumn>
