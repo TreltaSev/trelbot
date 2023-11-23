@@ -19,7 +19,8 @@ type StyleObject = {
  * this.get_decor(identifier: string)
  * ```
  */
-class Stylist extends React.Component {
+class Stylist<P = {}, S = {}> extends React.Component<P, S> {
+  public base_options: KeyframeAnimationOptions = { duration: 300, fill: "forwards", easing: "cubic-bezier(.11, .07, .04, .98)" };
   public decor: StyleObject = {};
 
   /**
@@ -27,7 +28,7 @@ class Stylist extends React.Component {
    * @param identifier The identifier of the style
    * @returns Html Properties
    */
-  get_decor(identifier: string): any {
+  protected get_decor(identifier: string): any {
     const decoration = this.decor[identifier];
     decoration.className = defaultValue(decoration.className, "", undefined);
     decoration.style = defaultValue(decoration.style, {}, undefined);
@@ -40,7 +41,7 @@ class Stylist extends React.Component {
    * @param style The css value of the style which will be used as an object
    * @param className Stored ClassName
    */
-  set_decor(identifier: string, style?: CSSProperties, className?: string) {
+  protected set_decor(identifier: string, style?: CSSProperties, className?: string) {
     style = defaultValue(style, {}, undefined);
     className = defaultValue(className, "", undefined);
     this.decor[identifier] = { style: style, className: className };
@@ -50,7 +51,7 @@ class Stylist extends React.Component {
    * Deletes the identifier from the stored decors.
    * @param identifier The identifier of the decor
    */
-  delete_decor(identifier: string) {
+  protected delete_decor(identifier: string) {
     delete this.decor[identifier];
   }
 }

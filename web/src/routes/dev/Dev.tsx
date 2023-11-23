@@ -5,7 +5,7 @@ import FlexColumn from "@root/lib/component/FlexColumn";
 import styling from "@assets/styling.module.css";
 import FlexRow from "@root/lib/component/FlexRow";
 import LoadingText from "@root/lib/component/LoadingText";
-import SwitchBoard from "@root/lib/component/switchboard/switchboard";
+import Switchboard from "@root/lib/component/switchboard/switchboard";
 import Stylist from "@root/lib/component/stylist/stylist";
 
 dotPulse.register();
@@ -31,7 +31,7 @@ class Dev extends Stylist {
             <LoadingText duration={500.0} ref={this.loading_tsx_ref} achieve_text='Loading TSX Components' type='run_on_call' show_callback={() => this.dots_ref.current?.call()} />
             <LoadingText duration={500.0} ref={this.dots_ref} achieve_text='...' type='loop_when_called' />
           </FlexRow>
-          <SwitchBoard />
+          <Switchboard />
         </FlexColumn>
       </NavigationLayout>
     );
