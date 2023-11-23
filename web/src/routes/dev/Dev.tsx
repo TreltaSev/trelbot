@@ -6,30 +6,36 @@ import styling from "@assets/styling.module.css";
 import FlexRow from "@root/lib/component/FlexRow";
 import LoadingText from "@root/lib/component/LoadingText";
 import SwitchBoard from "@root/lib/component/switchboard/switchboard";
+import Stylist from "@root/lib/component/stylist/stylist";
 
 dotPulse.register();
 
-const Dev: React.FC = () => {
-  let gathering_ref = React.createRef<LoadingText>();
-  let loading_tsx_ref = React.createRef<LoadingText>();
-  let dots_ref = React.createRef<LoadingText>();
+class Dev extends Stylist {
+  private gathering_ref = React.createRef<LoadingText>();
+  private loading_tsx_ref = React.createRef<LoadingText>();
+  private dots_ref = React.createRef<LoadingText>();
 
-  setTimeout(() => {
-    gathering_ref.current?.hide();
-  }, 3000);
+  componentDidMount(): void {
+    setTimeout(() => {
+      this.gathering_ref.current?.hide();
+    }, 3000);
+  }
 
-  return (
-    <NavigationLayout>
-      <FlexColumn style={{ gap: 20 }} className={`${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`}>
-        <FlexRow>
-          <LoadingText duration={500.0} ref={gathering_ref} achieve_text='Gathering Permissions' type='run_on_render' hide_callback={() => loading_tsx_ref.current?.call()} />
-          <LoadingText duration={500.0} ref={loading_tsx_ref} achieve_text='Loading TSX Components' type='run_on_call' show_callback={() => dots_ref.current?.call()} />
-          <LoadingText duration={500.0} ref={dots_ref} achieve_text='...' type='loop_when_called' />
+  render() {
+    this.set_decor("content_container", { gap: 20, position: "relative" }, `${styling.fill_all} ${styling.align_items_center} ${styling.justify_content_center}`);
+    return (
+      <NavigationLayout>
+        <FlexColumn {...this.get_decor("content_container")}>
+          <FlexRow>
+            <LoadingText duration={500.0} ref={this.gathering_ref} achieve_text='Gathering Permissions' type='run_on_render' hide_callback={() => this.loading_tsx_ref.current?.call()} />
+            <LoadingText duration={500.0} ref={this.loading_tsx_ref} achieve_text='Loading TSX Components' type='run_on_call' show_callback={() => this.dots_ref.current?.call()} />
+            <LoadingText duration={500.0} ref={this.dots_ref} achieve_text='...' type='loop_when_called' />
+          </FlexRow>
           <SwitchBoard />
-        </FlexRow>
-      </FlexColumn>
-    </NavigationLayout>
-  );
-};
+        </FlexColumn>
+      </NavigationLayout>
+    );
+  }
+}
 
 export default Dev;
