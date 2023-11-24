@@ -19,11 +19,11 @@ class SwitchboardButton extends Stylist<props> {
   }
 
   push_down() {
-    this.button_ref.current?.animate({ transform: "translateY(2px)" }, this.base_options);
+    this.button_ref.current?.animate({ transform: "translateY(2px)", boxShadow: "inset 0 -3px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
   push_up() {
-    this.button_ref.current?.animate({ transform: "translateY(0)" }, this.base_options);
+    this.button_ref.current?.animate({ transform: "translateY(0)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
   /**
