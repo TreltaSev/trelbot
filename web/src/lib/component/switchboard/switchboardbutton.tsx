@@ -11,6 +11,7 @@ type props = {
 class SwitchboardButton extends Stylist<props> {
   private icon: React.ReactNode;
   private button_ref = React.createRef<HTMLDivElement>();
+  private toggled: boolean = false;
 
   constructor(props: props) {
     super(props);
@@ -26,6 +27,10 @@ class SwitchboardButton extends Stylist<props> {
     this.button_ref.current?.animate({ transform: "translateY(0)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
+  modify_backgroundOpacity(reference: React.RefObject<HTMLDivElement>, value: string | number) {
+    reference.current?.animate({ backgroundColor: `rgba(255, 255, 255, ${value})` }, this.base_options);
+  }
+
   /**
    * Handles basic mouse triggered events for the button within this component to allow for
    * better looking and better structured tsx within the interfaced render method. extends
@@ -38,12 +43,19 @@ class SwitchboardButton extends Stylist<props> {
   handleMouse(event: MouseEvent) {
     switch (event.type) {
       case "mouseenter":
-        dim_element(this.button_ref, "0.5");
+        if (!this.toggled) {
+          this.modify_backgroundOpacity(this.button_ref, "0.50");
+        }
+
         break;
 
       case "mouseleave":
-        dim_element(this.button_ref, "0.25");
         this.push_up();
+
+        if (!this.toggled) {
+          this.modify_backgroundOpacity(this.button_ref, "0.25");
+        }
+
         break;
 
       case "mousedown":
@@ -52,6 +64,14 @@ class SwitchboardButton extends Stylist<props> {
 
       case "mouseup":
         this.push_up();
+
+        if (this.toggled) {
+          this.modify_backgroundOpacity(this.button_ref, "0.25");
+        } else {
+          this.modify_backgroundOpacity(this.button_ref, "1.00");
+        }
+
+        this.toggled = !this.toggled;
         break;
     }
   }
@@ -64,7 +84,7 @@ class SwitchboardButton extends Stylist<props> {
   }
 
   render(): React.ReactNode {
-    this.set_decor("button_container", { width: 40, height: 40, cursor: "pointer", borderRadius: 10, backgroundColor: "rgba(255,255,255,1)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.no_shrink}`);
+    this.set_decor("button_container", { width: 40, height: 40, cursor: "pointer", borderRadius: 10, backgroundColor: "rgba(255,255,255,0.25)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.no_shrink}`);
 
     return (
       <FlexColumn innerref={this.button_ref} {...this.get_decor("button_container")}>
