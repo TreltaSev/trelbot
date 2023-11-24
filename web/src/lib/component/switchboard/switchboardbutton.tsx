@@ -2,22 +2,24 @@ import React from "react";
 import styling from "@assets/styling.module.css";
 import Stylist from "@lib/component/stylist/stylist";
 import FlexColumn from "@lib/component/FlexColumn";
-import callifcallable from "@root/lib/method/callifcallable";
 
 type props = {
   icon?: React.ReactNode;
-  callback_to?: (toggled: boolean) => void;
+  identifier?: any;
+  callback_to?: (identifier: any, toggled: boolean) => void;
 };
 
 class SwitchboardButton extends Stylist<props> {
-  private icon: React.ReactNode;
   private button_reference = React.createRef<HTMLDivElement>();
   private toggled: boolean = false;
-  private callback_to?: (toggled: boolean) => void;
+  private icon: React.ReactNode;
+  private identifier?: string;
+  private callback_to?: (identifier: any, toggled: boolean) => void;
 
   constructor(props: props) {
     super(props);
     this.icon = props.icon;
+    this.identifier = props.identifier;
     this.callback_to = props.callback_to;
     this.handleMouse = this.handleMouse.bind(this);
   }
@@ -30,8 +32,13 @@ class SwitchboardButton extends Stylist<props> {
     this.button_reference.current?.animate({ transform: "translateY(0)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
-  modify_backgroundOpacity(reference: React.RefObject<HTMLDivElement>, value: string | number) {
-    reference.current?.animate({ backgroundColor: `rgba(255, 255, 255, ${value})` }, this.base_options);
+  modify_backgroundOpacity(value: string | number) {
+    this.button_reference.current?.animate({ backgroundColor: `rgba(255, 255, 255, ${value})` }, this.base_options);
+  }
+
+  toggle_off() {
+    this.toggled = false;
+    this.modify_backgroundOpacity("0.25");
   }
 
   /**
@@ -41,7 +48,7 @@ class SwitchboardButton extends Stylist<props> {
    */
   toggle_callback() {
     if (this.callback_to) {
-      this.callback_to(this.toggled);
+      this.callback_to(this.identifier, this.toggled);
     }
   }
 
@@ -58,7 +65,7 @@ class SwitchboardButton extends Stylist<props> {
     switch (event.type) {
       case "mouseenter":
         if (!this.toggled) {
-          this.modify_backgroundOpacity(this.button_reference, "0.50");
+          this.modify_backgroundOpacity("0.50");
         }
 
         break;
@@ -67,7 +74,7 @@ class SwitchboardButton extends Stylist<props> {
         this.push_up();
 
         if (!this.toggled) {
-          this.modify_backgroundOpacity(this.button_reference, "0.25");
+          this.modify_backgroundOpacity("0.25");
         }
 
         break;
@@ -80,9 +87,9 @@ class SwitchboardButton extends Stylist<props> {
         this.push_up();
 
         if (this.toggled) {
-          this.modify_backgroundOpacity(this.button_reference, "0.25");
+          this.modify_backgroundOpacity("0.25");
         } else {
-          this.modify_backgroundOpacity(this.button_reference, "1.00");
+          this.modify_backgroundOpacity("1.00");
         }
 
         this.toggled = !this.toggled;
