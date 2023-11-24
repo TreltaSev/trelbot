@@ -87,13 +87,11 @@ class SwitchboardButton extends Stylist<props> {
         this.push_up();
 
         if (this.toggled) {
-          this.modify_backgroundOpacity("0.25");
-        } else {
-          this.modify_backgroundOpacity("1.00");
+          return;
         }
 
         this.toggled = !this.toggled;
-
+        this.modify_backgroundOpacity("1.00");
         this.toggle_callback();
         break;
     }
