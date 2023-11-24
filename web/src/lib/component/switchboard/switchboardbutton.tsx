@@ -2,33 +2,47 @@ import React from "react";
 import styling from "@assets/styling.module.css";
 import Stylist from "@lib/component/stylist/stylist";
 import FlexColumn from "@lib/component/FlexColumn";
-import dim_element from "@root/lib/method/dim@element";
+import callifcallable from "@root/lib/method/callifcallable";
 
 type props = {
   icon?: React.ReactNode;
+  callback_to?: (toggled: boolean) => void;
 };
 
 class SwitchboardButton extends Stylist<props> {
   private icon: React.ReactNode;
-  private button_ref = React.createRef<HTMLDivElement>();
+  private button_reference = React.createRef<HTMLDivElement>();
   private toggled: boolean = false;
+  private callback_to?: (toggled: boolean) => void;
 
   constructor(props: props) {
     super(props);
     this.icon = props.icon;
+    this.callback_to = props.callback_to;
     this.handleMouse = this.handleMouse.bind(this);
   }
 
   push_down() {
-    this.button_ref.current?.animate({ transform: "translateY(2px)", boxShadow: "inset 0 -3px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
+    this.button_reference.current?.animate({ transform: "translateY(2px)", boxShadow: "inset 0 -3px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
   push_up() {
-    this.button_ref.current?.animate({ transform: "translateY(0)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
+    this.button_reference.current?.animate({ transform: "translateY(0)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, this.base_options);
   }
 
   modify_backgroundOpacity(reference: React.RefObject<HTMLDivElement>, value: string | number) {
     reference.current?.animate({ backgroundColor: `rgba(255, 255, 255, ${value})` }, this.base_options);
+  }
+
+  /**
+   * If the user passes a `callback_to` method within the props of this component, this method is applicable.
+   * whenever this component is clicked, this class will call the `callback_to` method inputted, and proceed to apply
+   * its own arguments through this method like the current state of the button after the click. this state will be a `boolean`.
+   */
+  toggle_callback() {
+    if (this.callback_to) {
+      this.callback_to(this.toggled);
+    }
   }
 
   /**
@@ -44,7 +58,7 @@ class SwitchboardButton extends Stylist<props> {
     switch (event.type) {
       case "mouseenter":
         if (!this.toggled) {
-          this.modify_backgroundOpacity(this.button_ref, "0.50");
+          this.modify_backgroundOpacity(this.button_reference, "0.50");
         }
 
         break;
@@ -53,7 +67,7 @@ class SwitchboardButton extends Stylist<props> {
         this.push_up();
 
         if (!this.toggled) {
-          this.modify_backgroundOpacity(this.button_ref, "0.25");
+          this.modify_backgroundOpacity(this.button_reference, "0.25");
         }
 
         break;
@@ -66,28 +80,33 @@ class SwitchboardButton extends Stylist<props> {
         this.push_up();
 
         if (this.toggled) {
-          this.modify_backgroundOpacity(this.button_ref, "0.25");
+          this.modify_backgroundOpacity(this.button_reference, "0.25");
         } else {
-          this.modify_backgroundOpacity(this.button_ref, "1.00");
+          this.modify_backgroundOpacity(this.button_reference, "1.00");
         }
 
         this.toggled = !this.toggled;
+
+        this.toggle_callback();
         break;
     }
   }
 
+  /**
+   * Attach event listeners to the main flex column within this component to simulate and use animations.
+   */
   componentDidMount(): void {
-    this.button_ref.current?.addEventListener("mouseenter", this.handleMouse);
-    this.button_ref.current?.addEventListener("mouseleave", this.handleMouse);
-    this.button_ref.current?.addEventListener("mousedown", this.handleMouse);
-    this.button_ref.current?.addEventListener("mouseup", this.handleMouse);
+    this.button_reference.current?.addEventListener("mouseenter", this.handleMouse);
+    this.button_reference.current?.addEventListener("mouseleave", this.handleMouse);
+    this.button_reference.current?.addEventListener("mousedown", this.handleMouse);
+    this.button_reference.current?.addEventListener("mouseup", this.handleMouse);
   }
 
   render(): React.ReactNode {
     this.set_decor("button_container", { width: 40, height: 40, cursor: "pointer", borderRadius: 10, backgroundColor: "rgba(255,255,255,0.25)", boxShadow: "inset 0 -5px 0 rgba(0, 0, 0, 0.1)" }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.no_shrink}`);
 
     return (
-      <FlexColumn innerref={this.button_ref} {...this.get_decor("button_container")}>
+      <FlexColumn innerref={this.button_reference} {...this.get_decor("button_container")}>
         {this.icon}
       </FlexColumn>
     );

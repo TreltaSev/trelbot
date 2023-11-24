@@ -20,6 +20,13 @@ class Switchboard extends Stylist {
         {/* Bar Parent */}
         <FlexRow {...this.get_decor("swb_parent")}>
           <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
+          <SwitchboardButton icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} />
         </FlexRow>
       </>
     );
