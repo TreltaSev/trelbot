@@ -38,7 +38,9 @@ class Switchboard extends Stylist<{}> {
     //      -> Toggle Off all other buttons
 
     this.buttons.forEach((button) => {
-      console.log(button);
+      if (button.identifier != identifier) {
+        button.assigned_ref.current?.toggle_off();
+      }
     });
 
     switch (identifier) {
