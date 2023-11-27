@@ -56,7 +56,7 @@ class Switchboard extends Stylist<{}> {
   }
 
   unpackButtons(): React.ReactNode {
-    return this.buttons.map((v, i, a) => <SwitchboardButton ref={v.assigned_ref} callback_to={this.handleButton} icon={v.icon} identifier='1' key={`${v.identifier};;lo`} />);
+    return this.buttons.map((v, i, a) => <SwitchboardButton ref={v.assigned_ref} callback_to={this.handleButton} icon={v.icon} identifier={v.identifier} key={`${v.identifier};;lo`} />);
   }
 
   componentDidMount(): void {}
@@ -69,7 +69,6 @@ class Switchboard extends Stylist<{}> {
       <>
         {/* Bar Parent */}
         <FlexRow {...this.get_decor("swb_parent")}>
-          
           {this.unpackButtons()}
           <SwitchboardButton ref={this.ref_1} callback_to={this.handleButton} icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} identifier='1' />
           <SwitchboardButton ref={this.ref_2} callback_to={this.handleButton} icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} identifier='2' />
