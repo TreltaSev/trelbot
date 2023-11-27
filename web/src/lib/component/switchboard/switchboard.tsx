@@ -33,6 +33,10 @@ class Switchboard extends Stylist<{}> {
   // TODO: Automate the shitty switch case statements
   handleButton(identifier: any, toggled: boolean) {
     console.log(`Identifier: ${identifier}; toggled: ${toggled}`);
+
+    // Loop Through this.buttons
+    //      -> Toggle Off all other buttons
+
     switch (identifier) {
       case "1":
         this.ref_2?.current?.toggle_off();
