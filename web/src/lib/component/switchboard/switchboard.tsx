@@ -32,33 +32,11 @@ class Switchboard extends Stylist<{}> {
   // TODO: Remove toggled param, not needed
   // TODO: Automate the shitty switch case statements
   handleButton(identifier: any, toggled: boolean) {
-    console.log(`Identifier: ${identifier}; toggled: ${toggled}`);
-
-    // Loop Through this.buttons
-    //      -> Toggle Off all other buttons
-
     this.buttons.forEach((button) => {
       if (button.identifier != identifier) {
         button.assigned_ref.current?.toggle_off();
       }
     });
-
-    switch (identifier) {
-      case "1":
-        this.ref_2?.current?.toggle_off();
-        this.ref_3?.current?.toggle_off();
-        break;
-
-      case "2":
-        this.ref_1?.current?.toggle_off();
-        this.ref_3?.current?.toggle_off();
-        break;
-
-      case "3":
-        this.ref_1?.current?.toggle_off();
-        this.ref_2?.current?.toggle_off();
-        break;
-    }
   }
 
   addButton(identifier: any, icon: React.ReactNode) {
