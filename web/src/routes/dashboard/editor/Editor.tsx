@@ -7,6 +7,7 @@ import NavigationLayout from "./NavigationTab";
 import "@root/routes/dashboard/editor/pages/automations";
 import { cModal } from "./loader";
 import Content from "./Content";
+import FlexColumn from "@root/lib/component/FlexColumn";
 
 const Editor: React.FC = () => {
   let { guildId } = useParams();
@@ -19,13 +20,13 @@ const Editor: React.FC = () => {
    */
   useEffect(() => {
     /* Fetch and Save Guild Data like settings */
-    mutgl.rc_guild(guildId as string).then((response) => {
+    mutgl.rc_guild(guildId as string, false, ["settings"]).then((response) => {
       mutgl.cGuild.cache("meta", response);
     });
   }, []);
 
   return (
-    <FlexRow className={`${styling.fill_all} ${styling.justify_content_start} ${styling.align_items_center}`}>
+    <FlexRow style={{ height: "calc(100% - 80px)" }} className={`${styling.fill_width} ${styling.justify_content_start} ${styling.align_items_center}`}>
       <NavigationLayout
         onUpdate={(modal) => {
           setContent(modal as any);

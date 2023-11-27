@@ -26,7 +26,7 @@ class Cogs:
     :param directory: The path of the parent directory containing the cog files 
     :param extension: The extension of the cog files, defaults to ".py"
     :param exclusions: Files to skip, defaults to ["__init__.py"]
-    :return: a list containing all cog paths using seperators as "."
+    :return: a list containing all cog paths using separators as "."
     :rtype: List[str]           
     """
 

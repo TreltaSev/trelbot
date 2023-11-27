@@ -30,22 +30,20 @@ class Configuration:
   you to format to and from a json serializable string, 
   dictionary, and this object.  
 
-  :param configuruation: A Optional Initial Paramter which can form the object automatically depending on what is inserted.
-  :type configuuration: Optional[Union[str, dict, None]] = None
+  :param configuration: A Optional Initial Parameter which can form the object automatically depending on what is inserted.
+  :type configuration: Optional[Union[str, dict, None]] = None
   :return: Nothing
   :rtype: None  
   """
 
   def __init__(self, configuration: Optional[Union[str, dict, None, int]] = None):
     self._base_level_configuration = configuration
-    self.automations: Automations = Automations()
+    self.automations: automations = automations()
 
   @classmethod
   def __unpack(cls, obj):
     """
-    Im ngl i forgot what this method did, I think its something to do
-    with holding values or smth idk I forgot to document.
-    OH OK I remeber, so it takes this class, "unpacks" all the values inside of it so it can be used in `cls.obj` or `cls.json`
+    takes this class, "unpacks" all the values inside of it so it can be used in `cls.obj` or `cls.json`
 
     :param obj: Its just some form of `self`
     :return: A dictionary containing all the values of this class that's human readable, make sure to sanitize this data because it may or may not hold very sensitive information :)
@@ -89,12 +87,11 @@ class Configuration:
     return json.dumps(self.__unpack(self))
 
 
-class Automations:
+class automations:
   """
-  Class which contains banner information such as `on_join`, `on_leave`, and `on_ban`.
+  Class which contains banner information such as `on_join`, `on_leave`.
   """
 
   def __init__(self) -> None:
     self.on_join: guild.BannerHead = guild.BannerHead()
     self.on_leave: guild.BannerHead = guild.BannerHead()
-    self.on_ban: guild.BannerHead = guild.BannerHead()

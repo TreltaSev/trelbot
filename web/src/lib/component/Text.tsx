@@ -19,13 +19,13 @@ const presets: type_presets = {
   "1.5em-bold": { fontSize: "1.5em", fontWeight: "700", fontFamily: "Lato", color: "white" },
 };
 
-const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset, innerref }) => {
+const Text: React.FC<type_Text> = ({ children, className, style, onClick, preset, innerref, onMouseDown, onMouseUp }) => {
   if (preset) {
     style = { ...style, ...presets[preset] };
   }
 
   return (
-    <span ref={innerref} style={style} onClick={onClick} className={className}>
+    <span ref={innerref} style={style} onClick={onClick} className={className} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       {children}
     </span>
   );

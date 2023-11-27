@@ -1,11 +1,5 @@
 import React from "react";
-import defaultValue from "@lib/method/defaultValue";
 import component from "@lib/types/component";
-
-type TypeArrow = {
-  width?: number;
-  height?: number;
-};
 
 const Arrow: React.FC<component> = ({ style }) => {
   return (

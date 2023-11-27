@@ -16,6 +16,10 @@ class register_pyucc:
   def _(*values, **optional):
     console.cprint(f"{colors.chex('#f1aa00', 'background')} QUART {symbols.reset} {colors.chex('#aaaaaa')}{optional.get('time')}{symbols.reset}", *values)
 
+  @console.register("error")
+  def _(*values, **optional):
+    console.cprint(f"{colors.chex('#E95950', 'background')} ERROR {symbols.reset} {colors.chex('#aaaaaa')}{optional.get('time')}{symbols.reset}", *values)
+
 
 class config:
   """|class|

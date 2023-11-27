@@ -9,7 +9,7 @@ import FlexColumn from "@lib/component/FlexColumn";
 import LoadingAnimated from "@lib/component/LoadingAnimated";
 import intervalHelper from "@root/lib/method/intervalHelper";
 
-const GuildContainer: React.FC = () => {
+const GuildContainer: React.FC<{ inactive?: boolean }> = ({ inactive }) => {
   // Force update used when refreshing metaguild
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
 
@@ -23,13 +23,14 @@ const GuildContainer: React.FC = () => {
    * sets the state of a value to save the current guild. this is used instead of context api
    */
   useEffect(() => {
-    const interval = setInterval(() => {
-      new intervalHelper(Object.keys(mutgl.cGuild.meta).length > 1, forceUpdate, interval);
-    }, 500);
+    if (!inactive) {
+      const interval = setInterval(() => {
+        new intervalHelper(Object.keys(mutgl.cGuild.meta).length > 1, forceUpdate, interval);
+      }, 500);
+    }
   }, []);
 
-  if (Object.keys(mutgl.cGuild.meta).length == 0) {
-    // Return a loading animation or smth
+  if (Object.keys(mutgl.cGuild.meta).length == 0 || inactive) {
     return (
       <FlexRow style={main_style} className={`${main_class} ${styling.justify_content_center}`}>
         <LoadingAnimated size={8} gap={4} heightoffset={6} amount={3} duration={0.5} />

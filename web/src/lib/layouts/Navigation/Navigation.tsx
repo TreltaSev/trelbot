@@ -58,7 +58,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
       {/**
        * Navigation Bar
        */}
-      <FlexRow style={{ height: 80, padding: "0 40px" }} className={`${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
+      <FlexRow style={{ height: 80, padding: "0 40px", flex: "0 0 auto" }} className={`${styling.border_box} ${styling.justify_content_center} ${styling.align_items_center} ${styling.fill_width} ${styling.dark}`}>
         {/**
          * Top left image, contains logo and trelbot text
          */}
@@ -102,7 +102,7 @@ const NavigationLayout: React.FC<component> = ({ children, className }) => {
           </FlexColumn>
         </FlexRow>
       </FlexRow>
-      <div className={`${styling.fill_height} ${className}`}>{children}</div>
+      {children}
     </FlexColumn>
   );
 };

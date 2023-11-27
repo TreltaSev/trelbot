@@ -3,6 +3,7 @@ import user from "@lib/types/user";
 import guild, { currentGuild } from "@lib/types/guild";
 import config from "@root/config";
 import { currentChannels } from "../types/channel";
+import { dashboardModify } from "../types/dashboardmodify";
 /**
  * Mutable Global Variables, holds user information
  * as well as guild data, settings data, etc.
@@ -12,17 +13,20 @@ class _mutgl {
   // Placeholder value
   public db = {};
 
-  // Used to hold mutiple guilds, really useful in `/dashboard`
+  // Used to hold multiple guilds, really useful in `/dashboard`
   public guilds: guild[] = [];
 
   // User information such as id, name, and avatar url.
   public user: user = {};
 
-  // Current Guild, Holds relevent information when guild is accessed. Must be saved first.
+  // Current Guild, Holds relevant information when guild is accessed. Must be saved first.
   public cGuild: currentGuild = new currentGuild();
 
   // Current channels, just stores channels.
   public cChannels: currentChannels = new currentChannels();
+
+  // User dashboard settings changes and previous data.
+  public DashboardChangeable: dashboardModify = new dashboardModify();
 
   /**
    * This method sends a request to the backend api, asking for the users information like
@@ -99,7 +103,7 @@ class _mutgl {
    * @param idGuild `Union[str, int]`The id of the guild
    * @param bCache `Literal[true, false]` Wether or not this value should be automatically cached into this.cGuild, defaults to false.
    */
-  public rc_guild = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {
+  public rc_guild = async (idGuild: string | number, bCache: boolean = false, extras: string[] = []): Promise<any> => {
     const _session = this.chSession();
 
     if (_session === undefined) {
@@ -108,7 +112,7 @@ class _mutgl {
 
     let _guild: any = undefined;
     try {
-      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string } });
+      const _fetchguild = await fetch(`${config.backendUrl}/guilds/${idGuild}`, { method: "get", headers: { Session: _session as string, operations: `meta,${extras.join(",")}` } });
       _guild = await _fetchguild.json();
     } catch (e) {
       console.error(`Failed in fetching ${e}`);
@@ -129,7 +133,7 @@ class _mutgl {
    * This method sends a get request to backend.com/guilds/guild_id/channels to get the channels of the guild id
    * the response of this request should be an object containing a list which contains all the channels
    * @param idGuild The id of the guild
-   * @param bCache if true, immediatly caches the data to this.channels
+   * @param bCache if true, immediately caches the data to this.channels
    * @returns a list of channel objects
    */
   public rc_channels = async (idGuild: string | number, bCache: boolean = false): Promise<any> => {

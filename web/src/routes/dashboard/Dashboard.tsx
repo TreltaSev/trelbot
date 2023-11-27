@@ -1,5 +1,7 @@
 import NavigationLayout from "@root/lib/layouts/Navigation";
 import React from "react";
+import styling from "@assets/styling.module.css";
+
 import { useParams } from "react-router-dom";
 import Selector from "./selector";
 import Editor from "./editor";
@@ -23,14 +25,14 @@ const Dashboard: React.FC = () => {
   switch (DashType) {
     case "selector":
       return (
-        <NavigationLayout className={``}>
+        <NavigationLayout>
           <Selector />
         </NavigationLayout>
       );
 
     case "editor":
       return (
-        <NavigationLayout className={``}>
+        <NavigationLayout>
           <Editor />
         </NavigationLayout>
       );

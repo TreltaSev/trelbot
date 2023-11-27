@@ -66,21 +66,6 @@ async def guilds():
   return quart.json.jsonify(_guilds)
 
 
-@blueprint.route("/api/guilds/<string:guild_id>")
-async def guild(guild_id: str):
-
-  try:
-    _https_connection = ApiConnection(quart.request)
-    _access_token = oauth2.Session.get(_https_connection.session)
-    _guild = oauth2.Oauth2.GetGuild(_access_token, guild_id)
-  except Exception as error:
-    if hasattr(error, "jsonstr"):
-      return error.jsonstr
-    return errors.BaseServerRouteException(f"Unregistered Error in /api/guilds/{guild_id}: {error}", code=1020).jsonstr
-
-  return quart.json.jsonify(_guild.__dict__)
-
-
 @blueprint.route("/api/guilds/<string:guild_id>/channels")
 async def guild_channels(guild_id: str):
 
@@ -94,32 +79,3 @@ async def guild_channels(guild_id: str):
     return errors.BaseServerRouteException(f"Unregistered Error in /api/guilds/{guild_id}/channels: {error}", code=1020).jsonstr
 
   return quart.json.jsonify(_channels)
-
-
-@blueprint.route("/api/guilds/<string:guild_id>/banner", methods=["GET", "PATCH", "PUT", "OPTIONS"])
-async def guild_banner(guild_id: str):
-  """
-  A path that responds with the guild's banner data
-  :param guild_id: The id of the guild in question
-  :return: A json object containing all relevant data
-  :rtype: 
-  """
-
-  match quart.request.method:
-    case "PATCH":
-      pass
-
-    case "GET":
-      pass
-
-  return "Test"
-  try:
-    pass
-    # _conn = ApiConnection(quart.request)
-    # _at = oauth2.Session.get(_conn.session)
-
-  except Exception as error:
-    if hasattr(error, "jsonstr"):
-      return error.jsonstr
-    return errors.BaseServerRouteException(f"Unregistered Error in /api/guilds/{guild_id}/banner: {error}", code=1020).jsonstr
-  return quart.json.jsonify({"h": 1})
