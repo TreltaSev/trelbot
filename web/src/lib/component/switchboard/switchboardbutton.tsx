@@ -6,7 +6,7 @@ import FlexColumn from "@lib/component/FlexColumn";
 type props = {
   icon?: React.ReactNode;
   identifier?: any;
-  callback_to?: (identifier: any, toggled: boolean) => void;
+  callback_to?: (identifier: any) => void;
 };
 
 class SwitchboardButton extends Stylist<props> {
@@ -14,7 +14,7 @@ class SwitchboardButton extends Stylist<props> {
   private toggled: boolean = false;
   private icon: React.ReactNode;
   private identifier?: string;
-  private callback_to?: (identifier: any, toggled: boolean) => void;
+  private callback_to?: (identifier: any) => void;
 
   constructor(props: props) {
     super(props);
@@ -48,7 +48,7 @@ class SwitchboardButton extends Stylist<props> {
    */
   toggle_callback() {
     if (this.callback_to) {
-      this.callback_to(this.identifier, this.toggled);
+      this.callback_to(this.identifier);
     }
   }
 

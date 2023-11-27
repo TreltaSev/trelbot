@@ -26,7 +26,7 @@ class Switchboard extends Stylist<{}> {
   }
 
   // TODO: Remove toggled param, not needed
-  handleButton(identifier: any, toggled: boolean) {
+  handleButton(identifier: any) {
     this.buttons.filter((button) => button.identifier !== identifier).forEach((button) => button.assigned_ref.current?.toggle_off());
   }
 
