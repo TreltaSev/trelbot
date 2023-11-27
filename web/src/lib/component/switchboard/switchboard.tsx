@@ -4,6 +4,7 @@ import FlexRow from "@lib/component/FlexRow";
 import Stylist from "@lib/component/stylist/stylist";
 import WavingHand from "@root/lib/svg/WavingHand";
 import SwitchboardButton from "./switchboardbutton";
+import QuestionMark from "@root/lib/svg/QuestionMark";
 
 type buttonPack = {
   identifier: string;
@@ -25,7 +26,6 @@ class Switchboard extends Stylist<{}> {
     this.handleButton = this.handleButton.bind(this);
   }
 
-  // TODO: Remove toggled param, not needed
   handleButton(identifier: any) {
     this.buttons.filter((button) => button.identifier !== identifier).forEach((button) => button.assigned_ref.current?.toggle_off());
   }
@@ -43,9 +43,9 @@ class Switchboard extends Stylist<{}> {
   render(): React.ReactNode {
     this.set_decor("swb_parent", { width: 800, height: 50, gap: 40, borderRadius: 10, position: "absolute", bottom: 50 }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`);
     this.addButton("1", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
-    this.addButton("2", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
-    this.addButton("3", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
-    this.addButton("4", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("2", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("3", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("4", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     console.warn(this.buttons);
     return (
       <>
