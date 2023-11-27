@@ -27,11 +27,7 @@ class Switchboard extends Stylist<{}> {
 
   // TODO: Remove toggled param, not needed
   handleButton(identifier: any, toggled: boolean) {
-    this.buttons.forEach((button) => {
-      if (button.identifier != identifier) {
-        button.assigned_ref.current?.toggle_off();
-      }
-    });
+    this.buttons.filter((button) => button.identifier !== identifier).forEach((button) => button.assigned_ref.current?.toggle_off());
   }
 
   addButton(identifier: any, icon: React.ReactNode) {
