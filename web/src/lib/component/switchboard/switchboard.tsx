@@ -20,10 +20,6 @@ class Switchboard extends Stylist<{}> {
 
   private buttons: buttonPack[] = [];
 
-  private ref_1 = React.createRef<SwitchboardButton>();
-  private ref_2 = React.createRef<SwitchboardButton>();
-  private ref_3 = React.createRef<SwitchboardButton>();
-
   constructor(props: {}) {
     super(props);
     this.handleButton = this.handleButton.bind(this);
