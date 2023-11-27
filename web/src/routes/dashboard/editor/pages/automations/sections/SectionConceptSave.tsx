@@ -5,11 +5,19 @@ import Text from "@lib/component/Text";
 import Url from "@root/lib/component/Url";
 import styling from "@assets/styling.module.css";
 import { alternate } from ".";
+import mutgl from "@root/lib/vars/mutgl";
 
 const SectionConceptSave: React.FC<alternate> = ({ readable }) => {
+  // Testing 11-26-23
+
+  const save = () => {
+    console.log(mutgl.DashboardChangeable.obtain());
+
+    // Some sort of sending method...
+  };
   return (
     <FlexColumn style={{ gap: 25 }}>
-      <FlexRow style={{ borderRadius: 5, cursor: "pointer", height: 50 }} className={`${styling.align_self_stretch} ${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`}>
+      <FlexRow onClick={() => save()} style={{ borderRadius: 5, cursor: "pointer", height: 50 }} className={`${styling.align_self_stretch} ${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`}>
         <Text preset='normal' style={{ fontSize: 24 }}>
           Save
         </Text>
