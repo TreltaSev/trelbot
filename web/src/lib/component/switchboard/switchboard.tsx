@@ -30,7 +30,6 @@ class Switchboard extends Stylist<{}> {
   }
 
   // TODO: Remove toggled param, not needed
-  // TODO: Automate the shitty switch case statements
   handleButton(identifier: any, toggled: boolean) {
     this.buttons.forEach((button) => {
       if (button.identifier != identifier) {
@@ -51,17 +50,15 @@ class Switchboard extends Stylist<{}> {
 
   render(): React.ReactNode {
     this.set_decor("swb_parent", { width: 800, height: 50, gap: 40, borderRadius: 10, position: "absolute", bottom: 50 }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`);
-    this.addButton("pog", <WavingHand color='#ff0000' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("1", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("2", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("3", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
+    this.addButton("4", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     console.warn(this.buttons);
     return (
       <>
         {/* Bar Parent */}
-        <FlexRow {...this.get_decor("swb_parent")}>
-          {this.unpackButtons()}
-          <SwitchboardButton ref={this.ref_1} callback_to={this.handleButton} icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} identifier='1' />
-          <SwitchboardButton ref={this.ref_2} callback_to={this.handleButton} icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} identifier='2' />
-          <SwitchboardButton ref={this.ref_3} callback_to={this.handleButton} icon={<WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />} identifier='3' />
-        </FlexRow>
+        <FlexRow {...this.get_decor("swb_parent")}>{this.unpackButtons()}</FlexRow>
       </>
     );
   }
