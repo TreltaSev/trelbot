@@ -20,6 +20,7 @@ class Switchboard extends Stylist<{}> {
   private is_visible: boolean = false;
 
   private buttons: buttonPack[] = [];
+  private switchboard_reference = React.createRef<HTMLDivElement>();
 
   constructor(props: {}) {
     super(props);
@@ -38,6 +39,18 @@ class Switchboard extends Stylist<{}> {
     return this.buttons.map((v, i, a) => <SwitchboardButton ref={v.assigned_ref} callback_to={this.handleButton} icon={v.icon} identifier={v.identifier} key={`${v.identifier};;lo`} />);
   }
 
+  show() {
+    this.switchboard_reference.current!.style.display = "flex";
+    this.switchboard_reference.current!.animate({ transform: "translateY(-50px)", opacity: "1" }, this.base_options);
+  }
+
+  hide() {
+    this.switchboard_reference.current!.animate({ transform: "translateY(0)", opacity: "0" }, this.base_options);
+    setTimeout(() => {
+      this.switchboard_reference.current!.style.display = "none";
+    }, 300);
+  }
+
   componentDidMount(): void {}
 
   render(): React.ReactNode {
@@ -50,7 +63,9 @@ class Switchboard extends Stylist<{}> {
     return (
       <>
         {/* Bar Parent */}
-        <FlexRow {...this.get_decor("swb_parent")}>{this.unpackButtons()}</FlexRow>
+        <FlexRow innerref={this.switchboard_reference} {...this.get_decor("swb_parent")}>
+          {this.unpackButtons()}
+        </FlexRow>
       </>
     );
   }
