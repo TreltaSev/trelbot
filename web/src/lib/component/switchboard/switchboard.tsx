@@ -1,11 +1,11 @@
-import React, { createRef } from "react";
 import styling from "@assets/styling.module.css";
 import FlexRow from "@lib/component/FlexRow";
 import Stylist from "@lib/component/stylist/stylist";
-import WavingHand from "@root/lib/svg/WavingHand";
-import SwitchboardButton from "./switchboardbutton";
 import QuestionMark from "@root/lib/svg/QuestionMark";
+import WavingHand from "@root/lib/svg/WavingHand";
+import React from "react";
 import FlexColumn from "../FlexColumn";
+import SwitchboardButton from "./switchboardbutton";
 
 type buttonPack = {
   identifier: string;
@@ -18,7 +18,6 @@ type buttonPack = {
  * @extends Stylist
  */
 class Switchboard extends Stylist<{}> {
-  private is_visible: boolean = false;
 
   private buttons: buttonPack[] = [];
   private switchboard_reference = React.createRef<HTMLDivElement>();
