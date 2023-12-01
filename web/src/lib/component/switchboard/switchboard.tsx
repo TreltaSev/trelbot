@@ -36,7 +36,7 @@ class Switchboard extends Stylist<{}> {
   }
 
   unpackButtons(): React.ReactNode {
-    return this.buttons.map((v, i, a) => <SwitchboardButton ref={v.assigned_ref} callback_to={this.handleButton} icon={v.icon} identifier={v.identifier} key={`${v.identifier};;lo`} />);
+    return this.buttons.map((v) => <SwitchboardButton ref={v.assigned_ref} callback_to={this.handleButton} icon={v.icon} identifier={v.identifier} key={`${v.identifier};;lo`} />);
   }
 
   show() {
@@ -59,7 +59,6 @@ class Switchboard extends Stylist<{}> {
     this.addButton("2", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     this.addButton("3", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     this.addButton("4", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
-    console.warn(this.buttons);
     return (
       <>
         {/* Bar Parent */}
