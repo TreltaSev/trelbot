@@ -5,6 +5,7 @@ import Stylist from "@lib/component/stylist/stylist";
 import WavingHand from "@root/lib/svg/WavingHand";
 import SwitchboardButton from "./switchboardbutton";
 import QuestionMark from "@root/lib/svg/QuestionMark";
+import FlexColumn from "../FlexColumn";
 
 type buttonPack = {
   identifier: string;
@@ -41,18 +42,18 @@ class Switchboard extends Stylist<{}> {
 
   show() {
     this.switchboard_reference.current!.style.display = "flex";
-    this.switchboard_reference.current!.animate({ transform: "translateY(-50px)", opacity: "1" }, this.base_options);
+    this.switchboard_reference.current!.animate({ transform: "translateY(0)", opacity: "1" }, this.base_options);
   }
 
   hide(instant: boolean = false) {
     if (instant) {
       this.switchboard_reference.current!.style.display = "none";
       this.switchboard_reference.current!.style.opacity = "0";
-      this.switchboard_reference.current!.style.transform = "translateY(0)";
+      this.switchboard_reference.current!.style.transform = "translateY(50px)";
       return;
     }
 
-    this.switchboard_reference.current!.animate({ transform: "translateY(0)", opacity: "0" }, this.base_options);
+    this.switchboard_reference.current!.animate({ transform: "translateY(50px)", opacity: "0" }, this.base_options);
 
     setTimeout(() => {
       this.switchboard_reference.current!.style.display = "none";
@@ -62,18 +63,19 @@ class Switchboard extends Stylist<{}> {
   componentDidMount(): void {}
 
   render(): React.ReactNode {
-    this.set_decor("swb_parent", { width: 800, height: 50, gap: 40, borderRadius: 10, position: "absolute", bottom: 50 }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`);
+    this.set_decor("swb_parent", { width: 800, height: 50, gap: 40, borderRadius: 10 }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`);
+    this.set_decor("oth_parent", { width: 800, height: 50, position: "absolute", bottom: 50 });
     this.addButton("1", <WavingHand color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     this.addButton("2", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     this.addButton("3", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     this.addButton("4", <QuestionMark color='#8C52FF' style={{ width: 24, height: 24, flex: "0 0 auto" }} />);
     return (
-      <>
+      <FlexColumn {...this.get_decor("oth_parent")}>
         {/* Bar Parent */}
         <FlexRow innerref={this.switchboard_reference} {...this.get_decor("swb_parent")}>
           {this.unpackButtons()}
         </FlexRow>
-      </>
+      </FlexColumn>
     );
   }
 }
