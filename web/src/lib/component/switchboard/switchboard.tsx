@@ -44,8 +44,16 @@ class Switchboard extends Stylist<{}> {
     this.switchboard_reference.current!.animate({ transform: "translateY(-50px)", opacity: "1" }, this.base_options);
   }
 
-  hide() {
+  hide(instant: boolean = false) {
+    if (instant) {
+      this.switchboard_reference.current!.style.display = "none";
+      this.switchboard_reference.current!.style.opacity = "0";
+      this.switchboard_reference.current!.style.transform = "translateY(0)";
+      return;
+    }
+
     this.switchboard_reference.current!.animate({ transform: "translateY(0)", opacity: "0" }, this.base_options);
+
     setTimeout(() => {
       this.switchboard_reference.current!.style.display = "none";
     }, 300);
