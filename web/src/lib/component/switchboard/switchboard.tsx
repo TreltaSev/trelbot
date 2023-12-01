@@ -22,10 +22,12 @@ class Switchboard extends Stylist<{}> {
 
   private buttons: buttonPack[] = [];
   private switchboard_reference = React.createRef<HTMLDivElement>();
+  private window_reference = React.createRef<HTMLDivElement>();
 
   constructor(props: {}) {
     super(props);
     this.handleButton = this.handleButton.bind(this);
+    this.mutate_window = this.mutate_window.bind(this);
   }
 
   handleButton(identifier: any) {
@@ -41,26 +43,57 @@ class Switchboard extends Stylist<{}> {
   }
 
   show() {
+    // Switchboard
     this.switchboard_reference.current!.style.display = "flex";
     this.switchboard_reference.current!.animate({ transform: "translateY(0)", opacity: "1" }, this.base_options);
+
+    // Window
+    this.window_reference.current!.style.display = "flex";
+    this.window_reference.current!.animate({ transform: "translateY(0)", opacity: "1", height: `${this.get_new_height()}px` }, this.base_options);
   }
 
   hide(instant: boolean = false) {
     if (instant) {
+      // Switchboard
       this.switchboard_reference.current!.style.display = "none";
       this.switchboard_reference.current!.style.opacity = "0";
       this.switchboard_reference.current!.style.transform = "translateY(50px)";
+
+      // Window
+      this.window_reference.current!.style.display = "none";
+      this.window_reference.current!.style.opacity = "0";
+      this.window_reference.current!.style.height = "250px";
+      this.window_reference.current!.style.transform = "translateY(50px)";
       return;
     }
 
+    // Switchboard
     this.switchboard_reference.current!.animate({ transform: "translateY(50px)", opacity: "0" }, this.base_options);
+
+    // Window
+    this.window_reference.current!.animate({ opacity: "0", height: "250px" }, this.base_options);
 
     setTimeout(() => {
       this.switchboard_reference.current!.style.display = "none";
+      this.window_reference.current!.style.display = "none";
     }, 300);
   }
 
-  componentDidMount(): void {}
+  get_new_height(): number {
+    let new_height = window.innerHeight - 50 * 4 - 80;
+    if (new_height < 250) {
+      new_height = 250;
+    }
+    return new_height;
+  }
+
+  mutate_window() {
+    this.window_reference.current!.animate({ height: `${this.get_new_height()}px` }, this.base_options);
+  }
+
+  componentDidMount(): void {
+    window.addEventListener("resize", this.mutate_window);
+  }
 
   render(): React.ReactNode {
     this.set_decor("swb_parent", { width: 800, height: 50, gap: 40, borderRadius: 10 }, `${styling.justify_content_center} ${styling.align_items_center} ${styling.main}`);
@@ -72,6 +105,8 @@ class Switchboard extends Stylist<{}> {
     return (
       <FlexColumn {...this.get_decor("oth_parent")}>
         {/* Bar Parent */}
+
+        <FlexColumn innerref={this.window_reference} style={{ width: 800, height: this.get_new_height(), position: "absolute", bottom: 100, borderRadius: 10 }} className={`${styling.darksub}`}></FlexColumn>
         <FlexRow innerref={this.switchboard_reference} {...this.get_decor("swb_parent")}>
           {this.unpackButtons()}
         </FlexRow>

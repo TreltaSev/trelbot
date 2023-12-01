@@ -168,7 +168,6 @@ class LoadingText extends React.Component<props, state> {
         clearInterval(interval);
 
         if (this.type == "loop_when_called") {
-          console.log(":)");
           if (this.end_callback !== undefined) {
             this.end_callback(this.iteration);
           }
