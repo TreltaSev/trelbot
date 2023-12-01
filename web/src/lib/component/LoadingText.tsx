@@ -10,6 +10,7 @@ type props = {
   type?: run_types;
   show_callback?: (...args: any[]) => void;
   hide_callback?: (...args: any[]) => void;
+  end_callback?: (...args: any[]) => void;
 };
 
 type state = {
@@ -21,9 +22,11 @@ class LoadingText extends React.Component<props, state> {
   private duration: number = 1000.0;
   private show_callback?: (...args: any[]) => void;
   private hide_callback?: (...args: any[]) => void;
+  private end_callback?: (...args: any[]) => void;
   private type: run_types = "run_on_render";
   public stop_signal: boolean = false;
   private initial_call: boolean = true;
+  private iteration: number = 0;
 
   render() {
     return <Text preset='1em-normal'>{this.state.current_text}</Text>;
@@ -39,6 +42,7 @@ class LoadingText extends React.Component<props, state> {
     this.duration = this.props.duration || 1000.0;
     this.show_callback = this.props.show_callback;
     this.hide_callback = this.props.hide_callback;
+    this.end_callback = this.props.end_callback;
     this.type = this.props.type || "run_on_render";
 
     this.state = {
@@ -108,6 +112,7 @@ class LoadingText extends React.Component<props, state> {
     this.show();
     setTimeout(() => {
       this.hide();
+      this.iteration++;
     }, this.duration + 500);
   }
 
@@ -161,6 +166,12 @@ class LoadingText extends React.Component<props, state> {
       // Clear interval if needed
       if (iter <= 0) {
         clearInterval(interval);
+
+        if (this.type == "loop_when_called") {
+          if (this.end_callback !== undefined) {
+            this.end_callback(this.iteration);
+          }
+        }
 
         if (this.type == "run_on_call" || this.type == "run_on_render") {
           callifcallable(this.hide_callback);
