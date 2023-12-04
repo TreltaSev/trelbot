@@ -130,6 +130,29 @@ class _mutgl {
   };
 
   /**
+   * This method is meant to send a patch request to the backend of the server, sending thew newly updated settings.
+   *
+   */
+  public patch_settings = async (guild_id: string | number, in_data: any): Promise<any> => {
+    const session = this.chSession();
+
+    if (session === undefined) {
+      return;
+    }
+
+    let patch_response: any = undefined;
+
+    try {
+      const patch_settings = await fetch(`${config.backendUrl}/guilds/${guild_id}`, { method: "PATCH", headers: { Session: session as string, operations: "meta,settings", "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://www.trelbot.xyz" }, body: in_data });
+      patch_response = await patch_settings.json();
+    } catch (e) {
+      console.error(`failed in fetching ${e}`);
+    }
+
+    return patch_response;
+  };
+
+  /**
    * This method sends a get request to backend.com/guilds/guild_id/channels to get the channels of the guild id
    * the response of this request should be an object containing a list which contains all the channels
    * @param idGuild The id of the guild

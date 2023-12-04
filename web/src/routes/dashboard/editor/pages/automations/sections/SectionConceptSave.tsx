@@ -12,6 +12,10 @@ const SectionConceptSave: React.FC<alternate> = ({ readable }) => {
 
   const save = () => {
     console.log(mutgl.DashboardChangeable.obtain());
+    mutgl.patch_settings(1245, JSON.stringify(mutgl.DashboardChangeable.obtain())).then((response) => {
+      console.log("Fone?");
+      console.log(response);
+    });
 
     // Some sort of sending method...
   };
