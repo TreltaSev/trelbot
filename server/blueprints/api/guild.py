@@ -1,7 +1,7 @@
 import quart
-from blueprints import api_connect, get_access, handle_error
+from blueprints import get_access, handle_error
 from exts.constants import oauth2
-from pyucc import console
+from pyucc import colors, console, symbols
 from quart_cors import cors
 
 from shared import types
@@ -15,6 +15,14 @@ blueprint = quart.Blueprint("api:guild", __name__)
 cors(blueprint, allow_origin="https://trelbot.xyz", allow_credentials=True, allow_methods=["GET", "PATCH", "PUT", "OPTIONS", "POST"])
 
 
+class dict_form:
+
+  def __init__(self, in_object: dict):
+    self.in_object: dict = in_object
+
+    print(in_object.keys())
+
+  
 @blueprint.route("/api/guilds/<string:guild_id>", methods=["GET", "PATCH"])
 @handle_error
 @get_access
@@ -45,5 +53,13 @@ async def API_GUILD(guild_id, **kwargs):
         guild.get_settings()
 
       return quart.json.jsonify(guild.__dict__)
+
+    case "PATCH":
+      console.quart(f"{colors.chex('#8C52FF')}/api/guilds/{guild_id}{symbols.reset} ::: {operations}")
+
+      # Get Inputed Data
+      
+      # Parse the data
+      # Update server information
 
   return ":)"

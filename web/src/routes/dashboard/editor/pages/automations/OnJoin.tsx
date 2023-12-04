@@ -8,6 +8,7 @@ import channel from "@lib/types/channel";
 import shard from "@lib/types/shard";
 import Dropdown from "@root/routes/dashboard/editor/Dropdown";
 import DropdownItem from "@root/routes/dashboard/editor/DropdownItem";
+import database_helper from "@root/lib/method/database_helper";
 
 import styling from "@assets/styling.module.css";
 import { SectionChannel, SectionConceptSave, SectionCustomImageData, SectionEnableText, SectionEntrance, SectionSeparator, SectionTextContent, SectionUseCustomImage } from "./sections";
@@ -45,7 +46,8 @@ const OnJoin: React.FC = () => {
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
   const readable: string = "On Join";
   const parent: string = "automations";
-  const script_use: string = `${parent}:onjoin`;
+  const script_use: string = `${parent}:on_join`;
+  const sequence_use: string = script_use.replace(":", ".");
   const channels_dropdown = React.useRef<Dropdown>(null);
 
   /**
@@ -54,6 +56,7 @@ const OnJoin: React.FC = () => {
    * if its been set it refreshes this entire component,
    */
   useEffect(() => {
+    console.log(mutgl.cGuild.meta.settings);
     const interval = setInterval(() => {
       new intervalHelper(mutgl.cChannels.meta !== undefined, forceUpdate, interval);
     }, 500);
@@ -62,26 +65,32 @@ const OnJoin: React.FC = () => {
   // OYE since the set possible initial is first fired after the first event,
   // this means that the initial value isn't actual activated until after the user already makes a change, swapping the values. fix this.
   const handleActive = (currentToggle: boolean) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.active`, currentToggle);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:active`, currentToggle, false, true);
   };
 
   const handleChannel = (serverName: string | null, serverID: string | null) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.channel`, serverName);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:channel`, serverID === null ? null : { name: serverName, id: serverID }, false, true);
   };
 
   const handleEnableText = (currentToggle: boolean) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.enable_text`, currentToggle);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:enable_text`, currentToggle, false, true);
   };
 
   const handleTextContent = (currentValue: string) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.text_content`, currentValue);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:text_content`, currentValue === null ? null : currentValue, false, true);
   };
 
   const handleUseCustomImage = (currentToggle: boolean) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.use_custom_image`, currentToggle);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:use_custom_image`, currentToggle, false, true);
   };
 
   const handleCustomImageData = (currentValue: string | null) => {
+    database_helper.populate(mutgl.cGuild.meta.settings, `${sequence_use}.custom_image_data`, currentValue);
     mutgl.DashboardChangeable.setPossibleInitial(`${script_use}:custom_image_data`, currentValue === null ? null : currentValue, false, true);
   };
 
