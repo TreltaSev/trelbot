@@ -16,10 +16,20 @@ class on_ready(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-
         console.start(f"Syncing App Commands {colors.chex('#111111')}This might take a while...")
 
-        await self.client.tree.sync(guild=discord.Object(id=1336405782153003061))
-        await self.client.tree.sync(guild=discord.Object(id=1290387318133489836))
+        guilds = [1336405782153003061, 1290387318133489836]
+        
+        console.start("Global Sync")
+        await self.client.tree.sync()
+        console.done("Finished Global Sync")
+        
+        for guild in guilds:
+            console.start(f"Handling {guild}")
+            guild_object = discord.Object(id=guild)
+            self.client.tree.clear_commands(guild=guild_object)
+            console.done(f"Cleared commands for {guild}")
+            self.client.tree.copy_global_to(guild=guild_object)
+            console.done(f"Copied global commands to {guild}")
 
-        console.done("Synced :)")
+        console.done("Synced all commands to all guilds")

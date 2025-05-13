@@ -6,6 +6,7 @@ from typing import Any, List, Type
 from discord.ext import commands
 from utils.types.spec.Spec import Spec
 import discord
+from pyucc import console, colors
 
 
 class Client(commands.Bot):
@@ -53,7 +54,7 @@ class Client(commands.Bot):
             if not isinstance(cog, commands.Cog):
                 raise TypeError(f"Loaded Cog isn't of type Cog")
             
-            
+            console.info(f"Adding Cog {cog.__cog_name__}")
             await self.add_cog(cog)
             
         await self.start(os.environ.get("BOT_TOKEN"))
