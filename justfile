@@ -1,7 +1,7 @@
 # Starts up the discord bot
 [working-directory: './']
 @bot:
-    siblink run ./bot
+    docker compose run --build --rm bot
 
 # Compose the whole project or a specific set of services
 [working-directory: './']

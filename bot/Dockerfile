@@ -38,6 +38,6 @@ COPY ./bot .
 WORKDIR /trelbot/bot
 
 # Test command
-CMD ["siblink", "run", "."]
+ENTRYPOINT ["siblink", "run", "."]
 
 

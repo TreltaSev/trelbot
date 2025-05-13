@@ -5,6 +5,7 @@ Syncs all the app commands.
 cog: on_ready
 """
 
+import os
 import discord
 from discord.ext import commands
 from pyucc import console, colors
@@ -17,12 +18,17 @@ class on_ready(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         console.start(f"Syncing App Commands {colors.chex('#111111')}This might take a while...")
-
-        guilds = [1336405782153003061, 1290387318133489836]
         
+        mode = os.environ.get("MODE", "development")
+    
         console.start("Global Sync")
         await self.client.tree.sync()
         console.done("Finished Global Sync")
+        
+        if mode == "production":
+            return
+        
+        guilds = [int(os.environ.get("GUILD"))]
         
         for guild in guilds:
             console.start(f"Handling {guild}")
