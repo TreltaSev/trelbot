@@ -18,16 +18,6 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 
-@client.event
-async def on_ready():
-    print("Logged in as", client.user)
-
-
-@client.event
-async def on_message(message):
-    print("Brother...", message)
-
-
 @Config.load_predetermined
 def _load_env():
     """
@@ -50,7 +40,6 @@ if not os.environ.get("BOT_SECRET", None):
 if not os.environ.get("BOT_TOKEN", None):
     raise KeyError(f"Missing Bot Token from .env")
 
-# client.run(os.environ.get("BOT_TOKEN"))
 async def run():
     await Client().setup()
 
@@ -74,3 +63,5 @@ except Exception as error:
     # For now, print is fine but should use own logging system
     # TODO: Update Logging system
     print(_er)
+    
+    raise error

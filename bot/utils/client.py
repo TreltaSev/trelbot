@@ -2,9 +2,10 @@ import os
 import sys
 import discord
 from pathlib import Path
-from typing import List
+from typing import Any, List, Type
 from discord.ext import commands
 from utils.types.spec.Spec import Spec
+import discord
 
 
 class Client(commands.Bot):
@@ -19,14 +20,46 @@ class Client(commands.Bot):
 
     async def setup(self) -> None:
         """
-        ## Setup 
         Hook used during setup, initializes all cogs and plugins (events/commands)
+        
+        Raises
+        ------
+        TypeError
+            Failed to load Cog meta. Got {cog.body.cog}, which wasn't found.
+            Failed to parse cog {cog.body.spec.name}, No cog found.
+            For some reason, the loaded cog string isn't of type `commands.CogMeta`
+            Loaded Cog isn't of type Cog
         """
 
         # Only register hello as a test
-        spec = Spec("bot.cogs.hello")
         project_root = Path(os.path.abspath(sys.argv[0]))
-        await self.find_cogs((project_root.parent / "cogs").absolute().as_posix())
+        cogs: List[Spec] = await self.find_cogs((project_root.parent / "cogs").absolute().as_posix())
+        for cog in cogs:            
+            
+            # Check for cog in doc
+            if not hasattr(cog.body, 'cog'):
+                raise TypeError(f"Failed to parse cog \"{cog.body.spec.name}\", No cog found")
+
+            # Check if loaded properly
+            cog_meta: commands.CogMeta = getattr(cog.body.module, cog.body.cog, None)
+            if not cog_meta:
+                raise TypeError(f"Failed to load Cog meta. Got \"{cog.body.cog}\", which wasn't found.")
+
+            if not isinstance(cog_meta, commands.CogMeta):
+                raise TypeError(f"For some reason, the loaded cog string isn't of type `commands.CogMeta`")
+            
+            cog: commands.Cog | Any = cog_meta(self)
+            
+            if not isinstance(cog, commands.Cog):
+                raise TypeError(f"Loaded Cog isn't of type Cog")
+            
+            
+            await self.add_cog(cog)
+            
+        await self.start(os.environ.get("BOT_TOKEN"))
+        
+        
+
 
     async def find_cogs(self, roots: List[str] | str, exclusions: List[str] | str = "__init__.py") -> List[Spec]:
         """

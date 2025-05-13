@@ -1,6 +1,7 @@
 import importlib
 from importlib.machinery import ModuleSpec
 import importlib.util
+from types import ModuleType
 from typing import Union
 from utils.types import Struct
 
@@ -28,6 +29,8 @@ class SpecBody(Struct):
     def __init__(self, obj=None, *args, **kwargs) -> None:
         # Type Annotation
         self.doc: str
+        self.spec: ModuleSpec | None
+        self.module: ModuleType
         self.cog: str
 
         super().__init__(obj, **kwargs)
@@ -156,7 +159,7 @@ class Spec(Struct):
             if ':' not in line:
                 continue
             key, value = line.split(":", 1)
-            _result[key.strip()] = value.strip()
+            _result[key.strip().lower()] = value.strip()
 
         if self.body is None:
             raise RuntimeError("Cannot update, body has not been loaded.")
