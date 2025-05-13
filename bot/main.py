@@ -24,7 +24,8 @@ def _load_env():
     Ensures that everything from within the env file is loaded
     """
 
-    project_root: pathlib.Path = pathlib.Path(Config.root)
+    project_root: pathlib.Path = pathlib.Path(sys.argv[0]).parent.parent
+    
     Config.env = {
         **dotenv_values(project_root / ".env")
     }

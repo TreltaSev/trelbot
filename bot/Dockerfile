@@ -35,9 +35,9 @@ WORKDIR /trelbot/bot
 COPY ./bot .
 
 # Go back to /trelbot
-WORKDIR /trelbot
+WORKDIR /trelbot/bot
 
 # Test command
-CMD ["sleep", "infinity"]
+CMD ["siblink", "run", "."]
 
 
