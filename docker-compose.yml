@@ -1,0 +1,10 @@
+services:
+  bot:
+    container_name: bot
+    image: bot
+    build:
+      context: .
+      dockerfile: ./bot/Dockerfile
+    volumes:
+      - ./.env:/trelbot/.env
+
