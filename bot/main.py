@@ -1,10 +1,12 @@
-from os import path
 import os
 import pathlib
 import sys
 import discord
 from siblink import Config
 from dotenv import dotenv_values
+import asyncio
+
+from utils.client import Client
 
 # Prevent program from creating __pycache__ dirs
 sys.dont_write_bytecode = True
@@ -48,10 +50,12 @@ if not os.environ.get("BOT_SECRET", None):
 if not os.environ.get("BOT_TOKEN", None):
     raise KeyError(f"Missing Bot Token from .env")
 
-client.run(os.environ.get("BOT_TOKEN"))
+# client.run(os.environ.get("BOT_TOKEN"))
+async def run():
+    await Client().setup()
 
 try:
-    pass
+    asyncio.run(run())
 except Exception as error:
     _er: str = ""  # End Reason
 
