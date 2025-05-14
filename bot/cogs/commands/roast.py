@@ -27,13 +27,15 @@ class roast(commands.Cog):
             console.start("Roast command")
             await interaction.response.defer(thinking=True)
             
-            _input=f"User {interaction.user.display_name or interaction.user.name} is asking you to roast "   
+            source = interaction.user.display_name or interaction.user.name
+            
+            _input=f"User {source} is asking you to roast "   
 
             if user.id in [342797306980204561]:
-                _input += f"Your creator. Roast {interaction.user.display_name or interaction.user.name} instead"
+                _input += f"Your creator. Roast {source} instead. Make sure you point out the fact that {source} attempted to roast your creator Trelta."
 
             elif user.id in [1371990578912559136, 932999965498834954]:
-                _input += f"Yourself, roast {interaction.user.display_name or interaction.user.name} instead."     
+                _input += f"Yourself, roast {source} instead. Make sure you point out the fact that {source} wanted you to roast yourself."     
             
             else:
                 _input += f"{user.display_name or user.name}"
