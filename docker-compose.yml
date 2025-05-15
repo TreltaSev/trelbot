@@ -7,4 +7,5 @@ services:
       dockerfile: ./bot/Dockerfile
     volumes:
       - ./.env:/trelbot/.env
+      - ./bot/data:/trelbot/bot/data
 
