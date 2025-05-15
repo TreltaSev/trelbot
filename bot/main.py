@@ -27,6 +27,7 @@ def _load_env():
     project_root: pathlib.Path = pathlib.Path(sys.argv[0]).parent.parent
     
     Config.env = {
+        "_root": project_root.absolute().as_posix(),
         **dotenv_values(project_root / ".env")
     }
     os.environ.update(Config.env)
