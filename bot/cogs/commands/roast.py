@@ -5,26 +5,28 @@ Roast command, uses gpt to make a realistic roast.
 cog: roast
 """
 
-import os
-from typing import List
 import discord
 from discord.ext import commands
-from openai import OpenAI
 from pyucc import console
+from utils.client import Client
+from utils.checks.openai import openai_check
 
 
-openai_client = OpenAI(api_key=os.environ.get("OPENAI_TOKEN"))
 
 class roast(commands.Cog):
     
-    def __init__(self, client: commands.Bot) -> None:
+    def __init__(self, client: Client) -> None:
         self.client = client
         
+        
     @discord.app_commands.command()
+    @openai_check
     async def roast(self, interaction: discord.Interaction, user: discord.User):
+        
                 
         try:
             console.start("Roast command")
+            
             await interaction.response.defer(thinking=True)
             
             _input=f"User {interaction.user.display_name or interaction.user.name} is asking you to roast "   
@@ -50,7 +52,7 @@ class roast(commands.Cog):
                 For example: *italic* **bold**
             """
 
-            response = openai_client.responses.create(
+            response = self.client.openai.responses.create(
                 model="gpt-4.1-nano",
                 instructions=_instructions,
                 input=_input
