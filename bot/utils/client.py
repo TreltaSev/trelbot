@@ -144,7 +144,7 @@ class OpenAIWrapper(OpenAI):
     to make sure that a client is active. If an openai client isn't active or valid, 
     these commands should not run.
     """
-    def __init__(self, *, api_key = None, organization = None, project = None, base_url = None, websocket_base_url = None, timeout = ..., max_retries = ..., default_headers = None, default_query = None, http_client = None, _strict_response_validation = False):
+    def __init__(self, *, api_key = None, organization = None, project = None, base_url = None, websocket_base_url = None, timeout = None, max_retries = 5, default_headers = None, default_query = None, http_client = None, _strict_response_validation = False):
         # Type Annotation
         self.active: bool = False
         
