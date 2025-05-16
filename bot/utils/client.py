@@ -1,9 +1,12 @@
+from concurrent.futures.process import _RemoteTraceback
 import os
 import sys
 import discord
 from pathlib import Path
 from typing import Any, List, Type
 from discord.ext import commands
+from openai import OpenAI, OpenAIError
+import openai
 from utils.types.spec.Spec import Spec
 import discord
 from pyucc import console, colors
@@ -18,6 +21,8 @@ class Client(commands.Bot):
 
     def __init__(self):
         super().__init__(command_prefix="t:", intents=discord.Intents.all())
+        
+        self.openai = OpenAIWrapper()
 
     async def setup(self) -> None:
         """
@@ -129,3 +134,44 @@ class Client(commands.Bot):
 
         await self.login(token)
         await self.connect(reconnect=reconnect)
+
+
+class OpenAIWrapper(OpenAI):
+    
+    
+    """
+    OpenAI client wrapper that's used in conjunction with event and command checkers
+    to make sure that a client is active. If an openai client isn't active or valid, 
+    these commands should not run.
+    """
+    def __init__(self, *, api_key = None, organization = None, project = None, base_url = None, websocket_base_url = None, timeout = ..., max_retries = ..., default_headers = None, default_query = None, http_client = None, _strict_response_validation = False):
+        # Type Annotation
+        self.active: bool = False
+        
+        console.start("Loading OpenAPI Client")        
+        
+        api_key = api_key or os.environ.get("OPENAI_TOKEN", None)
+        
+        # Check if API key was given
+        try:
+            super().__init__(api_key=api_key, organization=organization, project=project, base_url=base_url, websocket_base_url=websocket_base_url, timeout=timeout, max_retries=max_retries, default_headers=default_headers, default_query=default_query, http_client=http_client, _strict_response_validation=_strict_response_validation)
+        except OpenAIError as _:
+            console.error('No API_KEY found for openai, flag still false.')
+            return
+        
+        # Check if API key is valid
+        try:
+            self.models.list()
+        except openai.AuthenticationError:
+            console.error('OpenAI key given is invalid')
+            return
+        
+        console.done('OpenAI connection success')
+        
+        # Raise Flag
+        self.active = True
+        
+        
+        
+        
+        
