@@ -1,6 +1,6 @@
 """
 ---
-cog: compliment
+cog: montypython
 """
 import random
 import discord
@@ -10,21 +10,21 @@ from utils.client import Client
 from utils.checks.openai import openai_check
 
 
-class compliment(commands.Cog):
+class montypython(commands.Cog):
 
     def __init__(self, client: Client) -> None:
         self.client = client
 
     @discord.app_commands.command()
     @openai_check
-    async def compliment(self, interaction: discord.Interaction, user: discord.User):
+    async def montypython(self, interaction: discord.Interaction):
 
         await interaction.response.defer(thinking=True)
 
         _choices = [
-            "Send a random Monty Python quote, e.g., 'Your mother was a hamster and your father smelt of elderberries!'",
-            "Send a Monty Python-style sketch/dialogue snippet",
-            "Give {@user} a silly insult or title",
+            "Send a random Monty Python quote to {@user}, e.g., 'Your mother was a hamster and your father smelt of elderberries!'",
+            "Send {@user} a Monty Python-style sketch/dialogue snippet",
+            "{@user} ran the command, give them a silly insult or title",
         ]
 
         _input = random.choice(_choices).replace(
