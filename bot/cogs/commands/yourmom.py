@@ -21,22 +21,28 @@ class yourmom(commands.Cog):
 
         await interaction.response.defer(thinking=True)
 
-        _input = f"User {interaction.user.display_name or interaction.user.name} is asking you to roast"
+        _input = f"User {interaction.user.display_name or interaction.user.name} is asking you to make a yo mama joke towards "
 
         if interaction.user.id in [342797306980204561] and user.id in [342797306980204561]:
-            _input = "Your creator is asking you to roast his own mother?"
+            _input = "Your creator is asking you to make a yo mama joke towards him?"
 
         elif interaction.user.id in [342797306980204561] and user.id in [1371990578912559136, 932999965498834954]:
-            _input = "Your creator is asking you to roast your own mother?"
+            _input = "Your creator is asking you to make a yo mama joke towards your mother?"
 
+        elif user.id in [342797306980204561]:
+            _input += f"Your creator's mother. Make one towards {interaction.user.display_name or interaction.user.name}'s mother instead"
+
+        elif user.id in [1371990578912559136, 932999965498834954]:
+            _input += f"Your own mother, Make one towards {interaction.user.display_name or interaction.user.name}'s mother instead."
+            
         else:
-            _input += f"{user.display_name or user.name}'s mother"
+            _input += f"{user.display_name or user.name}"
 
         console.info("Sending prompt", _input)
 
         _instructions = """
                 You are a discord bot named 'Trelbot'.
-                People will sometimes ask you to roast other people's moms with "Your Mama" jokes.
+                People will sometimes ask you to tell yo mama jokes toward other people.
                 You will be given the user who requests a roast and the target.
                 You may also be given custom instruction.
                 Your creator is a he/him with the real name Richard, user name Trelta, User id 342797306980204561
