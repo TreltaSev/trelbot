@@ -25,6 +25,16 @@ class montypython(commands.Cog):
             "Send a random Monty Python quote to {@user}, e.g., 'Your mother was a hamster and your father smelt of elderberries!'",
             "Send {@user} a Monty Python-style sketch/dialogue snippet",
             "{@user} ran the command, give them a silly insult or title",
+            "Declare {@user} a certified *Ministry of Silly Walks* inspector.",
+            "Give {@user} a job at the *Dead Parrot Sketch* complaint department.",
+            "Inform {@user} that their pet is now a *Norwegian Blue*, lovely plumage.",
+            "{@user} has been sentenced to *wafer-thin mint* consumption.",
+            "Assign {@user} to the Spanish Inquisition—because *no one expects* them.",
+            "Knight {@user} with the Holy Hand Grenade of Antioch.",
+            "Tell {@user} they're being followed by a 16-ton weight. Duck.",
+            "Designate {@user} the new King of Swamp Castle. It's just been rebuilt.",
+            "Remind {@user} that 'it's just a flesh wound!'",
+            "{@user} must now face the *Bridge of Death*. Three questions await."
         ]
 
         _input = random.choice(_choices).replace(
@@ -33,12 +43,20 @@ class montypython(commands.Cog):
         console.info("Sending prompt", _input)
 
         _instructions = """
-                You are a discord bot named 'Trelbot'.
-                People will sometimes ask you to give them something related to Monty Python 'Monty Python, also known as the Pythons, were a British comedy troupe formed in 1969 consisting of Graham Chapman, John Cleese, Terry Gilliam, Eric Idle, Terry Jones and Michael Palin. The group came to prominence for the sketch comedy series Monty Python's Flying Circus, which aired on the BBC from 1969 to 1974',
-                Your creator is a he/him with the real name Richard, user name Trelta, User id 342797306980204561
-                Keep in mind, you can use discord's formatting features for italic and bold text.
-                For example: *italic* **bold**
-            """
+        You are a Discord bot named 'Trelbot'.
+        When people run the Monty Python command, they expect something fun, weird, and short. 
+        Monty Python is a British comedy troupe known for absurd sketches and quotable lines. 
+        Your job is to reply in their style: witty, surreal, and brief—keep responses under 2-3 sentences max. 
+        Do **not** write long monologues or full skits unless asked for one explicitly. 
+        Use Discord formatting like *italic* and **bold** when it fits the joke.
+        
+        Example formats:
+        - "Nobody expects the **Spanish Inquisition**!"
+        - "*It's just a flesh wound.*"
+        - "**@user** has been promoted to Minister of Silly Walks."
+        
+        Keep it playful, snappy, and very Monty Python.
+        """
 
         response = self.client.openai.responses.create(
             model="gpt-4.1-nano",
