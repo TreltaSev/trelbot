@@ -1,10 +1,11 @@
 import os
 import sys
 from pathlib import Path
-from typing import Any, List
+from typing import Any, Callable, Coroutine, List, TypeVar
 
 import discord
 from discord.ext import commands
+from discord.utils import MISSING
 
 import openai
 from openai import OpenAI, OpenAIError
@@ -12,6 +13,9 @@ from openai import OpenAI, OpenAIError
 from pyucc import console
 
 from utils.types.spec.Spec import Spec
+
+_func = Callable[..., Coroutine[Any, Any, Any]]
+LF = TypeVar('LF', bound=_func)
 
 
 class Client(commands.Bot):
@@ -23,13 +27,16 @@ class Client(commands.Bot):
 
     def __init__(self):
         super().__init__(command_prefix="t:", intents=discord.Intents.all())
-        
+
         self.openai = OpenAIWrapper()
+
+        # Type Hinting
+        self.root: Path = Path(os.environ.get("_root"))
 
     async def setup(self) -> None:
         """
         Hook used during setup, initializes all cogs and plugins (events/commands)
-        
+
         Raises
         ------
         TypeError
@@ -42,11 +49,12 @@ class Client(commands.Bot):
         # Only register hello as a test
         project_root = Path(os.path.abspath(sys.argv[0]))
         cogs: List[Spec] = await self.find_cogs((project_root.parent / "cogs").absolute().as_posix())
-        for cog in cogs:            
-            
+        for cog in cogs:
+
             # Check for cog in doc
             if not hasattr(cog.body, 'cog'):
-                raise TypeError(f"Failed to parse cog \"{cog.body.spec.name}\", No cog found")
+                raise TypeError(
+                    f"Failed to parse cog \"{cog.body.spec.name}\", No cog found")
 
             # Check if cog is multiple
             cog_names = cog.body.cog
@@ -144,41 +152,37 @@ class Client(commands.Bot):
 
 
 class OpenAIWrapper(OpenAI):
-    
-    
+
     """
     OpenAI client wrapper that's used in conjunction with event and command checkers
     to make sure that a client is active. If an openai client isn't active or valid, 
     these commands should not run.
     """
-    def __init__(self, *, api_key = None, organization = None, project = None, base_url = None, websocket_base_url = None, timeout = None, max_retries = 5, default_headers = None, default_query = None, http_client = None, _strict_response_validation = False):
+
+    def __init__(self, *, api_key=None, organization=None, project=None, base_url=None, websocket_base_url=None, timeout=None, max_retries=5, default_headers=None, default_query=None, http_client=None, _strict_response_validation=False):
         # Type Annotation
         self.active: bool = False
-        
-        console.start("Loading OpenAPI Client")        
-        
+
+        console.start("Loading OpenAPI Client")
+
         api_key = api_key or os.environ.get("OPENAI_TOKEN", None)
-        
+
         # Check if API key was given
         try:
-            super().__init__(api_key=api_key, organization=organization, project=project, base_url=base_url, websocket_base_url=websocket_base_url, timeout=timeout, max_retries=max_retries, default_headers=default_headers, default_query=default_query, http_client=http_client, _strict_response_validation=_strict_response_validation)
+            super().__init__(api_key=api_key, organization=organization, project=project, base_url=base_url, websocket_base_url=websocket_base_url, timeout=timeout,
+                             max_retries=max_retries, default_headers=default_headers, default_query=default_query, http_client=http_client, _strict_response_validation=_strict_response_validation)
         except OpenAIError as _:
             console.error('No API_KEY found for openai, flag still false.')
             return
-        
+
         # Check if API key is valid
         try:
             self.models.list()
         except openai.AuthenticationError:
             console.error('OpenAI key given is invalid')
             return
-        
+
         console.done('OpenAI connection success')
-        
+
         # Raise Flag
         self.active = True
-        
-        
-        
-        
-        
