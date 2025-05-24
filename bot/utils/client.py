@@ -23,13 +23,13 @@ class Client(commands.Bot):
 
     def __init__(self):
         super().__init__(command_prefix="t:", intents=discord.Intents.all())
-
+        
         self.openai = OpenAIWrapper()
 
     async def setup(self) -> None:
         """
         Hook used during setup, initializes all cogs and plugins (events/commands)
-
+        
         Raises
         ------
         TypeError
@@ -42,31 +42,35 @@ class Client(commands.Bot):
         # Only register hello as a test
         project_root = Path(os.path.abspath(sys.argv[0]))
         cogs: List[Spec] = await self.find_cogs((project_root.parent / "cogs").absolute().as_posix())
-        for cog in cogs:
-
+        for cog in cogs:            
+            
             # Check for cog in doc
             if not hasattr(cog.body, 'cog'):
-                raise TypeError(
-                    f"Failed to parse cog \"{cog.body.spec.name}\", No cog found")
+                raise TypeError(f"Failed to parse cog \"{cog.body.spec.name}\", No cog found")
 
-            # Check if loaded properly
-            cog_meta: commands.CogMeta = getattr(
-                cog.body.module, cog.body.cog, None)
-            if not cog_meta:
-                raise TypeError(
-                    f"Failed to load Cog meta. Got \"{cog.body.cog}\", which wasn't found.")
+            # Check if cog is multiple
+            cog_names = cog.body.cog
+            if isinstance(cog_names, str) and ',' in cog_names:
+                cog_names = [name.strip() for name in cog_names.split(",")]
+            else:
+                cog_names = [cog_names]
 
-            if not isinstance(cog_meta, commands.CogMeta):
-                raise TypeError(
-                    f"For some reason, the loaded cog string isn't of type `commands.CogMeta`")
+            for cog_name in cog_names:
 
-            cog: commands.Cog | Any = cog_meta(self)
+                # Check if the cog even exists
+                cog_meta: commands.CogMeta = getattr(
+                    cog.body.module, cog_name, None)
+                if not cog_meta:
+                    raise TypeError(
+                        f"Failed to load Cog meta. Got \"{cog_name}\", which wasn't found.")
 
-            if not isinstance(cog, commands.Cog):
-                raise TypeError(f"Loaded Cog isn't of type Cog")
+                _cog: commands.Cog | Any = cog_meta(self)
 
-            console.info(f"Adding Cog {cog.__cog_name__}")
-            await self.add_cog(cog)
+                if not isinstance(_cog, commands.Cog):
+                    TypeError(f"Loaded Cog isn't of type cog")
+
+                console.info(f"Adding Cog {_cog.__cog_name__}")
+                await self.add_cog(_cog)
 
         await self.start(os.environ.get("BOT_TOKEN"))
 
@@ -140,37 +144,41 @@ class Client(commands.Bot):
 
 
 class OpenAIWrapper(OpenAI):
-
+    
+    
     """
     OpenAI client wrapper that's used in conjunction with event and command checkers
     to make sure that a client is active. If an openai client isn't active or valid, 
     these commands should not run.
     """
-
-    def __init__(self, *, api_key=None, organization=None, project=None, base_url=None, websocket_base_url=None, timeout=None, max_retries=5, default_headers=None, default_query=None, http_client=None, _strict_response_validation=False):
+    def __init__(self, *, api_key = None, organization = None, project = None, base_url = None, websocket_base_url = None, timeout = None, max_retries = 5, default_headers = None, default_query = None, http_client = None, _strict_response_validation = False):
         # Type Annotation
         self.active: bool = False
-
-        console.start("Loading OpenAPI Client")
-
+        
+        console.start("Loading OpenAPI Client")        
+        
         api_key = api_key or os.environ.get("OPENAI_TOKEN", None)
-
+        
         # Check if API key was given
         try:
-            super().__init__(api_key=api_key, organization=organization, project=project, base_url=base_url, websocket_base_url=websocket_base_url, timeout=timeout,
-                             max_retries=max_retries, default_headers=default_headers, default_query=default_query, http_client=http_client, _strict_response_validation=_strict_response_validation)
+            super().__init__(api_key=api_key, organization=organization, project=project, base_url=base_url, websocket_base_url=websocket_base_url, timeout=timeout, max_retries=max_retries, default_headers=default_headers, default_query=default_query, http_client=http_client, _strict_response_validation=_strict_response_validation)
         except OpenAIError as _:
             console.error('No API_KEY found for openai, flag still false.')
             return
-
+        
         # Check if API key is valid
         try:
             self.models.list()
         except openai.AuthenticationError:
             console.error('OpenAI key given is invalid')
             return
-
+        
         console.done('OpenAI connection success')
-
+        
         # Raise Flag
         self.active = True
+        
+        
+        
+        
+        
