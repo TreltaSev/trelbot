@@ -1,0 +1,22 @@
+# Program Mode
+mode: "development" # production | development
+
+# Guilds to sync to
+guilds: null # None or list of ints
+
+# Bot Configurations
+bot:
+  secret: "SECRET_HERE" # Discord Bot Secret
+  token: "TOKEN_HERE" # Discord Bot Token
+
+  # Openai Configurations
+openai:
+  token: "TOKEN_HERE" # OpenAI Token
+
+# Database configurations
+database:
+  username: "mongo_user"
+  password: "mongo_password"
+  host: "bot-database:29345" # Database Host
+  root: "bot" # Main Database Used, for auth and data
+  uri_override: null # If not null, use this instead and ignore above values

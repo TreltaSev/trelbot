@@ -1,0 +1,50 @@
+services:
+  bot:
+    container_name: trelbot-bot
+
+    environment:
+      - PROJECT_ROOT=/trelbot
+
+    build:
+      context: ./packages
+      dockerfile: ./bot/Dockerfile
+
+    volumes:
+      # Source Files
+      - ./packages/bot/src:/trelbot/bot/src:ro
+
+      # Config Files
+      - ./config.yml:/trelbot/config.yml:ro
+
+      # Shared Package
+      - ./packages/shared/pyproject.toml:/shared/pyproject.toml:ro
+      - ./packages/shared/src:/shared/src:ro
+  
+    networks:
+      - docker-network
+
+  database:
+    image: mongo
+    container_name: trelbot-database
+    ports:
+      - "29345:29345"
+    volumes:
+      - "mongodb_data:/data/db"
+      - ./packages/database/mongo.conf:/etc/mongo/mongo.conf:rw
+      - ./packages/database/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      - docker-network
+    command:
+      - "--logpath"
+      - "/var/log/mongodb/mongod.log"
+      - "--config"
+      - "/etc/mongo/mongo.conf"
+
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  backend-logs:
+  mongodb_data:
+    driver: local

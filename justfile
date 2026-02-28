@@ -1,25 +1,33 @@
-# Starts up the discord bot
-[working-directory: './']
-@bot:
-    docker compose run --build --rm bot
+# ========================================= LOGIC ========================================= #
 
-# Compose the whole project or a specific set of services
-[working-directory: './']
-dc SERVICE="":
-    docker compose up -d --build {{SERVICE}}
+VENV_DIR := 'venv'
 
-# Stops the docker compose
+# Create virtual environment
 [working-directory: './']
-dc-down SERVICE="":
-    docker compose down {{SERVICE}}
+setup-venv:
+    python3 -m venv {{VENV_DIR}}
+    # Install Deps
+    ./{{VENV_DIR}}/bin/pip install -r requirements.txt
+    ./{{VENV_DIR}}/bin/pip install ./packages/shared
 
-# Compose only a specific service using a alternative file
-[working-directory: './']
-dc-alt ALT SERVICE="":
-    docker compose -f docker-compose.yml -f docker-compose-{{ALT}}.yml up -d --build {{SERVICE}}
+PIP_BIN := 'venv/bin/pip'
 
-# Builds a specific service with an alt file while also sh into it.
+# Run the virtual environment's pip command
 [working-directory: './']
-dc-int ALT SERVICE="":
-    just dc-alt {{ALT}} {{SERVICE}} 
-    docker exec -it {{SERVICE}} sh
+pip *ARGS:
+    {{PIP_BIN}} {{ARGS}}
+
+# Dump all the pip packages to requirements.txt
+[working-directory: './']
+pip-dump *ARGS:
+    {{PIP_BIN}} freeze | grep -v shared > requirements.txt
+
+# Run the before script to generate all necessary files
+[working-directory: './before']
+before: setup-venv
+    bash before.sh {{justfile_directory()}}
+
+# ========================================= COMMANDS ========================================= #
+
+compose *ARGS: before
+    docker compose {{ARGS}}
