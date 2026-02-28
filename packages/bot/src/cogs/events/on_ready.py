@@ -21,7 +21,7 @@ class on_ready(commands.Cog):
     async def on_ready(self):
         console.debug(f"Syncing App Commands [gray]This might take a while...[/]")
         
-        mode = os.environ.get("MODE", "development")
+        mode = config.parsed.mode or "development"
 
         if mode == "production":
             console.debug("Sync Mode: [bold]Global[/]")
