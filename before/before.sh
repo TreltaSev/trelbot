@@ -7,7 +7,7 @@ export PROJECT_ROOT=$1
 PYTHON_BIN=$1/venv/bin/python
 
 # # Generate config file
-python ./config.py
+$PYTHON_BIN ./config.py
 
 # # Ensure the database runs seamlessly
-python ./database.py
+$PYTHON_BIN ./database.py
