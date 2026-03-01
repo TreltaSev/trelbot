@@ -18,9 +18,9 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
-            cd /root/trelbot
+            cd /srv/trelbot
             git pull origin production
-            docker compose down && docker compose up --build -d bot
+            systemctl restart trelbot
           EOF
         env:
           SSH_USER: ${{ vars.SSH_USER }}
