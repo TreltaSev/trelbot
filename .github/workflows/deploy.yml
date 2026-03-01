@@ -17,12 +17,11 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+          $SSH_COMMAND << 'EOF'
             cd /srv/trelbot
             git pull origin production
             systemctl restart trelbot
           EOF
         env:
-          SSH_USER: ${{ vars.SSH_USER }}
-          SSH_HOST: ${{ vars.SSH_HOST }}
+          SSH_COMMAND: ${{ vars.SSH_COMMAND }}
 
