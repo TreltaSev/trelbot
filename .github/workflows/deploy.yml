@@ -23,7 +23,9 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -o -p 57242 -J root@vps.trelta.dev:57242 server@10.8.0.2
+          ssh -o -p 57242 -J root@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
+            whoami
+          EOF
           # $SSH_COMMAND << 'EOF'
           #   cd /srv/trelbot
           #   git pull origin production
