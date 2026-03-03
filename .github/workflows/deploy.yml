@@ -27,7 +27,7 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -p 57242 -J server@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
+          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ vars.SSH_ARGS }} << 'EOF'
             cd /srv/trelbot
             git pull origin production
             sudo systemctl restart trelbot
