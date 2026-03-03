@@ -23,27 +23,14 @@ jobs:
       - name: Setup Hosts
         run: |
           mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
-          ssh-keyscan -p 57242 vps.trelta.dev >> ~/.ssh/known_hosts
-
-
-      - name: Configure Jump Host
-        run: |
-          mkdir -p ~/.ssh
-          cat $SSH_CONFIG > ~/.ssh/config
-          chmod 600 ~/.ssh/config    
-          
+          ssh-keyscan -p 57242 vps.trelta.dev >> ~/.ssh/known_hosts          
 
       - name: Deploy
         run: |
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -p 57242 -J server@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
-            whoami
+            cd /srv/trelbot
+            git pull origin production
+            systemctl restart trelbot
           EOF
-          # $SSH_COMMAND << 'EOF'
-          #   cd /srv/trelbot
-          #   git pull origin production
-          #   systemctl restart trelbot
-          # EOF
         env:
           SSH_COMMAND: ${{ vars.SSH_COMMAND }}
-          SSH_CONFIG: ${{ vars.SSH_CONFIG }}
-
