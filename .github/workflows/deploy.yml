@@ -30,7 +30,7 @@ jobs:
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -p 57242 -J server@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
             cd /srv/trelbot
             git pull origin production
-            systemctl restart trelbot
+            sudo systemctl restart trelbot
           EOF
         env:
           SSH_COMMAND: ${{ vars.SSH_COMMAND }}
