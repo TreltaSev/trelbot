@@ -15,6 +15,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Configure Jump Host
+        run: |
+          mkdir -p ~/.ssh
+          cat $SSH_CONFIG > ~/.ssh/config
+          chmod 600 ~/.ssh/config          
+
       - name: Deploy
         run: |
           $SSH_COMMAND << 'EOF'
@@ -24,4 +30,5 @@ jobs:
           EOF
         env:
           SSH_COMMAND: ${{ vars.SSH_COMMAND }}
+          SSSH_CONFIG: ${{ vars.SSH_CONFIG }}_
 
