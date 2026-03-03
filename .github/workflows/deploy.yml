@@ -21,15 +21,10 @@ jobs:
           cat $SSH_CONFIG > ~/.ssh/config
           chmod 600 ~/.ssh/config    
           
-      - name: Cleanup SSH Hosts
-        run: |
-          ssh-keygen -R [vps.trelta.dev]:57242
-          ssh-keygen -R [10.8.0.2]:57242
-          
 
       - name: Deploy
         run: |
-          ssh -p 57242 -J server@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p 57242 -J server@vps.trelta.dev:57242 server@10.8.0.2 << 'EOF'
             whoami
           EOF
           # $SSH_COMMAND << 'EOF'
