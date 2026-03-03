@@ -18,7 +18,7 @@ jobs:
       - name: Store Private Key
         run: |
           mkdir -p ~/.ssh/id_ed25519
-          echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
 
       - name: Configure Jump Host
         run: |
