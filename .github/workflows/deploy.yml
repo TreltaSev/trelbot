@@ -20,6 +20,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
 
+      - name: Setup Hosts
+        run: |
+          mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
+          ssh-keyscan -p 57242 vps.trelta.dev >> ~/.ssh/known_hosts
+
+
       - name: Configure Jump Host
         run: |
           mkdir -p ~/.ssh
